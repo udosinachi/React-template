@@ -4,13 +4,11 @@ import {
   Flex,
   Icon,
   useColorModeValue,
-  Link,
   Drawer,
   DrawerContent,
   Text,
   useDisclosure,
   BoxProps,
-  FlexProps,
 } from "@chakra-ui/react";
 import { ReactNode } from "react";
 import { NavLink } from "react-router-dom";
@@ -19,8 +17,9 @@ import { RiTeamLine } from "react-icons/ri";
 import { TbReportAnalytics } from "react-icons/tb";
 import { MdOutlineRestartAlt } from "react-icons/md";
 import { IconType } from "react-icons";
-import { ReactText } from "react";
+// import { ReactText } from "react";
 import Navbar from "./Navbar";
+import Footer from "./Footer";
 
 interface LinkItemProps {
   name: string;
@@ -42,7 +41,7 @@ const activeStyle: React.CSSProperties = {
   alignItems: "center",
   padding: "10px",
   margin: "10px",
-  borderRadius: "10px",
+  // borderRadius: "10px",
   cursor: "pointer",
 };
 
@@ -70,7 +69,8 @@ export default function Sidebar({ children }: { children: ReactNode }) {
       {/* mobilenav */}
       <Navbar onOpen={onOpen} />
       <Box ml={{ base: 0, md: 60 }} p="4">
-        {children}
+        <Box height="100vh">{children}</Box>
+        <Footer />
       </Box>
     </Box>
   );

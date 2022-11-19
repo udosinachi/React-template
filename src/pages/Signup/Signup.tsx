@@ -5,14 +5,12 @@ import {
   FormLabel,
   Input,
   InputGroup,
-  HStack,
   InputRightElement,
   Stack,
   Button,
   Heading,
   Text,
   useColorModeValue,
-  Link,
 } from "@chakra-ui/react";
 import { useState } from "react";
 import { NavLink } from "react-router-dom";
@@ -89,7 +87,7 @@ export default function SignupCard() {
             <Stack pt={6}>
               <Text align={"center"}>
                 Already a user?{" "}
-                <NavLink to="/login" color={"blue.400"}>
+                <NavLink to="/login" style={{ color: "#26C6DA" }}>
                   Login
                 </NavLink>
               </Text>

@@ -14,13 +14,8 @@ import {
   MenuItem,
   MenuList,
 } from "@chakra-ui/react";
-import { ReactNode } from "react";
-import { NavLink } from "react-router-dom";
-import { FiBook, FiHome, FiMenu, FiBell, FiChevronDown } from "react-icons/fi";
-import { AiOutlineBell } from "react-icons/ai";
-import { BsWallet2 } from "react-icons/bs";
-import { MdOutlineExitToApp } from "react-icons/md";
-import { Link, useLocation } from "react-router-dom";
+import { FiMenu, FiBell, FiChevronDown } from "react-icons/fi";
+
 import { User } from "../assets/index";
 
 type MenuListItemType = {

@@ -25,9 +25,6 @@ export default function SimpleCard() {
       <Stack spacing={8} mx={"auto"} maxW={"lg"} py={12} px={6}>
         <Stack align={"center"}>
           <Heading fontSize={"4xl"}>Sign in to your account</Heading>
-          <Text fontSize={"lg"} color={"gray.600"}>
-            to enjoy all of our cool ✌️
-          </Text>
         </Stack>
         <Box
           rounded={"lg"}
@@ -65,7 +62,7 @@ export default function SimpleCard() {
               <Stack pt={6}>
                 <Text align={"center"}>
                   Don't have an account?{" "}
-                  <NavLink to="/signup" color={"blue.400"}>
+                  <NavLink to="/signup" style={{ color: "#26C6DA" }}>
                     Sign Up
                   </NavLink>
                 </Text>
