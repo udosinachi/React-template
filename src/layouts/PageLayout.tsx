@@ -21,7 +21,6 @@ export const NonAuthPageLayout = ({ children }: IChildren) => {
       height={["80vh", "100vh"]}
     >
       {children}
-      <Box mt={"auto"}>{/* <Footer /> */}</Box>
     </Box>
   );
 };

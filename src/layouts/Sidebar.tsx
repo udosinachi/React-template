@@ -48,10 +48,11 @@ const activeStyle: React.CSSProperties = {
 export default function Sidebar({ children }: { children: ReactNode }) {
   const { isOpen, onOpen, onClose } = useDisclosure();
   return (
-    <Box minH="100vh" bg={useColorModeValue("gray.100", "gray.900")}>
+    <Box minH="100vh" bg="whitesmoke">
       <SidebarContent
         onClose={() => onClose}
         display={{ base: "none", md: "block" }}
+        // bg="blackAlpha.300"
       />
       <Drawer
         autoFocus={false}
@@ -107,7 +108,7 @@ const SidebarContent = ({ onClose, ...rest }: SidebarProps) => {
                 ? activeStyle
                 : {
                     ...activeStyle,
-                    background: "white",
+                    background: "none",
                     color: "black",
                   }
             }
