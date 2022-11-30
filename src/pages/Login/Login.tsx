@@ -12,9 +12,40 @@ import {
   Text,
   useColorModeValue,
 } from "@chakra-ui/react";
+import { useState } from "react";
 import { NavLink } from "react-router-dom";
+import { useLogin } from "../../services/query/login";
+import useCustomToast from "../../utils/notification";
 
-export default function SimpleCard() {
+export default function Login() {
+  const { errorToast, successToast } = useCustomToast();
+  const [username, setUsername] = useState("");
+  const [password, setPassword] = useState("");
+
+  const { mutate, isLoading: isCreateLoading } = useLogin({
+    onSuccess: (res: any) => {
+      console.log(res);
+      successToast("Login Successful");
+      localStorage.setItem("user", JSON.stringify(res));
+      setTimeout(() => {
+        window.location.href = "/dashboard";
+      }, 200);
+    },
+    onError: (err: any) => {
+      console.log(err);
+      errorToast("Failed");
+    },
+  });
+
+  const handleSubmit = () => {
+    // console.log(username);
+    // console.log(password);
+    mutate({
+      username,
+      password,
+    });
+  };
+
   return (
     <Flex
       minH={"100vh"}
@@ -32,43 +63,59 @@ export default function SimpleCard() {
           boxShadow={"lg"}
           p={8}
         >
-          <Stack spacing={4}>
-            <FormControl id="email">
-              <FormLabel>Email address</FormLabel>
-              <Input type="email" />
-            </FormControl>
-            <FormControl id="password">
-              <FormLabel>Password</FormLabel>
-              <Input type="password" />
-            </FormControl>
-            <Stack spacing={10}>
-              <Stack
-                direction={{ base: "column", sm: "row" }}
-                align={"start"}
-                justify={"space-between"}
-              >
-                <Checkbox>Remember me</Checkbox>
-                <Link color={"blue.400"}>Forgot password?</Link>
-              </Stack>
-              <Button
-                bg={"blue.400"}
-                color={"white"}
-                _hover={{
-                  bg: "blue.500",
-                }}
-              >
-                Sign in
-              </Button>
-              <Stack pt={6}>
-                <Text align={"center"}>
-                  Don't have an account?{" "}
-                  <NavLink to="/signup" style={{ color: "#26C6DA" }}>
-                    Sign Up
-                  </NavLink>
-                </Text>
+          <form>
+            <Stack spacing={4}>
+              <FormControl id="email">
+                <FormLabel>Email address</FormLabel>
+                <Input
+                  type="text"
+                  name="username"
+                  value={username}
+                  onChange={(e) => setUsername(e.target.value)}
+                />
+              </FormControl>
+              <FormControl id="password">
+                <FormLabel>Password</FormLabel>
+                <Input
+                  type="password"
+                  name="password"
+                  value={password}
+                  onChange={(e) => setPassword(e.target.value)}
+                />
+              </FormControl>
+              <Stack spacing={10}>
+                <Stack
+                  direction={{ base: "column", sm: "row" }}
+                  align={"start"}
+                  justify={"space-between"}
+                >
+                  <Checkbox>Remember me</Checkbox>
+                  <Link color={"blue.400"}>Forgot password?</Link>
+                </Stack>
+                <Button
+                  bg={"blue.400"}
+                  color={"white"}
+                  _hover={{
+                    bg: "blue.500",
+                  }}
+                  type="submit"
+                  isLoading={isCreateLoading}
+                  onClick={handleSubmit}
+                  // disabled={Username === "" || Password === ""}
+                >
+                  Login
+                </Button>
+                <Stack pt={6}>
+                  <Text align={"center"}>
+                    Don't have an account?{" "}
+                    <NavLink to="/signup" style={{ color: "#26C6DA" }}>
+                      Sign Up
+                    </NavLink>
+                  </Text>
+                </Stack>
               </Stack>
             </Stack>
-          </Stack>
+          </form>
         </Box>
       </Stack>
     </Flex>

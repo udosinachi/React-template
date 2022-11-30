@@ -17,6 +17,7 @@ import {
 import { FiMenu, FiBell, FiChevronDown } from "react-icons/fi";
 
 import { User } from "../assets/index";
+import useCustomToast from "../utils/notification";
 
 type MenuListItemType = {
   icon: string;
@@ -51,6 +52,15 @@ interface MobileProps extends FlexProps {
 }
 
 const Navbar = ({ onOpen, ...rest }: MobileProps) => {
+  const { successToast } = useCustomToast();
+  const logout = () => {
+    localStorage.removeItem("user");
+    successToast("Logout Successful");
+    setTimeout(() => {
+      window.location.reload();
+    }, 500);
+  };
+
   return (
     <Flex
       ml={{ base: 0, md: 60 }}
@@ -125,7 +135,7 @@ const Navbar = ({ onOpen, ...rest }: MobileProps) => {
               <MenuItem>Settings</MenuItem>
               <MenuItem>Billing</MenuItem>
               <MenuDivider />
-              <MenuItem>Sign out</MenuItem>
+              <MenuItem onClick={logout}>Sign out</MenuItem>
             </MenuList>
           </Menu>
         </Flex>

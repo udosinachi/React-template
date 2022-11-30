@@ -16,7 +16,7 @@ const PrivateRouteWrapper = () => {
 const Pages = () => {
   const location = useLocation();
   const user = localStorage.getItem("user");
-  return !user ? (
+  return user ? (
     <AuthPageLayout>
       <PrivateRouteWrapper key={location.pathname} />
     </AuthPageLayout>
