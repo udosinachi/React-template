@@ -9,11 +9,9 @@ import {
   Link,
   Button,
   Heading,
-  Text,
   useColorModeValue,
 } from "@chakra-ui/react";
 import { useState } from "react";
-import { NavLink } from "react-router-dom";
 import { useLogin } from "../../services/query/login";
 import useCustomToast from "../../utils/notification";
 
@@ -27,6 +25,10 @@ export default function Login() {
       console.log(res);
       successToast("Login Successful");
       localStorage.setItem("user", JSON.stringify(res));
+      localStorage.setItem(
+        "accessToken",
+        JSON.stringify(res?.document?.accessToken)
+      );
       setTimeout(() => {
         window.location.href = "/dashboard";
       }, 200);
@@ -105,14 +107,14 @@ export default function Login() {
                 >
                   Login
                 </Button>
-                <Stack pt={6}>
+                {/* <Stack pt={6}>
                   <Text align={"center"}>
                     Don't have an account?{" "}
                     <NavLink to="/signup" style={{ color: "#26C6DA" }}>
                       Sign Up
                     </NavLink>
                   </Text>
-                </Stack>
+                </Stack> */}
               </Stack>
             </Stack>
           </form>

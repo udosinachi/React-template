@@ -2,7 +2,7 @@ import { useMediaQuery } from "@chakra-ui/react";
 import axios from "axios";
 import { useLocation } from "react-router-dom";
 import { apiURL } from "../enivironment";
-import { REFRESH_TOKEN } from "../services/apiUrl";
+// import { REFRESH_TOKEN } from "../services/apiUrl";
 
 interface SavedToken {
   refresh: string;
@@ -16,20 +16,20 @@ export const toBase64 = (file: any) =>
     reader.onerror = (error) => reject(error);
   });
 
-export const getAccessToken = async () => {
-  const user: any = localStorage.getItem("user");
-  const savedToken: SavedToken = JSON.parse(user);
+// export const getAccessToken = async () => {
+//   const user: any = localStorage.getItem("user");
+//   const savedToken: SavedToken = JSON.parse(user);
 
-  try {
-    const res = await axios.post(`${apiURL}${REFRESH_TOKEN}`, {
-      refresh: savedToken.refresh,
-    });
-    return res;
-  } catch (error) {
-    localStorage.removeItem("user");
-    window.location.href = "/login";
-  }
-};
+//   try {
+//     const res = await axios.post(`${apiURL}${REFRESH_TOKEN}`, {
+//       refresh: savedToken.refresh,
+//     });
+//     return res;
+//   } catch (error) {
+//     localStorage.removeItem("user");
+//     window.location.href = "/login";
+//   }
+// };
 
 export const scrollBarStyle = {
   "&::-webkit-scrollbar": {

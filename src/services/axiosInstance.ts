@@ -5,7 +5,7 @@ import axios, {
   AxiosError,
 } from "axios";
 import { apiURL } from "../enivironment";
-import { getAccessToken } from "../utils/helpers";
+// import { getAccessToken } from "../utils/helpers";
 
 // export const baseURL = "http://tfapstaging.trustedpartners.software/api/";
 const axiosInstance: AxiosInstance = axios.create({
@@ -16,8 +16,9 @@ const axiosInstance: AxiosInstance = axios.create({
   },
 });
 const onRequest = (request: AxiosRequestConfig): AxiosRequestConfig => {
-  const { access } = JSON.parse(localStorage.getItem("user") as string);
+  const access = JSON.parse(localStorage.getItem("accessToken") as string);
   request.headers!.Authorization = `Bearer ${access}` || "";
+  // console.log(access);
   return request;
 };
 
@@ -35,11 +36,11 @@ const onResponseError = async (error: AxiosError) => {
   const statusCode = error.response!.status;
   const originalRequest: any = error.config;
   if (statusCode === 403 && user) {
-    const { data }: any = await getAccessToken();
+    // const { data }: any = await getAccessToken();
 
-    const newData = { ...user, access: data.access };
+    // const newData = { ...user, access: data.access };
 
-    localStorage.setItem("user", JSON.stringify(newData));
+    // localStorage.setItem("user", JSON.stringify(newData));
 
     return axiosInstance(originalRequest);
   }

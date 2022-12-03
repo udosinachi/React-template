@@ -1,7 +1,7 @@
 import React, { Suspense } from "react";
 import { Box, CircularProgress } from "@chakra-ui/react";
 
-const Loader = () => {
+export const Loader = () => {
   return (
     <Box
       display="flex"
@@ -9,10 +9,7 @@ const Loader = () => {
       alignItems="center"
       sx={{ width: "100%", height: "100vh" }}
     >
-      <CircularProgress
-        isIndeterminate
-        color='black'
-      />
+      <CircularProgress isIndeterminate color="black" />
     </Box>
   );
 };

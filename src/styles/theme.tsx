@@ -49,7 +49,7 @@ export const customTheme = extendTheme({
       variants: {
         primary: {
           bgColor: "lightMode.btnBgColor",
-          size: "md",
+          size: "sm",
           color: "lightMode.white",
           fontWeight: "700",
           _hover: {
