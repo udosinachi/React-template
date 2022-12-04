@@ -6,6 +6,8 @@ import {
   getUserInfoById,
   editUserInfo,
   getUserInfoByIdMutate,
+  getSearchUserInfo,
+  getSearchUserInfoMutate,
 } from "../api/user";
 import {
   GET_ALL_USER_INFO,
@@ -13,6 +15,7 @@ import {
   DELETE_USER_INFO,
   EDIT_USER_INFO,
   GET_USER_INFO,
+  SEARCH_USER_INFO,
 } from "../queryKeys";
 
 export const useGetAllUserInfo = (
@@ -28,6 +31,30 @@ export const useGetAllUserInfo = (
     }
   );
   return { data, isLoading, refetch };
+};
+
+export const useGetSearchUserInfo = (
+  searchKey: string,
+  page: number,
+  itemPerPage: number,
+  options = {}
+) => {
+  const { data, isLoading, refetch } = useQuery(
+    [SEARCH_USER_INFO, searchKey, page, itemPerPage],
+    getSearchUserInfo,
+    {
+      ...options,
+    }
+  );
+  return { data, isLoading, refetch };
+};
+
+export const useGetSearchUserInfoMutate = (options = {}) => {
+  const { mutate, isLoading } = useMutation(getSearchUserInfoMutate, {
+    mutationKey: SEARCH_USER_INFO,
+    ...options,
+  });
+  return { mutate, isLoading };
 };
 
 export const useAddNewUserInfo = (options = {}) => {

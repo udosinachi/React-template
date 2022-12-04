@@ -10,6 +10,22 @@ export const getAllUserInfo = async ({ queryKey }: any) => {
   return res.data;
 };
 
+export const getSearchUserInfo = async ({ queryKey }: any) => {
+  const [, searchKey, page, itemsPerPage] = queryKey;
+  const res = await axiosInstance.get(
+    `${apiURL}${GET_ALL_USER_INFO}/search?searchKey=${searchKey}&page=${page}&itemsPerPage=${itemsPerPage}&orderBy=Id|DESC`
+  );
+  return res?.data;
+};
+
+export const getSearchUserInfoMutate = async (body: any) => {
+  // const [, searchKey, page, itemsPerPage] = queryKey;
+  const res = await axiosInstance.get(
+    `${apiURL}${GET_ALL_USER_INFO}/search?searchKey=${body.searchKey}&page=${body.page}&itemsPerPage=${body.itemsPerPage}&orderBy=Id|DESC`
+  );
+  return res?.data;
+};
+
 export const addNewUserInfo = async (body: any) => {
   const res = await axiosInstance.post(apiURL + GET_ALL_USER_INFO, body);
   return res?.data;
@@ -42,7 +58,5 @@ export const getUserInfoByIdMutate = async (body: any) => {
   const res = await axiosInstance.get(
     `${apiURL}${GET_ALL_USER_INFO}/${body.id}`
   );
-  // console.log(res?.data);
-  // console.log(body?.id);
   return res?.data;
 };
