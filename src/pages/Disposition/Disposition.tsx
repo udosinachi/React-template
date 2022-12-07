@@ -30,12 +30,23 @@ import useCustomToast from "../../utils/notification";
 import { AddUserModal } from "../../components/modals/AddUserModal";
 import { Loader } from "../../components/WithSuspense";
 import { useQueryClient } from "react-query";
-import { GET_ALL_USER_INFO } from "../../services/queryKeys";
+import {
+  GET_ALL_DISPOSITION,
+  GET_ALL_USER_INFO,
+} from "../../services/queryKeys";
 import { EditUserModal } from "../../components/modals/EditUserModal";
 import { NavLink } from "react-router-dom";
-import Pagination from "./Pagination";
+import {
+  useDeleteDisposition,
+  useGetAllDisposition,
+  useGetDispositionByIdMutate,
+  useGetSearchDispositionMutate,
+} from "../../services/query/disposition";
+import { AddDispositionModal } from "../../components/modals/AddDispositionModal";
+import { EditDispositionModal } from "../../components/modals/EditDispositionModal";
+// import Pagination from "./Pagination";
 
-const CustomerBook = () => {
+const Disposition = () => {
   const queryClient = useQueryClient();
   const { errorToast, successToast } = useCustomToast();
   const { isOpen, onOpen, onClose } = useDisclosure();
@@ -63,7 +74,7 @@ const CustomerBook = () => {
     data,
     isLoading,
     refetch: refetchAllUser,
-  } = useGetAllUserInfo(currentPage, recordsPerPage);
+  } = useGetAllDisposition(currentPage, recordsPerPage);
   const allUserData = data?.document?.records;
   console.log(allUserData);
 
@@ -76,7 +87,7 @@ const CustomerBook = () => {
   // console.log(allSearchedUserData);
 
   const { mutate: searchMutate, isLoading: searchLoader } =
-    useGetSearchUserInfoMutate({
+    useGetSearchDispositionMutate({
       onSuccess: (res: any) => {
         console.log(res);
         setAllSearchedUserData(res?.document?.records);
@@ -146,23 +157,24 @@ const CustomerBook = () => {
     setRecordsPerPage(e.target.value);
   };
 
-  const { mutate: byIdMutate, isLoading: loaderId } = useGetUserInfoByIdMutate({
-    onSuccess: (res: any) => {
-      // console.log(res);
-      setUserIdData(res);
-    },
-    onError: (err: any) => {
-      console.log(err);
-      errorToast("Failed");
-    },
-  });
+  const { mutate: byIdMutate, isLoading: loaderId } =
+    useGetDispositionByIdMutate({
+      onSuccess: (res: any) => {
+        // console.log(res);
+        setUserIdData(res);
+      },
+      onError: (err: any) => {
+        console.log(err);
+        errorToast("Failed");
+      },
+    });
 
-  const { mutate, isLoading: isDelete } = useDeleteUserInfo({
+  const { mutate, isLoading: isDelete } = useDeleteDisposition({
     onSuccess: (res: any) => {
       console.log(res);
       successToast("Record Deleted");
       setTimeout(() => {
-        queryClient.invalidateQueries(GET_ALL_USER_INFO);
+        queryClient.invalidateQueries(GET_ALL_DISPOSITION);
       }, 200);
     },
     onError: (err: any) => {
@@ -212,7 +224,7 @@ const CustomerBook = () => {
             />
           </InputGroup>
           <Button size={"sm"} bgColor="#26C6DA" color="white" onClick={onOpen}>
-            Add New User
+            Add Disposition
           </Button>
         </Flex>
         <TableContainer bg="white">
@@ -220,12 +232,14 @@ const CustomerBook = () => {
             {/* <TableCaption>Imperial to metric conversion factors</TableCaption> */}
             <Thead>
               <Tr>
-                <Th>ID</Th>
-                <Th>Email </Th>
-                <Th>Role Name </Th>
-                <Th>First Name </Th>
-                <Th>Last Name </Th>
-                <Th>Last Login </Th>
+                <Th>Agent ID</Th>
+                <Th>Customer ID </Th>
+                <Th>Category </Th>
+                <Th>CC </Th>
+                <Th>Date Created</Th>
+                <Th>Subject </Th>
+                <Th>Message Body </Th>
+                <Th>Flag</Th>
               </Tr>
             </Thead>
 
@@ -233,12 +247,14 @@ const CustomerBook = () => {
               {!allSearchedUserData || allSearchedUserData?.length === 0
                 ? allUserData?.map((info: any) => (
                     <Tr key={info.id}>
-                      <Td>{info?.id}</Td>
-                      <Td>{info?.email}</Td>
-                      <Td>{info?.roleName}</Td>
-                      <Td>{info?.firstName}</Td>
-                      <Td>{info?.lastName}</Td>
-                      <Td>{info?.lastLogin}</Td>
+                      <Td>{info?.agentId}</Td>
+                      <Td>{info?.customerId}</Td>
+                      <Td>{info?.category}</Td>
+                      <Td>{info?.cc}</Td>
+                      <Td>{info?.dateCreated}</Td>
+                      <Td>{info?.subject}</Td>
+                      <Td>{info?.messageBody}</Td>
+                      <Td>{info?.flag}</Td>
                       <Td>
                         <Icon
                           onClick={() => {
@@ -265,12 +281,14 @@ const CustomerBook = () => {
                   ))
                 : allSearchedUserData?.map((info: any) => (
                     <Tr key={info.id}>
-                      <Td>{info?.id}</Td>
-                      <Td>{info?.email}</Td>
-                      <Td>{info?.roleName}</Td>
-                      <Td>{info?.firstName}</Td>
-                      <Td>{info?.lastName}</Td>
-                      <Td>{info?.lastLogin}</Td>
+                      <Td>{info?.agentId}</Td>
+                      <Td>{info?.customerId}</Td>
+                      <Td>{info?.category}</Td>
+                      <Td>{info?.cc}</Td>
+                      <Td>{info?.dateCreated}</Td>
+                      <Td>{info?.subject}</Td>
+                      <Td>{info?.messageBody}</Td>
+                      <Td>{info?.flag}</Td>
                       <Td>
                         <Icon
                           onClick={() => {
@@ -368,12 +386,12 @@ const CustomerBook = () => {
           </Flex>
         </Box>
       </Box>
-      <AddUserModal
+      <AddDispositionModal
         isOpen={isOpen}
         onClose={onClose}
         refetchAllUser={refetchAllUser}
       />
-      <EditUserModal
+      <EditDispositionModal
         editID={editID}
         isOpenEdit={isOpenEdit}
         onCloseEdit={onCloseEdit}
@@ -384,4 +402,4 @@ const CustomerBook = () => {
   );
 };
 
-export default CustomerBook;
+export default Disposition;

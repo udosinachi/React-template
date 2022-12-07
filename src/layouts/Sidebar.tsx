@@ -29,7 +29,7 @@ interface LinkItemProps {
 const LinkItems: Array<LinkItemProps> = [
   { name: "Dashboard", icon: FiHome, path: "/dashboard" },
   { name: "Customer Book", icon: FiBook, path: "/customer-book" },
-  { name: "Setup Book", icon: MdOutlineRestartAlt, path: "/fff" },
+  { name: "Disposition", icon: MdOutlineRestartAlt, path: "/disposition" },
   { name: "Team Members", icon: RiTeamLine, path: "/hh" },
   { name: "Report", icon: TbReportAnalytics, path: "/kk" },
 ];
