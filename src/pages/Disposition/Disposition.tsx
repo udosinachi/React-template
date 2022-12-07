@@ -220,7 +220,6 @@ const Disposition = () => {
               color="white"
               cursor="pointer"
               onClick={() => searchHandler()}
-              // onClick={() => setUserInfoToggle("Searched")}
             />
           </InputGroup>
           <Button size={"sm"} bgColor="#26C6DA" color="white" onClick={onOpen}>
