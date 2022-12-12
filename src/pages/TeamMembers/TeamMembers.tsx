@@ -30,23 +30,12 @@ import useCustomToast from "../../utils/notification";
 import { AddUserModal } from "../../components/modals/AddUserModal";
 import { Loader } from "../../components/WithSuspense";
 import { useQueryClient } from "react-query";
-import {
-  GET_ALL_DISPOSITION,
-  GET_ALL_USER_INFO,
-} from "../../services/queryKeys";
+import { GET_ALL_USER_INFO } from "../../services/queryKeys";
 import { EditUserModal } from "../../components/modals/EditUserModal";
 import { NavLink } from "react-router-dom";
-import {
-  useDeleteDisposition,
-  useGetAllDisposition,
-  useGetDispositionByIdMutate,
-  useGetSearchDispositionMutate,
-} from "../../services/query/disposition";
-import { AddDispositionModal } from "../../components/modals/AddDispositionModal";
-import { EditDispositionModal } from "../../components/modals/EditDispositionModal";
-// import Pagination from "./Pagination";
+import Pagination from "./Pagination";
 
-const Disposition = () => {
+const TeamMembers = () => {
   const queryClient = useQueryClient();
   const { errorToast, successToast } = useCustomToast();
   const { isOpen, onOpen, onClose } = useDisclosure();
@@ -74,8 +63,10 @@ const Disposition = () => {
     data,
     isLoading,
     refetch: refetchAllUser,
-  } = useGetAllDisposition(currentPage, recordsPerPage);
+  } = useGetAllUserInfo(currentPage, recordsPerPage);
   const allUserData = data?.document?.records;
+  const totalRecords = data?.document?.totalRecords;
+  //   console.log(data?.document?.totalRecords);
   console.log(allUserData);
 
   // const {
@@ -87,7 +78,7 @@ const Disposition = () => {
   // console.log(allSearchedUserData);
 
   const { mutate: searchMutate, isLoading: searchLoader } =
-    useGetSearchDispositionMutate({
+    useGetSearchUserInfoMutate({
       onSuccess: (res: any) => {
         console.log(res);
         setAllSearchedUserData(res?.document?.records);
@@ -157,24 +148,23 @@ const Disposition = () => {
     setRecordsPerPage(e.target.value);
   };
 
-  const { mutate: byIdMutate, isLoading: loaderId } =
-    useGetDispositionByIdMutate({
-      onSuccess: (res: any) => {
-        // console.log(res);
-        setUserIdData(res);
-      },
-      onError: (err: any) => {
-        console.log(err);
-        errorToast("Failed");
-      },
-    });
+  const { mutate: byIdMutate, isLoading: loaderId } = useGetUserInfoByIdMutate({
+    onSuccess: (res: any) => {
+      // console.log(res);
+      setUserIdData(res);
+    },
+    onError: (err: any) => {
+      console.log(err);
+      errorToast("Failed");
+    },
+  });
 
-  const { mutate, isLoading: isDelete } = useDeleteDisposition({
+  const { mutate, isLoading: isDelete } = useDeleteUserInfo({
     onSuccess: (res: any) => {
       console.log(res);
       successToast("Record Deleted");
       setTimeout(() => {
-        queryClient.invalidateQueries(GET_ALL_DISPOSITION);
+        queryClient.invalidateQueries(GET_ALL_USER_INFO);
       }, 200);
     },
     onError: (err: any) => {
@@ -224,22 +214,22 @@ const Disposition = () => {
             />
           </InputGroup>
           {/* <Button size={"sm"} bgColor="#26C6DA" color="white" onClick={onOpen}>
-            Add Disposition
+            Add New User
           </Button> */}
+          <Box fontSize="14px">Total of {totalRecords} Team Members</Box>
         </Flex>
         <TableContainer bg="white">
           <Table size="sm">
             {/* <TableCaption>Imperial to metric conversion factors</TableCaption> */}
             <Thead>
               <Tr>
-                <Th color="#26C6DA">Agent ID</Th>
-                <Th color="#26C6DA">Customer ID </Th>
-                <Th color="#26C6DA">Category </Th>
-                <Th color="#26C6DA">CC </Th>
-                <Th color="#26C6DA">Subject </Th>
-                <Th color="#26C6DA">Message Body </Th>
-                <Th color="#26C6DA">Flag</Th>
-                <Th color="#26C6DA">Date Created</Th>
+                <Th color="#26C6DA">ID</Th>
+                <Th color="#26C6DA">Email </Th>
+                <Th color="#26C6DA">Role Name </Th>
+                <Th color="#26C6DA">First Name </Th>
+                <Th color="#26C6DA">Last Name </Th>
+                <Th color="#26C6DA">Logged In Status </Th>
+                {/* <Th>Last Login </Th> */}
               </Tr>
             </Thead>
 
@@ -248,17 +238,32 @@ const Disposition = () => {
                 ? allUserData?.map((info: any) => (
                     <Tr
                       key={info.id}
+                      //   onClick={() => {
+                      //     setEditID(info?.id);
+                      //     onOpenEdit();
+                      //     byIdMutate({
+                      //       id: info?.id,
+                      //     });
+                      //   }}
                       cursor="pointer"
                       _hover={{ background: "whitesmoke" }}
                     >
-                      <Td>{info?.agentId}</Td>
-                      <Td>{info?.customerId}</Td>
-                      <Td>{info?.category}</Td>
-                      <Td>{info?.cc}</Td>
-                      <Td>{info?.subject}</Td>
-                      <Td>{info?.messageBody}</Td>
-                      <Td>{info?.flag}</Td>
-                      <Td>{info?.dateCreated}</Td>
+                      <Td>{info?.id}</Td>
+                      <Td>{info?.email}</Td>
+                      <Td>{info?.roleName}</Td>
+                      <Td>{info?.firstName}</Td>
+                      <Td>{info?.lastName}</Td>
+                      {info?.id % 2 ? (
+                        <Td bgColor="green.200" color="green">
+                          Logged In
+                        </Td>
+                      ) : (
+                        <Td bgColor="red.200" color="red">
+                          Logged Out
+                        </Td>
+                      )}
+
+                      {/* <Td>{info?.lastLogin}</Td> */}
                       <Td>
                         {/* <Icon
                           onClick={() => {
@@ -285,14 +290,13 @@ const Disposition = () => {
                   ))
                 : allSearchedUserData?.map((info: any) => (
                     <Tr key={info.id}>
-                      <Td>{info?.agentId}</Td>
-                      <Td>{info?.customerId}</Td>
-                      <Td>{info?.category}</Td>
-                      <Td>{info?.cc}</Td>
-                      <Td>{info?.dateCreated}</Td>
-                      <Td>{info?.subject}</Td>
-                      <Td>{info?.messageBody}</Td>
-                      <Td>{info?.flag}</Td>
+                      <Td>{info?.id}</Td>
+                      <Td>{info?.email}</Td>
+                      <Td>{info?.roleName}</Td>
+                      <Td>{info?.firstName}</Td>
+                      <Td>{info?.lastName}</Td>
+                      <Td>Logged In</Td>
+                      {/* <Td>{info?.lastLogin}</Td> */}
                       <Td>
                         {/* <Icon
                           onClick={() => {
@@ -390,12 +394,12 @@ const Disposition = () => {
           </Flex>
         </Box>
       </Box>
-      <AddDispositionModal
+      <AddUserModal
         isOpen={isOpen}
         onClose={onClose}
         refetchAllUser={refetchAllUser}
       />
-      <EditDispositionModal
+      <EditUserModal
         editID={editID}
         isOpenEdit={isOpenEdit}
         onCloseEdit={onCloseEdit}
@@ -406,4 +410,4 @@ const Disposition = () => {
   );
 };
 
-export default Disposition;
+export default TeamMembers;

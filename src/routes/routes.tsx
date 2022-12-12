@@ -6,7 +6,13 @@ import { AppRoute } from "../types";
 
 const { LOGIN, SIGNUP, HOME } = PUBLIC_PATHS;
 
-const { DASHBOARD, CUSTOMERSBOOK, DISPOSITION } = PRIVATE_PATHS;
+const {
+  DASHBOARD,
+  CUSTOMERSBOOK,
+  CUSTOMERSBOOKDETAILS,
+  DISPOSITION,
+  TEAMMEMBERS,
+} = PRIVATE_PATHS;
 
 const Home = WithSuspense(lazy(() => import("../pages/Home/Home")));
 const Dashboard = WithSuspense(
@@ -17,8 +23,14 @@ const SignUp = WithSuspense(lazy(() => import("../pages/Signup/Signup")));
 const CustomerBook = WithSuspense(
   lazy(() => import("../pages/CustomerBook/CustomerBook"))
 );
+const CustomerBookDetails = WithSuspense(
+  lazy(() => import("../pages/CustomerBook/CustomerBookDetails"))
+);
 const Disposition = WithSuspense(
   lazy(() => import("../pages/Disposition/Disposition"))
+);
+const TeamMembers = WithSuspense(
+  lazy(() => import("../pages/TeamMembers/TeamMembers"))
 );
 
 export const PUBLIC_ROUTES: AppRoute[] = [
@@ -33,6 +45,8 @@ export const PUBLIC_ROUTES: AppRoute[] = [
 export const PRIVATE_ROUTES: AppRoute[] = [
   { path: DASHBOARD, element: <Dashboard /> },
   { path: CUSTOMERSBOOK, element: <CustomerBook /> },
+  { path: CUSTOMERSBOOKDETAILS, element: <CustomerBookDetails /> },
   { path: DISPOSITION, element: <Disposition /> },
+  { path: TEAMMEMBERS, element: <TeamMembers /> },
   { path: "*", element: <Navigate to="/dashboard" replace /> },
 ];

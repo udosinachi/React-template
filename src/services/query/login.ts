@@ -1,6 +1,6 @@
 import { useMutation } from "react-query";
-import { getLogin } from "../api/login";
-import { LOGIN_KEY } from "../queryKeys";
+import { getLogin, getLoginAccount } from "../api/login";
+import { LOGIN_KEY, LOGIN_ACCOUNT } from "../queryKeys";
 
 export const useLogin = (options = {}) => {
   const { mutate, isLoading } = useMutation(getLogin, {
@@ -10,10 +10,10 @@ export const useLogin = (options = {}) => {
   return { mutate, isLoading };
 };
 
-// export const useInviteLogin = (options = {}) => {
-//   const { mutate, isLoading } = useMutation(getInviteLogin, {
-//     mutationKey: INVITE_LOGIN_KEY,
-//     ...options,
-//   });
-//   return { mutate, isLoading };
-// };
+export const useLoginAccount = (options = {}) => {
+  const { mutate, isLoading } = useMutation(getLoginAccount, {
+    mutationKey: LOGIN_ACCOUNT,
+    ...options,
+  });
+  return { mutate, isLoading };
+};

@@ -7,5 +7,7 @@ export const PUBLIC_PATHS = {
 export const PRIVATE_PATHS = {
   DASHBOARD: "/dashboard",
   CUSTOMERSBOOK: "/customer-book",
+  CUSTOMERSBOOKDETAILS: "/customer-book-details",
   DISPOSITION: "/disposition",
+  TEAMMEMBERS: "/team-members",
 };

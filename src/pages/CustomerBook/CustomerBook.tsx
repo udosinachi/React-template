@@ -1,102 +1,82 @@
-import { useState } from "react";
-import { EditIcon, DeleteIcon, PhoneIcon, SearchIcon } from "@chakra-ui/icons";
+import { Search2Icon } from "@chakra-ui/icons";
 import {
   Box,
+  Button,
+  Input,
+  InputGroup,
+  InputRightAddon,
+  Text,
   Table,
   Thead,
   Tbody,
+  Tfoot,
   Tr,
   Th,
   Td,
+  TableCaption,
   TableContainer,
-  Button,
-  useDisclosure,
-  Flex,
-  Icon,
-  InputGroup,
-  Input,
-  InputRightElement,
-  InputRightAddon,
-  Select,
 } from "@chakra-ui/react";
-import {
-  useGetAllUserInfo,
-  useDeleteUserInfo,
-  useGetUserInfoByIdMutate,
-  useGetSearchUserInfo,
-  useGetSearchUserInfoMutate,
-} from "../../services/query/user";
-import useCustomToast from "../../utils/notification";
-import { AddUserModal } from "../../components/modals/AddUserModal";
-import { Loader } from "../../components/WithSuspense";
-import { useQueryClient } from "react-query";
-import { GET_ALL_USER_INFO } from "../../services/queryKeys";
-import { EditUserModal } from "../../components/modals/EditUserModal";
+import { useState } from "react";
 import { NavLink } from "react-router-dom";
-import Pagination from "./Pagination";
+import { Loader } from "../../components/WithSuspense";
+import { useGetCustomerDetailSearchMutate } from "../../services/query/customer";
+import useCustomToast from "../../utils/notification";
 
 const CustomerBook = () => {
-  const queryClient = useQueryClient();
   const { errorToast, successToast } = useCustomToast();
-  const { isOpen, onOpen, onClose } = useDisclosure();
-  const {
-    isOpen: isOpenEdit,
-    onOpen: onOpenEdit,
-    onClose: onCloseEdit,
-  } = useDisclosure();
-  const [editID, setEditID] = useState("");
-  const [userIdData, setUserIdData] = useState("");
-  console.log(userIdData);
 
-  const [allSearchedUserData, setAllSearchedUserData] = useState([]);
-  console.log(allSearchedUserData);
   const [searchedWords, setSearchedWords] = useState("");
   const [noSearchRecord, setNoSearchRecord] = useState("");
-  console.log(noSearchRecord);
-
-  const [currentPage, setCurrentPage] = useState(1);
-  const [recordsPerPage, setRecordsPerPage] = useState(10);
-  console.log(currentPage);
-  console.log(recordsPerPage);
-
-  const {
-    data,
-    isLoading,
-    refetch: refetchAllUser,
-  } = useGetAllUserInfo(currentPage, recordsPerPage);
-  const allUserData = data?.document?.records;
-  console.log(allUserData);
-
-  // const {
-  //   data: searchedData,
-  //   isLoading: searchLoader,
-  //   refetch: refetchSearchedUser,
-  // } = useGetSearchUserInfo(searchedWords, 1, 100);
-  // const allSearchedUserData = searchedData?.document?.records;
-  // console.log(allSearchedUserData);
+  const [allSearchedUserData, setAllSearchedUserData] = useState([]);
+  const [customerID, setCustomerID] = useState("");
+  const [customerFirstname, setCustomerFirstname] = useState("");
+  const [customerLastname, setCustomerLastname] = useState("");
+  const [customerMsisdn, setCustomerMsisdn] = useState("");
+  const [customerBVN, setCustomerBVN] = useState("");
+  const [customerActivationDate, setCustomerActivationDate] = useState("");
+  const [preCustomers, setPreCustomers] = useState([]);
+  const [customerAddress, setCustomerAddress] = useState("");
+  const [searchResponse, setSearchResponse] = useState(false);
+  // const [falseSearchResponse, setFalseSearchResponse] = useState(false);
+  const [theData, setTheData] = useState({});
 
   const { mutate: searchMutate, isLoading: searchLoader } =
-    useGetSearchUserInfoMutate({
+    useGetCustomerDetailSearchMutate({
       onSuccess: (res: any) => {
         console.log(res);
+        setTheData(res?.document?.data);
+        setCustomerID(res?.document?.data?.id);
+        setCustomerFirstname(res?.document?.data?.firstname);
+        setCustomerLastname(res?.document?.data?.lastname);
+        setCustomerMsisdn(res?.document?.data?.msisdn);
+        setCustomerBVN(res?.document?.data?.bvn);
+        setCustomerActivationDate(res?.document?.data?.activationDate);
+        setPreCustomers(res?.document?.data?.preCustomers);
+        setCustomerAddress(res?.document?.data?.preCustomers[0]?.address1);
+        console.log(res?.document?.data?.preCustomers);
         setAllSearchedUserData(res?.document?.records);
+        setSearchResponse(true);
         setNoSearchRecord(res?.message);
+        if (res?.document?.data === null) {
+          errorToast(res?.document?.message);
+        } else {
+          successToast(res?.document?.message);
+          // setFalseSearchResponse(true);
+        }
       },
       onError: (err: any) => {
         console.log(err?.response?.data);
-        errorToast("Failed to Search");
+        errorToast(err?.response?.data);
       },
     });
 
   const searchHandler = () => {
-    // if (searchedWords.length === 0) {
-    //   errorToast("No Record Found");
-    //   setTimeout(() => {
-    //     window.location.href = "/customer-book";
-    //   }, 200);
-    // }
-    if (searchedWords.length < 3) {
-      errorToast("Minimum 3 chracters required for search");
+    if (searchedWords.length === 0) {
+      errorToast("Empty Field");
+      return false;
+    }
+    if (searchedWords.length < 11) {
+      errorToast("Invalid Number");
       return false;
     }
     if (noSearchRecord === "No Record Found") {
@@ -104,282 +84,87 @@ const CustomerBook = () => {
     }
 
     searchMutate({
-      searchKey: searchedWords,
-      page: currentPage,
-      itemsPerPage: recordsPerPage,
+      // phoneNumber: "08036975694",
+      phoneNumber: searchedWords,
     });
   };
-
-  const pageNumbers: any = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10];
-  const indexOfLastRecord = currentPage * recordsPerPage;
-  const indexOfFirstRecord = indexOfLastRecord - recordsPerPage;
-  const currentRecords = allUserData?.slice(
-    indexOfFirstRecord,
-    indexOfLastRecord
-  );
-  // console.log(currentRecords, "Recc");
-  const nPages = Math.ceil(allUserData?.length / recordsPerPage);
-  // console.log(nPages, "npage");
-
-  const nextPage = () => {
-    // if (currentPage !== nPages) {
-    setCurrentPage(currentPage + 1);
-    // searchMutate({
-    //   searchKey: searchedWords,
-    //   page: currentPage,
-    //   itemsPerPage: recordsPerPage,
-    // });
-    // }
-  };
-  const prevPage = () => {
-    if (currentPage !== 1) {
-      setCurrentPage(currentPage - 1);
-      // searchMutate({
-      //   searchKey: searchedWords,
-      //   page: currentPage,
-      //   itemsPerPage: recordsPerPage,
-      // });
-    }
-  };
-
-  const tableSizeChanger = (e: any) => {
-    setRecordsPerPage(e.target.value);
-  };
-
-  const { mutate: byIdMutate, isLoading: loaderId } = useGetUserInfoByIdMutate({
-    onSuccess: (res: any) => {
-      // console.log(res);
-      setUserIdData(res);
-    },
-    onError: (err: any) => {
-      console.log(err);
-      errorToast("Failed");
-    },
-  });
-
-  const { mutate, isLoading: isDelete } = useDeleteUserInfo({
-    onSuccess: (res: any) => {
-      console.log(res);
-      successToast("Record Deleted");
-      setTimeout(() => {
-        queryClient.invalidateQueries(GET_ALL_USER_INFO);
-      }, 200);
-    },
-    onError: (err: any) => {
-      console.log(err);
-      errorToast("Failed");
-    },
-  });
-
-  const deleteUserInfo = (id: any) => {
-    alert("Are you sure");
-    console.log(id);
-    mutate({
-      id,
-    });
-  };
-
-  // console.log(editID);
 
   return (
     <div>
-      {isLoading && <Loader />}
+      {searchLoader && <Loader />}
       <Box>
-        <Flex
-          justifyContent="space-between"
-          mb="3"
-          flexWrap="wrap"
-          alignItems="center"
+        <Text mb="5">Customer Book Loan</Text>
+        <InputGroup
+          w={["100%", "200px", "200px", "300px"]}
+          size={"sm"}
+          border="1px solid black"
         >
-          <InputGroup
-            w={["100%", "200px", "200px", "300px"]}
-            size={"sm"}
-            border="1px solid black"
+          <Input
+            type="number"
+            placeholder="Search with Msisdn"
+            value={searchedWords}
+            onChange={(e) => setSearchedWords(e.target.value)}
+          />
+          <InputRightAddon
+            children="Search"
+            bgColor="#26C6DA"
+            color="white"
+            cursor="pointer"
+            onClick={() => searchHandler()}
+            // onClick={() => setUserInfoToggle("Searched")}
+          />
+        </InputGroup>
+        <Box mt="5">
+          <TableContainer bg="white">
+            <Table size="sm">
+              <Thead>
+                <Tr>
+                  <Th>Customer ID</Th>
+                  <Th>Full Name</Th>
+                  <Th>Msisdn</Th>
+                  <Th>BVN</Th>
+                  <Th>Address</Th>
+                  <Th>Activation Date</Th>
+                </Tr>
+              </Thead>
+              {}
+              <Tbody>
+                <Tr
+                  cursor="pointer"
+                  _hover={{ bgColor: "whitesmoke" }}
+                  onClick={() => {
+                    window.location.href = "/customer-book-details";
+                  }}
+                >
+                  <Td>{customerID}</Td>
+                  <Td>
+                    {customerFirstname} {customerLastname}
+                  </Td>
+                  <Td>{customerMsisdn}</Td>
+                  <Td>{customerBVN}</Td>
+                  <Td>{customerAddress?.toUpperCase()}</Td>
+                  <Td>{customerActivationDate}</Td>
+                </Tr>
+              </Tbody>
+            </Table>
+          </TableContainer>
+          <Box
+            bgColor="white"
+            height="200px"
+            display="flex"
+            justifyContent="center"
           >
-            <Input
-              type="text"
-              placeholder="Search User"
-              value={searchedWords}
-              onChange={(e) => setSearchedWords(e.target.value)}
-            />
-            <InputRightAddon
-              children="Search"
-              bgColor="#26C6DA"
-              color="white"
-              cursor="pointer"
-              onClick={() => searchHandler()}
-              // onClick={() => setUserInfoToggle("Searched")}
-            />
-          </InputGroup>
-          <Button size={"sm"} bgColor="#26C6DA" color="white" onClick={onOpen}>
-            Add New User
-          </Button>
-        </Flex>
-        <TableContainer bg="white">
-          <Table size="sm">
-            {/* <TableCaption>Imperial to metric conversion factors</TableCaption> */}
-            <Thead>
-              <Tr>
-                <Th>ID</Th>
-                <Th>Email </Th>
-                <Th>Role Name </Th>
-                <Th>First Name </Th>
-                <Th>Last Name </Th>
-                <Th>Last Login </Th>
-              </Tr>
-            </Thead>
-
-            <Tbody>
-              {!allSearchedUserData || allSearchedUserData?.length === 0
-                ? allUserData?.map((info: any) => (
-                    <Tr key={info.id}>
-                      <Td>{info?.id}</Td>
-                      <Td>{info?.email}</Td>
-                      <Td>{info?.roleName}</Td>
-                      <Td>{info?.firstName}</Td>
-                      <Td>{info?.lastName}</Td>
-                      <Td>{info?.lastLogin}</Td>
-                      <Td>
-                        <Icon
-                          onClick={() => {
-                            setEditID(info?.id);
-                            onOpenEdit();
-                            byIdMutate({
-                              id: info?.id,
-                            });
-                          }}
-                          as={EditIcon}
-                          boxSize={5}
-                          mr="3"
-                          cursor="pointer"
-                        />
-                        <Icon
-                          onClick={() => deleteUserInfo(info?.id)}
-                          as={DeleteIcon}
-                          boxSize={5}
-                          color="red.500"
-                          cursor="pointer"
-                        />
-                      </Td>
-                    </Tr>
-                  ))
-                : allSearchedUserData?.map((info: any) => (
-                    <Tr key={info.id}>
-                      <Td>{info?.id}</Td>
-                      <Td>{info?.email}</Td>
-                      <Td>{info?.roleName}</Td>
-                      <Td>{info?.firstName}</Td>
-                      <Td>{info?.lastName}</Td>
-                      <Td>{info?.lastLogin}</Td>
-                      <Td>
-                        <Icon
-                          onClick={() => {
-                            setEditID(info?.id);
-                            onOpenEdit();
-                            byIdMutate({
-                              id: info?.id,
-                            });
-                          }}
-                          as={EditIcon}
-                          boxSize={5}
-                          mr="3"
-                          cursor="pointer"
-                        />
-                        <Icon
-                          onClick={() => deleteUserInfo(info?.id)}
-                          as={DeleteIcon}
-                          boxSize={5}
-                          color="red.500"
-                          cursor="pointer"
-                        />
-                      </Td>
-                    </Tr>
-                  ))}
-            </Tbody>
-            {/* ) : ( */}
-
-            {/* )} */}
-          </Table>
-        </TableContainer>
-        {/* <Pagination
-          nPages={nPages}
-          currentPage={currentPage}
-          setCurrentPage={setCurrentPage}
-          recordsPerPage={recordsPerPage}
-          setRecordsPerPage={setRecordsPerPage}
-        /> */}
-
-        <Box>
-          <Flex flexWrap="wrap" mt="3" fontSize="13px">
-            <Box
-              p="1"
-              px="2"
-              border="1px solid grey"
-              bgColor="#26C6DA"
-              color="white"
-              cursor="pointer"
-              onClick={prevPage}
-              mr="3"
-            >
-              Previous
+            <Box margin="auto" textAlign="center">
+              {!searchResponse && (
+                <>
+                  <Search2Icon boxSize={10} color="#26C6DA" mb="3" />
+                  <Text>Search with phone number to get a response</Text>
+                </>
+              )}
             </Box>
-            {pageNumbers.map((pgNumber: any) => (
-              <Box
-                p="1"
-                px="2"
-                border="1px solid grey"
-                cursor="pointer"
-                color={`${currentPage === pgNumber ? "white" : "#26C6DA"}`}
-                key={pgNumber}
-                bgColor={`${currentPage === pgNumber ? "#26C6DA" : "white"}`}
-                onClick={() => {
-                  setCurrentPage(pgNumber);
-                }}
-              >
-                {pgNumber}
-              </Box>
-            ))}
-            <Box
-              p="1"
-              px="2"
-              border="1px solid grey"
-              bgColor="#26C6DA"
-              color="white"
-              cursor="pointer"
-              onClick={nextPage}
-              ml="3"
-            >
-              Next
-            </Box>
-            <Flex p="1" px="2" align="center">
-              PageSize
-              <Select
-                size="xs"
-                ml="3"
-                onChange={tableSizeChanger}
-                border="1px solid grey"
-              >
-                {/* <option value="5">5</option> */}
-                <option value="10">10</option>
-                <option value="15">15</option>
-                <option value="20">20</option>
-              </Select>
-            </Flex>
-          </Flex>
+          </Box>
         </Box>
       </Box>
-      <AddUserModal
-        isOpen={isOpen}
-        onClose={onClose}
-        refetchAllUser={refetchAllUser}
-      />
-      <EditUserModal
-        editID={editID}
-        isOpenEdit={isOpenEdit}
-        onCloseEdit={onCloseEdit}
-        userIdData={userIdData}
-        refetchAllUser={refetchAllUser}
-      />
     </div>
   );
 };

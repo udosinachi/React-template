@@ -1,3 +1,4 @@
+export const LOGIN_ACCOUNT = "login_account";
 export const LOGIN_KEY = "login-key";
 export const INVITE_LOGIN_KEY = "invite_login-key";
 
@@ -14,3 +15,5 @@ export const DELETE_DISPOSITION = "delete_disposition";
 export const EDIT_DISPOSITION = "edit_disposition";
 export const GET_DISPOSITION = "get_disposition";
 export const SEARCH_DISPOSITION = "search_disposition";
+
+export const CUSTOMER_DETAILS = "customer_details";

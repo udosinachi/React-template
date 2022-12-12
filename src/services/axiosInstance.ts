@@ -17,7 +17,7 @@ const axiosInstance: AxiosInstance = axios.create({
 });
 const onRequest = (request: AxiosRequestConfig): AxiosRequestConfig => {
   const access = JSON.parse(localStorage.getItem("accessToken") as string);
-  request.headers!.Authorization = `Bearer ${access}` || "";
+  request.headers!.Authorization = `${access}` || "";
   // console.log(access);
   return request;
 };

@@ -12,7 +12,7 @@ import {
   useColorModeValue,
 } from "@chakra-ui/react";
 import { useState } from "react";
-import { useLogin } from "../../services/query/login";
+import { useLogin, useLoginAccount } from "../../services/query/login";
 import useCustomToast from "../../utils/notification";
 
 export default function Login() {
@@ -20,14 +20,34 @@ export default function Login() {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
 
-  const { mutate, isLoading: isCreateLoading } = useLogin({
+  // const { mutate, isLoading: isCreateLoading } = useLogin({
+  //   onSuccess: (res: any) => {
+  //     console.log(res);
+  //     successToast("Login Successful");
+  //     localStorage.setItem("user", JSON.stringify(res));
+  //     localStorage.setItem(
+  //       "accessToken",
+  //       JSON.stringify(res?.document?.accessToken)
+  //     );
+  //     setTimeout(() => {
+  //       window.location.href = "/dashboard";
+  //     }, 200);
+  //   },
+  //   onError: (err: any) => {
+  //     console.log(err);
+  //     errorToast("Failed");
+  //   },
+  // });
+  const { mutate, isLoading: isCreateLoading } = useLoginAccount({
     onSuccess: (res: any) => {
       console.log(res);
       successToast("Login Successful");
       localStorage.setItem("user", JSON.stringify(res));
       localStorage.setItem(
         "accessToken",
-        JSON.stringify(res?.document?.accessToken)
+        JSON.stringify(
+          res?.document?.accessTokens?.authorizationToken?.accessToken
+        )
       );
       setTimeout(() => {
         window.location.href = "/dashboard";
@@ -43,8 +63,8 @@ export default function Login() {
     // console.log(username);
     // console.log(password);
     mutate({
-      username,
-      password,
+      email: username,
+      password: password,
     });
   };
 

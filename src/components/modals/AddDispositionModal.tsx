@@ -12,6 +12,8 @@ import {
   FormLabel,
   Input,
   useDisclosure,
+  Box,
+  Select,
 } from "@chakra-ui/react";
 import useCustomToast from "../../utils/notification";
 import { useAddNewUserInfo } from "../../services/query/user";
@@ -70,38 +72,47 @@ export const AddDispositionModal = ({
 
   return (
     <>
-      <Modal isOpen={isOpen} onClose={onClose}>
+      <Modal isOpen={isOpen} onClose={onClose} size="lg">
         <ModalOverlay />
         <ModalContent>
           <ModalHeader>Add a New User</ModalHeader>
           <ModalCloseButton />
           <ModalBody pb={6}>
-            <FormControl>
-              <FormLabel>Agent ID</FormLabel>
-              <Input
-                type="text"
-                name="Agent ID"
-                value={agentID}
-                onChange={(e) => setAgentID(e.target.value)}
-              />
-            </FormControl>
-            <FormControl>
-              <FormLabel>Customer ID</FormLabel>
-              <Input
-                type="text"
-                name="Customer ID"
-                value={customerID}
-                onChange={(e) => setCustomerID(e.target.value)}
-              />
-            </FormControl>
+            <Box display="flex" justifyContent="space-between">
+              <FormControl w="90%" mr="2">
+                <FormLabel>Agent ID</FormLabel>
+                <Input
+                  type="text"
+                  name="Agent ID"
+                  value={agentID}
+                  onChange={(e) => setAgentID(e.target.value)}
+                />
+              </FormControl>
+              <FormControl w="90%" ml="2">
+                <FormLabel>Customer ID</FormLabel>
+                <Input
+                  type="text"
+                  name="Customer ID"
+                  value={customerID}
+                  onChange={(e) => setCustomerID(e.target.value)}
+                />
+              </FormControl>
+            </Box>
+
             <FormControl>
               <FormLabel>Category</FormLabel>
-              <Input
+              {/* <Input
                 type="text"
                 name="Category"
                 value={category}
                 onChange={(e) => setCategory(e.target.value)}
-              />
+              /> */}
+
+              <Select onChange={(e) => setCategory(e.target.value)}>
+                <option value="Promise to payback">Promise to payback</option>
+                <option value="Call Back">Call Back</option>
+                <option value="Unable to pay">Unable to pay</option>
+              </Select>
             </FormControl>
 
             <FormControl mt={4}>
