@@ -32,13 +32,22 @@ export const AddDispositionModal = ({
 }) => {
   const queryClient = useQueryClient();
   const { errorToast, successToast } = useCustomToast();
-  const [agentID, setAgentID] = useState("");
-  const [customerID, setCustomerID] = useState("");
-  const [category, setCategory] = useState("");
-  const [subject, setSubject] = useState("");
-  const [cc, setCc] = useState("");
-  const [messageBody, setMessageBody] = useState("");
-  const [flag, setFlag] = useState("");
+  // const [agentID, setAgentID] = useState("");
+  // const [customerID, setCustomerID] = useState("");
+  // const [category, setCategory] = useState("");
+  // const [subject, setSubject] = useState("");
+  // const [cc, setCc] = useState("");
+  // const [messageBody, setMessageBody] = useState("");
+  // const [flag, setFlag] = useState("");
+  const [DateCreated, setDateCreated] = useState("");
+  const [CallAnswered, setCallAnswered] = useState("");
+  const [CallStatus, setCallStatus] = useState("");
+  const [ReasonForNoPayment, setReasonForNoPayment] = useState("");
+  const [SubReasonForNoPayment, setSubReasonForNoPayment] = useState("");
+  const [PromiseToPay, setPromiseToPay] = useState("");
+  const [AmountToPayToday, setAmountToPayToday] = useState("");
+  const [NumberOfDays, setNumberOfDays] = useState("");
+  const [Comment, setComment] = useState("");
 
   const { mutate, isLoading: loader } = useAddNewDisposition({
     onSuccess: (res: any) => {
@@ -59,14 +68,23 @@ export const AddDispositionModal = ({
 
   const handleSubmit = () => {
     mutate({
-      CustomerId: customerID,
-      AgentId: agentID,
-      Category: category,
-      Subject: subject,
-      MessageBody: messageBody,
-      Cc: cc,
-      Flag: flag,
-      DateCreated: new Date(),
+      // CustomerId: customerID,
+      // AgentId: agentID,
+      // Category: category,
+      // Subject: subject,
+      // MessageBody: messageBody,
+      // Cc: cc,
+      // Flag: flag,
+      // DateCreated: new Date(),
+      DateCreated,
+      CallAnswered,
+      CallStatus,
+      ReasonForNoPayment,
+      SubReasonForNoPayment,
+      PromiseToPay,
+      AmountToPayToday,
+      NumberOfDays,
+      Comment,
     });
   };
 
@@ -75,83 +93,134 @@ export const AddDispositionModal = ({
       <Modal isOpen={isOpen} onClose={onClose} size="lg">
         <ModalOverlay />
         <ModalContent>
-          <ModalHeader>Add a New User</ModalHeader>
+          <ModalHeader>Add a New Disposition</ModalHeader>
           <ModalCloseButton />
           <ModalBody pb={6}>
             <Box display="flex" justifyContent="space-between">
               <FormControl w="90%" mr="2">
-                <FormLabel>Agent ID</FormLabel>
-                <Input
+                <FormLabel>Call Answered</FormLabel>
+                {/* <Input
                   type="text"
                   name="Agent ID"
                   value={agentID}
                   onChange={(e) => setAgentID(e.target.value)}
-                />
+                /> */}
+                <Select onChange={(e) => setCallAnswered(e.target.value)}>
+                  <option value=""></option>
+                  <option value="Yes">Yes</option>
+                  <option value="No">No</option>
+                </Select>
               </FormControl>
               <FormControl w="90%" ml="2">
-                <FormLabel>Customer ID</FormLabel>
-                <Input
+                <FormLabel>Call Status</FormLabel>
+                {/* <Input
                   type="text"
                   name="Customer ID"
                   value={customerID}
                   onChange={(e) => setCustomerID(e.target.value)}
-                />
+                /> */}
+                <Select onChange={(e) => setCallStatus(e.target.value)}>
+                  <option value=""></option>
+                  <option value="Received">Received</option>
+                  <option value="Ignored">Ignored</option>
+                  <option value="Failed">Failed</option>
+                </Select>
               </FormControl>
             </Box>
 
-            <FormControl>
-              <FormLabel>Category</FormLabel>
-              {/* <Input
+            <Box display="flex" justifyContent="space-between" mt="4">
+              <FormControl w="90%" mr="2">
+                <FormLabel>Reason for Non Payment</FormLabel>
+                {/* <Input
                 type="text"
                 name="Category"
                 value={category}
                 onChange={(e) => setCategory(e.target.value)}
               /> */}
 
-              <Select onChange={(e) => setCategory(e.target.value)}>
-                <option value="Promise to payback">Promise to payback</option>
-                <option value="Call Back">Call Back</option>
-                <option value="Unable to pay">Unable to pay</option>
-              </Select>
-            </FormControl>
+                <Select onChange={(e) => setReasonForNoPayment(e.target.value)}>
+                  <option value=""></option>
+                  <option value="Promise to payback">Promise to payback</option>
+                  <option value="Call Back">Call Back</option>
+                  <option value="Unable to pay">Unable to pay</option>
+                </Select>
+              </FormControl>
+
+              <FormControl w="90%" ml="2">
+                <FormLabel>Sub Reason</FormLabel>
+                {/* <Input
+                  type="text"
+                  name="CC"
+                  value={cc}
+                  onChange={(e) => setCc(e.target.value)}
+                /> */}
+                <Select
+                  onChange={(e) => setSubReasonForNoPayment(e.target.value)}
+                >
+                  <option value=""></option>
+                  <option value="Promise to payback">Promise to payback</option>
+                  <option value="Call Back">Call Back</option>
+                  <option value="Unable to pay">Unable to pay</option>
+                </Select>
+              </FormControl>
+            </Box>
+
+            <Box display="flex" justifyContent="space-between" mt="4">
+              <FormControl w="90%" mr="2">
+                <FormLabel>Promise to Pay</FormLabel>
+                {/* <Input
+                  type="text"
+                  name="Subject"
+                  value={subject}
+                  onChange={(e) => setSubject(e.target.value)}
+                /> */}
+                <Select onChange={(e) => setPromiseToPay(e.target.value)}>
+                  <option value=""></option>
+                  <option value="Yes">Yes</option>
+                  <option value="No">No</option>
+                </Select>
+              </FormControl>
+
+              <FormControl w="90%" ml="2">
+                <FormLabel>Commitment Date</FormLabel>
+                <Input
+                  type="date"
+                  name="Message Body"
+                  value={DateCreated}
+                  onChange={(e) => setDateCreated(e.target.value)}
+                />
+              </FormControl>
+            </Box>
+
+            <Box display="flex" justifyContent="space-between" mt="4">
+              <FormControl w="90%" mr="2">
+                <FormLabel>Amount to Repay Today</FormLabel>
+                <Input
+                  type="number"
+                  name="Flag"
+                  value={AmountToPayToday}
+                  onChange={(e) => setAmountToPayToday(e.target.value)}
+                />
+              </FormControl>
+
+              <FormControl w="90%" ml="2">
+                <FormLabel>Number of Days</FormLabel>
+                <Input
+                  type="number"
+                  name="Flag"
+                  value={NumberOfDays}
+                  onChange={(e) => setNumberOfDays(e.target.value)}
+                />
+              </FormControl>
+            </Box>
 
             <FormControl mt={4}>
-              <FormLabel>CC</FormLabel>
-              <Input
-                type="text"
-                name="CC"
-                value={cc}
-                onChange={(e) => setCc(e.target.value)}
-              />
-            </FormControl>
-
-            <FormControl mt={4}>
-              <FormLabel>Subject</FormLabel>
-              <Input
-                type="text"
-                name="Subject"
-                value={subject}
-                onChange={(e) => setSubject(e.target.value)}
-              />
-            </FormControl>
-
-            <FormControl mt={4}>
-              <FormLabel>Message Body</FormLabel>
-              <Input
-                type="text"
-                name="Message Body"
-                value={messageBody}
-                onChange={(e) => setMessageBody(e.target.value)}
-              />
-            </FormControl>
-
-            <FormControl mt={4}>
-              <FormLabel>Flag</FormLabel>
+              <FormLabel>Comment</FormLabel>
               <Input
                 type="text"
                 name="Flag"
-                value={flag}
-                onChange={(e) => setFlag(e.target.value)}
+                value={Comment}
+                onChange={(e) => setComment(e.target.value)}
               />
             </FormControl>
           </ModalBody>
@@ -163,7 +232,7 @@ export const AddDispositionModal = ({
               onClick={handleSubmit}
               bgColor="#26C6DA"
             >
-              Add
+              Save & Post
             </Button>
           </ModalFooter>
         </ModalContent>

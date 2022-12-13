@@ -233,13 +233,27 @@ const Disposition = () => {
             <Thead>
               <Tr>
                 <Th color="#26C6DA">Agent ID</Th>
-                <Th color="#26C6DA">Customer ID </Th>
-                <Th color="#26C6DA">Category </Th>
+                <Th color="#26C6DA">Enter Date</Th>
+                <Th color="#26C6DA">Loan ID</Th>
+                <Th color="#26C6DA">Disbursement Date</Th>
+                <Th color="#26C6DA">Name of Borrower</Th>
+                <Th color="#26C6DA">Email</Th>
+                <Th color="#26C6DA">Signup Phone Number</Th>
+                <Th color="#26C6DA">Reason For No Payment</Th>
+                <Th color="#26C6DA">Promise To Pay </Th>
+                <Th color="#26C6DA">Comment</Th>
+
+                {/* <Th color="#26C6DA">Customer ID </Th>
+                <Th color="#26C6DA">Amount to Pay Today</Th>
+                <Th color="#26C6DA">Call Status </Th>
                 <Th color="#26C6DA">CC </Th>
+                <Th color="#26C6DA">Commitment Date</Th>
+                <Th color="#26C6DA">Number of Days to Pay</Th>
+                <Th color="#26C6DA">Sub Reason For No Payment</Th>
                 <Th color="#26C6DA">Subject </Th>
                 <Th color="#26C6DA">Message Body </Th>
                 <Th color="#26C6DA">Flag</Th>
-                <Th color="#26C6DA">Date Created</Th>
+                <Th color="#26C6DA">Date Created</Th> */}
               </Tr>
             </Thead>
 
@@ -252,13 +266,27 @@ const Disposition = () => {
                       _hover={{ background: "whitesmoke" }}
                     >
                       <Td>{info?.agentId}</Td>
-                      <Td>{info?.customerId}</Td>
+                      {/* <Td>{info?.customerId}</Td> */}
+                      <Td>{info?.dateCreated}</Td>
+                      <Td>{info?.loanId}</Td>
+                      <Td>{info?.disbursementDate}</Td>
+                      <Td>{info?.nameOfBrowser}</Td>
+                      <Td>{info?.email}</Td>
+                      <Td>{info?.phoneNumber}</Td>
+                      <Td>{info?.reasonForNoPayment}</Td>
+                      <Td>{info?.promiseToPay}</Td>
+                      <Td>{info?.comment}</Td>
+
+                      {/* <Td>{info?.amountToPayToday}</Td>
                       <Td>{info?.category}</Td>
+                      <Td>{info?.callStatus}</Td>
                       <Td>{info?.cc}</Td>
+                      <Td>{info?.commitmentDate}</Td>
+                      <Td>{info?.numberOfDays}</Td>
+                      <Td>{info?.subReasonForNoPayment}</Td>
                       <Td>{info?.subject}</Td>
                       <Td>{info?.messageBody}</Td>
-                      <Td>{info?.flag}</Td>
-                      <Td>{info?.dateCreated}</Td>
+                      <Td>{info?.flag}</Td> */}
                       <Td>
                         {/* <Icon
                           onClick={() => {

@@ -17,3 +17,11 @@ export const GET_DISPOSITION = "get_disposition";
 export const SEARCH_DISPOSITION = "search_disposition";
 
 export const CUSTOMER_DETAILS = "customer_details";
+export const ADD_CUSTOMER_INFO = "add_customer_info";
+
+export const GET_ALL_DROP_DOWN = "get_all_drop_down";
+export const ADD_DROP_DOWN = "add_drop_down";
+export const DELETE_DROP_DOWN = "delete_drop_down";
+export const EDIT_DROP_DOWN = "edit_drop_down";
+export const GET_DROP_DOWN = "get_drop_down";
+export const SEARCH_DROP_DOWN = "search_drop_down";
