@@ -238,13 +238,13 @@ const Disposition = () => {
                 <Th color="#26C6DA">Disbursement Date</Th>
                 <Th color="#26C6DA">Name of Borrower</Th>
                 <Th color="#26C6DA">Email</Th>
+                <Th color="#26C6DA">Amount to Pay Today</Th>
                 <Th color="#26C6DA">Signup Phone Number</Th>
                 <Th color="#26C6DA">Reason For No Payment</Th>
                 <Th color="#26C6DA">Promise To Pay </Th>
                 <Th color="#26C6DA">Comment</Th>
 
                 {/* <Th color="#26C6DA">Customer ID </Th>
-                <Th color="#26C6DA">Amount to Pay Today</Th>
                 <Th color="#26C6DA">Call Status </Th>
                 <Th color="#26C6DA">CC </Th>
                 <Th color="#26C6DA">Commitment Date</Th>
@@ -267,17 +267,18 @@ const Disposition = () => {
                     >
                       <Td>{info?.agentId}</Td>
                       {/* <Td>{info?.customerId}</Td> */}
-                      <Td>{info?.dateCreated}</Td>
+                      <Td>{info?.dateCreated?.slice(0, 10)}</Td>
                       <Td>{info?.loanId}</Td>
-                      <Td>{info?.disbursementDate}</Td>
+                      <Td>{info?.disbursementDate?.slice(0, 10)}</Td>
                       <Td>{info?.nameOfBrowser}</Td>
                       <Td>{info?.email}</Td>
+                      <Td>{info?.amountToPayToday}</Td>
                       <Td>{info?.phoneNumber}</Td>
                       <Td>{info?.reasonForNoPayment}</Td>
                       <Td>{info?.promiseToPay}</Td>
                       <Td>{info?.comment}</Td>
 
-                      {/* <Td>{info?.amountToPayToday}</Td>
+                      {/* 
                       <Td>{info?.category}</Td>
                       <Td>{info?.callStatus}</Td>
                       <Td>{info?.cc}</Td>

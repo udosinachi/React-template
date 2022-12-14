@@ -28,7 +28,20 @@ const CustomerBookDetails = () => {
     isLoading,
     refetch: refetchAllUser,
   } = useGetCustomerDetailSearch();
-  //   console.log(data);
+  const displayedData = data?.document?.data;
+  const displayedData2 = data?.document?.data?.preCustomers[0];
+  //   console.log(data?.document?.data);
+  console.log(data?.document?.data?.preCustomers[0]);
+
+  //   console.log(data?.document?.data?.preCustomers);
+  //   const customerDetailsArray = data?.document?.data?.preCustomers;
+
+  //   const precustomerArray = [];
+  //   for (let i = 0; i < customerDetailsArray?.length; i++) {
+  //     precustomerArray.push(customerDetailsArray[i]?.kycInfos);
+  //   }
+  //   console.log(precustomerArray[0]);
+
   return (
     <div>
       {isLoading && <Loader />}
@@ -57,32 +70,34 @@ const CustomerBookDetails = () => {
                   <Text w="150px" fontWeight="700">
                     Full Name:{" "}
                   </Text>
-                  <Text>Ayobolu Segun</Text>
+                  <Text>
+                    {displayedData?.firstname} {displayedData?.lastname}{" "}
+                  </Text>
+                </Flex>
+                <Flex mb="1">
+                  <Text w="150px" fontWeight="700">
+                    Address:{" "}
+                  </Text>
+                  <Text>{displayedData2?.address1}</Text>
                 </Flex>
                 <Flex mb="1">
                   <Text w="150px" fontWeight="700">
                     Mobile No:{" "}
                   </Text>
-                  <Text>09876553425</Text>
-                </Flex>
-                <Flex mb="1">
-                  <Text w="150px" fontWeight="700">
-                    Email:{" "}
-                  </Text>
-                  <Text>abcdefghijklmno@gmail.com</Text>
-                </Flex>
-                <Flex mb="1">
-                  <Text w="150px" fontWeight="700">
-                    Amount Repaid:{" "}
-                  </Text>
-                  <Text>56,890</Text>
+                  <Text>{displayedData?.msisdn}</Text>
                 </Flex>
 
                 <Flex mb="1">
                   <Text w="150px" fontWeight="700">
-                    Address:{" "}
+                    DOB:{" "}
                   </Text>
-                  <Text>No 1 way, double change avenue</Text>
+                  <Text>{displayedData2?.dob}</Text>
+                </Flex>
+                <Flex mb="1">
+                  <Text w="150px" fontWeight="700">
+                    BVN Status:{" "}
+                  </Text>
+                  <Text>{displayedData2?.bvnStatus}</Text>
                 </Flex>
               </Box>
 
@@ -91,69 +106,57 @@ const CustomerBookDetails = () => {
                   General Information
                 </Text>
                 <Divider />
-                <Flex flexWrap="wrap">
-                  <Box mr="5">
+                <Flex flexWrap="wrap" mt="2">
+                  <Box mr="10">
                     <Flex mb="1">
                       <Text w="200px" fontWeight="700">
-                        Amount to repay today:{" "}
+                        First Name:{" "}
                       </Text>
-                      <Text>56,890</Text>
+                      <Text>{displayedData2?.fname}</Text>
                     </Flex>
                     <Flex mb="1">
                       <Text w="200px" fontWeight="700">
-                        Bank Name:{" "}
+                        Last Name:{" "}
                       </Text>
-                      <Text>Wema Bank</Text>
+                      <Text>{displayedData2?.lname}</Text>
                     </Flex>
                     <Flex mb="1">
                       <Text w="200px" fontWeight="700">
-                        Days Late:{" "}
+                        Customer ID:{" "}
                       </Text>
-                      <Text>150</Text>
+                      <Text>{displayedData2?.customerId}</Text>
                     </Flex>
                     <Flex mb="1">
                       <Text w="200px" fontWeight="700">
-                        Days past due:{" "}
+                        Ref No:{" "}
                       </Text>
-                      <Text>Bucket 3</Text>
-                    </Flex>
-                    <Flex mb="1">
-                      <Text w="200px" fontWeight="700">
-                        Disbursement Date:{" "}
-                      </Text>
-                      <Text>23-12-2022</Text>
+                      <Text>{displayedData2?.refNo}</Text>
                     </Flex>
                   </Box>
                   <Box>
                     <Flex mb="1">
                       <Text w="200px" fontWeight="700">
-                        Amount to repay today:{" "}
+                        Device ID:{" "}
                       </Text>
-                      <Text>56,890</Text>
+                      <Text>{displayedData2?.deviceId}</Text>
                     </Flex>
                     <Flex mb="1">
                       <Text w="200px" fontWeight="700">
-                        Bank Name:{" "}
+                        BVN Number:{" "}
                       </Text>
-                      <Text>Wema Bank</Text>
+                      <Text>{displayedData2?.bvnNumber}</Text>
                     </Flex>
                     <Flex mb="1">
                       <Text w="200px" fontWeight="700">
-                        Days Late:{" "}
+                        Risk Class:{" "}
                       </Text>
-                      <Text>150</Text>
+                      <Text>{displayedData2?.riskClass}</Text>
                     </Flex>
                     <Flex mb="1">
                       <Text w="200px" fontWeight="700">
-                        Days past due:{" "}
+                        Created Date:{" "}
                       </Text>
-                      <Text>Bucket 3</Text>
-                    </Flex>
-                    <Flex mb="1">
-                      <Text w="200px" fontWeight="700">
-                        Disbursement Date:{" "}
-                      </Text>
-                      <Text>23-12-2022</Text>
+                      <Text>{displayedData2?.created}</Text>
                     </Flex>
                   </Box>
                 </Flex>

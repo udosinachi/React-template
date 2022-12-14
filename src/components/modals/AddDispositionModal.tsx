@@ -20,6 +20,7 @@ import { useAddNewUserInfo } from "../../services/query/user";
 import { useQueryClient } from "react-query";
 import { ADD_DISPOSITION, ADD_USER_INFO } from "../../services/queryKeys";
 import { useAddNewDisposition } from "../../services/query/disposition";
+import { useGetAllDropDown } from "../../services/query/drop-down";
 
 export const AddDispositionModal = ({
   isOpen,
@@ -40,7 +41,7 @@ export const AddDispositionModal = ({
   // const [messageBody, setMessageBody] = useState("");
   // const [flag, setFlag] = useState("");
   const [DateCreated, setDateCreated] = useState("");
-  const [CallAnswered, setCallAnswered] = useState("");
+  const [CallAnswered, setCallAnswered] = useState("Yes");
   const [CallStatus, setCallStatus] = useState("");
   const [ReasonForNoPayment, setReasonForNoPayment] = useState("");
   const [SubReasonForNoPayment, setSubReasonForNoPayment] = useState("");
@@ -66,16 +67,65 @@ export const AddDispositionModal = ({
     },
   });
 
+  const { data, isLoading, refetch } = useGetAllDropDown(1, 100);
+  const dropdownList = data?.document?.records;
+  // console.log(dropdownList);
+  const callAnsweredOptionData = [];
+  for (let i = 0; i < dropdownList?.length; i++) {
+    if (dropdownList[i]?.dropDownName === "Call Answered") {
+      callAnsweredOptionData.push(dropdownList[i]);
+    }
+    // console.log(dropdownList[i]?.dropDownName);
+  }
+  // console.log(callAnsweredOptionData);
+
+  const callStatusOptionData = [];
+  for (let i = 0; i < dropdownList?.length; i++) {
+    if (dropdownList[i]?.dropDownName === "Call Status") {
+      if (dropdownList[i]?.optionCode === CallAnswered)
+        callStatusOptionData.push(dropdownList[i]);
+    }
+  }
+  // console.log(callStatusOptionData);
+
+  const reasonForNonPaymentOptionData = [];
+  for (let i = 0; i < dropdownList?.length; i++) {
+    if (dropdownList[i]?.dropDownName === "Reason For Non Payment") {
+      if (dropdownList[i]?.optionCode === CallStatus && "Completed") {
+        reasonForNonPaymentOptionData.push(dropdownList[i]);
+      }
+    }
+  }
+  // console.log(reasonForNonPaymentOptionData);
+
+  const subReasonForNonPaymentOptionData = [];
+  for (let i = 0; i < dropdownList?.length; i++) {
+    if (dropdownList[i]?.dropDownName === "Sub-Reason For Non Payment") {
+      if (dropdownList[i]?.optionCode === ReasonForNoPayment) {
+        subReasonForNonPaymentOptionData.push(dropdownList[i]);
+      }
+    }
+  }
+  // console.log(subReasonForNonPaymentOptionData);
+
+  const promiseToPayOptionData = [];
+  for (let i = 0; i < dropdownList?.length; i++) {
+    if (dropdownList[i]?.dropDownName === "Promise to Pay") {
+      promiseToPayOptionData.push(dropdownList[i]);
+    }
+  }
+
   const handleSubmit = () => {
     mutate({
-      // CustomerId: customerID,
-      // AgentId: agentID,
-      // Category: category,
-      // Subject: subject,
-      // MessageBody: messageBody,
-      // Cc: cc,
-      // Flag: flag,
-      // DateCreated: new Date(),
+      CustomerId: "1",
+      AgentId: "15",
+      CommitmentDate: "2022-12-12",
+      NameOfBrowser: "Lionel Messi",
+      Email: "messi@test.com",
+      PhoneNumber: "0967897556",
+      DisbursementDate: "12 Dec 2022",
+      LoanId: "30",
+
       DateCreated,
       CallAnswered,
       CallStatus,
@@ -106,9 +156,13 @@ export const AddDispositionModal = ({
                   onChange={(e) => setAgentID(e.target.value)}
                 /> */}
                 <Select onChange={(e) => setCallAnswered(e.target.value)}>
-                  <option value=""></option>
-                  <option value="Yes">Yes</option>
-                  <option value="No">No</option>
+                  {callAnsweredOptionData?.reverse()?.map((choose) => (
+                    <option key={choose?.id} value={choose?.optionText}>
+                      {choose?.optionText}
+                    </option>
+                  ))}
+                  {/* <option value="Yes">Yes</option>
+                  <option value="No">No</option> */}
                 </Select>
               </FormControl>
               <FormControl w="90%" ml="2">
@@ -120,10 +174,15 @@ export const AddDispositionModal = ({
                   onChange={(e) => setCustomerID(e.target.value)}
                 /> */}
                 <Select onChange={(e) => setCallStatus(e.target.value)}>
-                  <option value=""></option>
+                  {callStatusOptionData?.map((choose) => (
+                    <option key={choose?.id} value={choose?.optionText}>
+                      {choose?.optionText}
+                    </option>
+                  ))}
+                  {/* <option value=""></option>
                   <option value="Received">Received</option>
                   <option value="Ignored">Ignored</option>
-                  <option value="Failed">Failed</option>
+                  <option value="Failed">Failed</option> */}
                 </Select>
               </FormControl>
             </Box>
@@ -139,10 +198,15 @@ export const AddDispositionModal = ({
               /> */}
 
                 <Select onChange={(e) => setReasonForNoPayment(e.target.value)}>
-                  <option value=""></option>
+                  {reasonForNonPaymentOptionData?.reverse()?.map((choose) => (
+                    <option key={choose?.id} value={choose?.optionText}>
+                      {choose?.optionText}
+                    </option>
+                  ))}
+                  {/* <option value=""></option>
                   <option value="Promise to payback">Promise to payback</option>
                   <option value="Call Back">Call Back</option>
-                  <option value="Unable to pay">Unable to pay</option>
+                  <option value="Unable to pay">Unable to pay</option> */}
                 </Select>
               </FormControl>
 
@@ -157,10 +221,17 @@ export const AddDispositionModal = ({
                 <Select
                   onChange={(e) => setSubReasonForNoPayment(e.target.value)}
                 >
-                  <option value=""></option>
+                  {subReasonForNonPaymentOptionData
+                    ?.reverse()
+                    ?.map((choose) => (
+                      <option key={choose?.id} value={choose?.optionText}>
+                        {choose?.optionText}
+                      </option>
+                    ))}
+                  {/* <option value=""></option>
                   <option value="Promise to payback">Promise to payback</option>
                   <option value="Call Back">Call Back</option>
-                  <option value="Unable to pay">Unable to pay</option>
+                  <option value="Unable to pay">Unable to pay</option> */}
                 </Select>
               </FormControl>
             </Box>
@@ -175,9 +246,14 @@ export const AddDispositionModal = ({
                   onChange={(e) => setSubject(e.target.value)}
                 /> */}
                 <Select onChange={(e) => setPromiseToPay(e.target.value)}>
-                  <option value=""></option>
+                  {promiseToPayOptionData?.reverse()?.map((choose) => (
+                    <option key={choose?.id} value={choose?.optionText}>
+                      {choose?.optionText}
+                    </option>
+                  ))}
+                  {/* <option value=""></option>
                   <option value="Yes">Yes</option>
-                  <option value="No">No</option>
+                  <option value="No">No</option> */}
                 </Select>
               </FormControl>
 
