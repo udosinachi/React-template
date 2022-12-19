@@ -28,10 +28,10 @@ const CustomerBookDetails = () => {
     isLoading,
     refetch: refetchAllUser,
   } = useGetCustomerDetailSearch();
-  const displayedData = data?.document?.data;
-  const displayedData2 = data?.document?.data?.preCustomers[0];
-  //   console.log(data?.document?.data);
-  console.log(data?.document?.data?.preCustomers[0]);
+  const displayedData = data?.document?.data[0];
+  const displayedData2 = data?.document?.data[0]?.preCustomers[0];
+  console.log(data?.document?.data);
+  //   console.log(data?.document?.data?.preCustomers[0]);
 
   //   console.log(data?.document?.data?.preCustomers);
   //   const customerDetailsArray = data?.document?.data?.preCustomers;

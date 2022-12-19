@@ -43,17 +43,17 @@ const CustomerBook = () => {
   const { mutate: searchMutate, isLoading: searchLoader } =
     useGetCustomerDetailSearchMutate({
       onSuccess: (res: any) => {
-        console.log(res);
-        setTheData(res?.document?.data);
-        setCustomerID(res?.document?.data?.id);
-        setCustomerFirstname(res?.document?.data?.firstname);
-        setCustomerLastname(res?.document?.data?.lastname);
-        setCustomerMsisdn(res?.document?.data?.msisdn);
-        setCustomerBVN(res?.document?.data?.bvn);
-        setCustomerActivationDate(res?.document?.data?.activationDate);
-        setPreCustomers(res?.document?.data?.preCustomers);
-        setCustomerAddress(res?.document?.data?.preCustomers[0]?.address1);
-        console.log(res?.document?.data?.preCustomers);
+        console.log(res?.document?.data[0]);
+        setTheData(res?.document?.data[0]);
+        setCustomerID(res?.document?.data[0]?.id);
+        setCustomerFirstname(res?.document?.data[0]?.firstname);
+        setCustomerLastname(res?.document?.data[0]?.lastname);
+        setCustomerMsisdn(res?.document?.data[0]?.msisdn);
+        setCustomerBVN(res?.document?.data[0]?.bvn);
+        setCustomerActivationDate(res?.document?.data[0]?.activationDate);
+        setPreCustomers(res?.document?.data[0]?.preCustomers);
+        setCustomerAddress(res?.document?.data[0]?.preCustomers[0]?.address1);
+        console.log(res?.document?.data[0]?.preCustomers);
         setAllSearchedUserData(res?.document?.records);
         setSearchResponse(true);
         setNoSearchRecord(res?.message);
@@ -148,21 +148,21 @@ const CustomerBook = () => {
               </Tbody>
             </Table>
           </TableContainer>
-          <Box
-            bgColor="white"
-            height="200px"
-            display="flex"
-            justifyContent="center"
-          >
-            <Box margin="auto" textAlign="center">
-              {!searchResponse && (
+          {!searchResponse && (
+            <Box
+              bgColor="white"
+              height="200px"
+              display="flex"
+              justifyContent="center"
+            >
+              <Box margin="auto" textAlign="center">
                 <>
                   <Search2Icon boxSize={10} color="#26C6DA" mb="3" />
                   <Text>Search with phone number to get a response</Text>
                 </>
-              )}
+              </Box>
             </Box>
-          </Box>
+          )}
         </Box>
       </Box>
     </div>
