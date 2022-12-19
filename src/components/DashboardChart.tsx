@@ -9,6 +9,7 @@ import {
   Text,
   Progress,
 } from "@chakra-ui/react";
+import { useGetDashboardChart } from "../services/query/dashboard";
 
 const CircleIcon = (props: any) => (
   <Icon viewBox="0 0 200 200" {...props}>
@@ -20,6 +21,13 @@ const CircleIcon = (props: any) => (
 );
 
 const BarChart = () => {
+  const {
+    data: chartData,
+    isLoading: isLoaded,
+    refetch: refetchAllUser,
+  } = useGetDashboardChart();
+  console.log(chartData);
+
   //   const { data } = useGetDashboardStats()
   //   const [chartData, setChartData] = useState([]);
   //   const [chartOptions, setChartOptions] = useState([]);
@@ -34,17 +42,17 @@ const BarChart = () => {
       data: [
         {
           x: "Apple",
-          y: 21,
+          y: `${chartData?.document?.promiseToPay}`,
           fillColor: "#e53e3e",
         },
         {
           x: "Orange",
-          y: 2,
+          y: `${chartData?.document?.callBack}`,
           fillColor: "#d69e2e",
         },
         {
           x: "Orange",
-          y: 5,
+          y: `${chartData?.document?.loanPaid}`,
           fillColor: "#38a169",
         },
       ],
@@ -164,9 +172,15 @@ const BarChart = () => {
             <Box w="100%">
               <Flex mb="2" justifyContent="space-between">
                 <Text fontSize="12">Promise to pay</Text>
-                <Text fontSize="12">21 Count</Text>
+                <Text fontSize="12">
+                  {chartData?.document?.promiseToPay} Count
+                </Text>
               </Flex>
-              <Progress value={80} size="xs" colorScheme="red" />
+              <Progress
+                value={chartData?.document?.promiseToPay}
+                size="xs"
+                colorScheme="red"
+              />
             </Box>
           </Flex>
           <Flex mb="5">
@@ -174,9 +188,13 @@ const BarChart = () => {
             <Box w="100%">
               <Flex mb="2" justifyContent="space-between">
                 <Text fontSize="12">Call Back</Text>
-                <Text fontSize="12">2 Count</Text>
+                <Text fontSize="12">{chartData?.document?.callBack} Count</Text>
               </Flex>
-              <Progress value={2} size="xs" colorScheme="yellow" />
+              <Progress
+                value={chartData?.document?.callBack}
+                size="xs"
+                colorScheme="yellow"
+              />
             </Box>
           </Flex>
           <Flex mb="5">
@@ -184,9 +202,13 @@ const BarChart = () => {
             <Box w="100%">
               <Flex mb="2" justifyContent="space-between">
                 <Text fontSize="12">Loan Paid</Text>
-                <Text fontSize="12">5 Count</Text>
+                <Text fontSize="12">{chartData?.document?.loanPaid} Count</Text>
               </Flex>
-              <Progress value={30} size="xs" colorScheme="green" />
+              <Progress
+                value={chartData?.document?.loanPaid}
+                size="xs"
+                colorScheme="green"
+              />
             </Box>
           </Flex>
         </Box>

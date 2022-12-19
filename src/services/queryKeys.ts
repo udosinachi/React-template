@@ -25,3 +25,6 @@ export const DELETE_DROP_DOWN = "delete_drop_down";
 export const EDIT_DROP_DOWN = "edit_drop_down";
 export const GET_DROP_DOWN = "get_drop_down";
 export const SEARCH_DROP_DOWN = "search_drop_down";
+
+export const DASHBOARD_GET_STATISTICS = "dashboard_get_statistics";
+export const DASHBOARD_CHARTS = "dashboard_chart";

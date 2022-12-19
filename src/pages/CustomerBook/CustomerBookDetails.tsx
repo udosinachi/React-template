@@ -45,8 +45,8 @@ const CustomerBookDetails = () => {
   return (
     <div>
       {isLoading && <Loader />}
-      <Box>
-        <Text>Customer Details</Text>
+      <Box fontStyle="Raleway">
+        {/* <Text>Customer Details</Text> */}
         <Box>
           <Box>
             <Flex justifyContent="flex-end">

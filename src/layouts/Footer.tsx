@@ -9,7 +9,7 @@ const Footer = () => {
         fontSize="12px"
         textAlign="center"
         mt="20px"
-        // border="3px solid red"
+        border="3px solid red"
       >
         Intelligra &copy; 2022, All rights reserved.
       </Box>

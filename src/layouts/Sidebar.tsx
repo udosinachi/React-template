@@ -9,6 +9,7 @@ import {
   Text,
   useDisclosure,
   BoxProps,
+  Image,
 } from "@chakra-ui/react";
 import { ReactNode } from "react";
 import { NavLink } from "react-router-dom";
@@ -20,6 +21,7 @@ import { IconType } from "react-icons";
 // import { ReactText } from "react";
 import Navbar from "./Navbar";
 import Footer from "./Footer";
+import { LogoImage } from "../assets";
 
 interface LinkItemProps {
   name: string;
@@ -71,8 +73,8 @@ export default function Sidebar({ children }: { children: ReactNode }) {
       <Navbar onOpen={onOpen} />
       <Box ml={{ base: 0, md: 60 }} p="4">
         <Box height="100vh">{children}</Box>
-        <Footer />
       </Box>
+      {/* <Footer /> */}
     </Box>
   );
 }
@@ -94,14 +96,16 @@ const SidebarContent = ({ onClose, ...rest }: SidebarProps) => {
       {...rest}
     >
       <Flex h="20" alignItems="center" mx="8" justifyContent="space-between">
-        <Text fontSize="2xl" fontFamily="monospace" fontWeight="bold">
+        {/* <Text fontSize="2xl" fontFamily="monospace" fontWeight="bold">
           Logo
-        </Text>
+        </Text> */}
+        <Image src={LogoImage} w={["200px", "200px", "200px", "100%"]} />
         <CloseButton display={{ base: "flex", md: "none" }} onClick={onClose} />
       </Flex>
       {LinkItems.map((link) => (
         <div key={link.name}>
           <NavLink
+            onClick={onClose}
             to={link.path}
             style={({ isActive }) =>
               isActive

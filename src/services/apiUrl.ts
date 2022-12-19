@@ -7,3 +7,4 @@ export const DISPOSITION = "/Dispositions";
 export const CUSTOMER_DETAILS = "/AccountManager/customerdetails";
 export const CUSTOMER_INFO = "/CustomerInfos";
 export const DROP_DOWN = "/Dropdowns";
+export const DASHBOARD = "/Dashboard";

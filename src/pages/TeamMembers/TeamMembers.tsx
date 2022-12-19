@@ -33,7 +33,7 @@ import { useQueryClient } from "react-query";
 import { GET_ALL_USER_INFO } from "../../services/queryKeys";
 import { EditUserModal } from "../../components/modals/EditUserModal";
 import { NavLink } from "react-router-dom";
-import Pagination from "./Pagination";
+import Pagination from "../CustomerBook/Pagination";
 
 const TeamMembers = () => {
   const queryClient = useQueryClient();

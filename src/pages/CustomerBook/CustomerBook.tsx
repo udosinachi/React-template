@@ -93,7 +93,7 @@ const CustomerBook = () => {
     <div>
       {searchLoader && <Loader />}
       <Box>
-        <Text mb="5">Customer Book Loan</Text>
+        {/* <Text mb="5">Customer Book Loan</Text> */}
         <InputGroup
           w={["100%", "200px", "200px", "300px"]}
           size={"sm"}

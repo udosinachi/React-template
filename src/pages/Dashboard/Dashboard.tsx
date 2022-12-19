@@ -1,11 +1,19 @@
 import { Box, Card, Flex, Icon, Text } from "@chakra-ui/react";
 import { FcMissedCall, FcCallTransfer, FcCallback } from "react-icons/fc";
-import React from "react";
 import DashboardChart from "../../components/DashboardChart";
+import { Loader } from "../../components/WithSuspense";
+import {
+  useGetDashboardChart,
+  useGetDashboardStatistics,
+} from "../../services/query/dashboard";
 
 const Dashboard = () => {
+  const { data, isLoading, refetch } = useGetDashboardStatistics();
+  // console.log(data);
+
   return (
     <div>
+      {isLoading && <Loader />}
       <Box>
         <Box>
           <Flex justifyContent="space-evenly" flexWrap="wrap" mb="5">
@@ -19,7 +27,7 @@ const Dashboard = () => {
               <Flex align="center">
                 <Icon as={FcCallTransfer} fontSize="30" mr="4" />
                 <Text fontSize="22" mr="2" fontWeight="600">
-                  73
+                  {data?.document?.totalCalls}
                 </Text>
                 <Text fontSize="14">Total Calls</Text>
               </Flex>
@@ -34,7 +42,7 @@ const Dashboard = () => {
               <Flex align="center">
                 <Icon as={FcCallback} fontSize="30" mr="4" />
                 <Text fontSize="22" mr="2" fontWeight="600">
-                  39
+                  {data?.document?.successfulCalls}
                 </Text>
                 <Text fontSize="14">Successful Calls</Text>
               </Flex>
@@ -49,7 +57,7 @@ const Dashboard = () => {
               <Flex align="center">
                 <Icon as={FcMissedCall} fontSize="30" mr="4" />
                 <Text fontSize="22" mr="2" fontWeight="600">
-                  34
+                  {data?.document?.failedCalls}
                 </Text>
                 <Text fontSize="14">Failed Calls</Text>
               </Flex>

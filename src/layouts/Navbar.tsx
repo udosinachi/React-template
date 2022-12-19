@@ -13,10 +13,11 @@ import {
   MenuDivider,
   MenuItem,
   MenuList,
+  Image,
 } from "@chakra-ui/react";
 import { FiMenu, FiBell, FiChevronDown } from "react-icons/fi";
 
-import { User } from "../assets/index";
+import { LogoImage, User } from "../assets/index";
 import useCustomToast from "../utils/notification";
 
 type MenuListItemType = {
@@ -81,14 +82,21 @@ const Navbar = ({ onOpen, ...rest }: MobileProps) => {
         icon={<FiMenu />}
       />
 
-      <Text
+      {/* <Text
         display={{ base: "flex", md: "none" }}
         fontSize="2xl"
         fontFamily="monospace"
         fontWeight="bold"
       >
         Logo
-      </Text>
+      </Text> */}
+      <Image
+        src={LogoImage}
+        display={{ base: "flex", md: "none" }}
+        // width={{ base: "100%", md: "100px" }}
+        // w="100px"
+        w={["120px", "200px", "200px", "100%"]}
+      />
 
       <HStack spacing={{ base: "0", md: "6" }}>
         <IconButton

@@ -10,10 +10,12 @@ import {
   Button,
   Heading,
   useColorModeValue,
+  Image,
 } from "@chakra-ui/react";
 import { useState } from "react";
 import { useLogin, useLoginAccount } from "../../services/query/login";
 import useCustomToast from "../../utils/notification";
+import { LogoImage } from "../../assets/index";
 
 export default function Login() {
   const { errorToast, successToast } = useCustomToast();
@@ -73,11 +75,14 @@ export default function Login() {
       minH={"100vh"}
       align={"center"}
       justify={"center"}
-      bg={useColorModeValue("gray.50", "gray.800")}
+      // bg={useColorModeValue("gray.50", "gray.800")}
+      bg="whitesmoke"
     >
       <Stack spacing={8} mx={"auto"} maxW={"lg"} py={12} px={6}>
         <Stack align={"center"}>
-          <Heading fontSize={"4xl"}>Sign in to your account</Heading>
+          <Heading fontSize={"4xl"}>
+            <Image src={LogoImage} />
+          </Heading>
         </Stack>
         <Box
           rounded={"lg"}
