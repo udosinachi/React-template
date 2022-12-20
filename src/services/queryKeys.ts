@@ -15,6 +15,7 @@ export const DELETE_DISPOSITION = "delete_disposition";
 export const EDIT_DISPOSITION = "edit_disposition";
 export const GET_DISPOSITION = "get_disposition";
 export const SEARCH_DISPOSITION = "search_disposition";
+export const DISPOSITION_REPORT = "disposition_report";
 
 export const CUSTOMER_DETAILS = "customer_details";
 export const ADD_CUSTOMER_INFO = "add_customer_info";

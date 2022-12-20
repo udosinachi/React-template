@@ -196,7 +196,7 @@ const TeamMembers = () => {
           <InputGroup
             w={["100%", "200px", "200px", "300px"]}
             size={"sm"}
-            border="1px solid black"
+            border="grey"
           >
             <Input
               type="text"
@@ -340,7 +340,7 @@ const TeamMembers = () => {
             <Box
               p="1"
               px="2"
-              border="1px solid grey"
+              border="grey"
               bgColor="#26C6DA"
               color="white"
               cursor="pointer"
@@ -353,7 +353,7 @@ const TeamMembers = () => {
               <Box
                 p="1"
                 px="2"
-                border="1px solid grey"
+                border="grey"
                 cursor="pointer"
                 color={`${currentPage === pgNumber ? "white" : "#26C6DA"}`}
                 key={pgNumber}
@@ -368,7 +368,7 @@ const TeamMembers = () => {
             <Box
               p="1"
               px="2"
-              border="1px solid grey"
+              border="grey"
               bgColor="#26C6DA"
               color="white"
               cursor="pointer"
@@ -383,7 +383,7 @@ const TeamMembers = () => {
                 size="xs"
                 ml="3"
                 onChange={tableSizeChanger}
-                border="1px solid grey"
+                border="grey"
               >
                 {/* <option value="5">5</option> */}
                 <option value="10">10</option>

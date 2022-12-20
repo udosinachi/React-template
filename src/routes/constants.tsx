@@ -10,4 +10,5 @@ export const PRIVATE_PATHS = {
   CUSTOMERSBOOKDETAILS: "/customer-book-details",
   DISPOSITION: "/disposition",
   TEAMMEMBERS: "/team-members",
+  REPORT: "/report",
 };

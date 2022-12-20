@@ -8,6 +8,8 @@ import {
   getSearchDisposition,
   getSearchDispositionMutate,
   deleteDisposition,
+  getDispositionReport,
+  getDispositionReportMutate,
 } from "../api/disposition";
 import {
   GET_ALL_DISPOSITION,
@@ -16,6 +18,7 @@ import {
   DELETE_DISPOSITION,
   SEARCH_DISPOSITION,
   EDIT_DISPOSITION,
+  DISPOSITION_REPORT,
 } from "../queryKeys";
 
 export const useGetAllDisposition = (
@@ -95,6 +98,31 @@ export const useGetDispositionById = (id: any, options = {}) => {
 export const useGetDispositionByIdMutate = (options = {}) => {
   const { mutate, isLoading } = useMutation(getDispositionByIdMutate, {
     mutationKey: GET_DISPOSITION,
+    ...options,
+  });
+  return { mutate, isLoading };
+};
+
+export const useGetDispositionReport = (
+  searchDate: any,
+  searchKey: string,
+  page: number,
+  itemsPerPage: number,
+  options = {}
+) => {
+  const { data, isLoading, refetch } = useQuery(
+    [DISPOSITION_REPORT, searchDate, searchKey, page, itemsPerPage],
+    getDispositionReport,
+    {
+      ...options,
+    }
+  );
+  return { data, isLoading, refetch };
+};
+
+export const useGetDispositionReportMutate = (options = {}) => {
+  const { mutate, isLoading } = useMutation(getDispositionReportMutate, {
+    mutationKey: DISPOSITION_REPORT,
     ...options,
   });
   return { mutate, isLoading };

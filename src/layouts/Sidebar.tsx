@@ -33,7 +33,7 @@ const LinkItems: Array<LinkItemProps> = [
   { name: "Customer Book", icon: FiBook, path: "/customer-book" },
   { name: "Disposition", icon: MdOutlineRestartAlt, path: "/disposition" },
   { name: "Team Members", icon: RiTeamLine, path: "/team-members" },
-  { name: "Report", icon: TbReportAnalytics, path: "/kk" },
+  { name: "Report", icon: TbReportAnalytics, path: "/report" },
 ];
 
 const activeStyle: React.CSSProperties = {

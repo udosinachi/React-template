@@ -206,7 +206,7 @@ const Disposition = () => {
           <InputGroup
             w={["100%", "200px", "200px", "300px"]}
             size={"sm"}
-            border="1px solid black"
+            border="grey"
           >
             <Input
               type="text"
@@ -233,16 +233,16 @@ const Disposition = () => {
             <Thead>
               <Tr>
                 <Th color="#26C6DA">Agent ID</Th>
-                <Th color="#26C6DA">Enter Date</Th>
-                <Th color="#26C6DA">Loan ID</Th>
-                <Th color="#26C6DA">Disbursement Date</Th>
-                <Th color="#26C6DA">Name of Borrower</Th>
+                {/* <Th color="#26C6DA">Loan ID</Th> */}
+                {/* <Th color="#26C6DA">Disbursement Date</Th> */}
+                <Th color="#26C6DA">Customer Name</Th>
                 <Th color="#26C6DA">Email</Th>
                 <Th color="#26C6DA">Amount to Pay Today</Th>
-                <Th color="#26C6DA">Signup Phone Number</Th>
+                <Th color="#26C6DA">Phone Number</Th>
                 <Th color="#26C6DA">Reason For No Payment</Th>
                 <Th color="#26C6DA">Promise To Pay </Th>
                 <Th color="#26C6DA">Comment</Th>
+                <Th color="#26C6DA">Enter Date</Th>
 
                 {/* <Th color="#26C6DA">Customer ID </Th>
                 <Th color="#26C6DA">Call Status </Th>
@@ -264,12 +264,12 @@ const Disposition = () => {
                       key={info.id}
                       cursor="pointer"
                       _hover={{ background: "whitesmoke" }}
+                      // background={i % 2 === 0 ? "red" : "blue"}
                     >
                       <Td>{info?.agentId}</Td>
                       {/* <Td>{info?.customerId}</Td> */}
-                      <Td>{info?.dateCreated?.slice(0, 10)}</Td>
-                      <Td>{info?.loanId}</Td>
-                      <Td>{info?.disbursementDate?.slice(0, 10)}</Td>
+                      {/* <Td>{info?.loanId}</Td> */}
+                      {/* <Td>{info?.disbursementDate?.slice(0, 10)}</Td> */}
                       <Td>{info?.nameOfBrowser}</Td>
                       <Td>{info?.email}</Td>
                       <Td>{info?.amountToPayToday}</Td>
@@ -277,6 +277,7 @@ const Disposition = () => {
                       <Td>{info?.reasonForNoPayment}</Td>
                       <Td>{info?.promiseToPay}</Td>
                       <Td>{info?.comment}</Td>
+                      <Td>{info?.dateCreated?.slice(0, 10)}</Td>
 
                       {/* 
                       <Td>{info?.category}</Td>
@@ -365,7 +366,7 @@ const Disposition = () => {
             <Box
               p="1"
               px="2"
-              border="1px solid grey"
+              border="grey"
               bgColor="#26C6DA"
               color="white"
               cursor="pointer"
@@ -393,7 +394,7 @@ const Disposition = () => {
             <Box
               p="1"
               px="2"
-              border="1px solid grey"
+              border="grey"
               bgColor="#26C6DA"
               color="white"
               cursor="pointer"
@@ -408,7 +409,7 @@ const Disposition = () => {
                 size="xs"
                 ml="3"
                 onChange={tableSizeChanger}
-                border="1px solid grey"
+                border="grey"
               >
                 {/* <option value="5">5</option> */}
                 <option value="10">10</option>

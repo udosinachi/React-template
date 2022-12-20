@@ -20,49 +20,29 @@ import { useState } from "react";
 import { NavLink } from "react-router-dom";
 import { Loader } from "../../components/WithSuspense";
 import { useGetCustomerDetailSearchMutate } from "../../services/query/customer";
+import { useGetDispositionReportMutate } from "../../services/query/disposition";
 import useCustomToast from "../../utils/notification";
 
-const CustomerBook = () => {
+const Report = () => {
   const { errorToast, successToast } = useCustomToast();
 
   const [searchedWords, setSearchedWords] = useState("");
   const [noSearchRecord, setNoSearchRecord] = useState("");
   const [allSearchedUserData, setAllSearchedUserData] = useState([]);
-  const [customerID, setCustomerID] = useState("");
-  const [customerFirstname, setCustomerFirstname] = useState("");
-  const [customerLastname, setCustomerLastname] = useState("");
-  const [customerMsisdn, setCustomerMsisdn] = useState("");
-  const [customerBVN, setCustomerBVN] = useState("");
-  const [customerActivationDate, setCustomerActivationDate] = useState("");
-  const [preCustomers, setPreCustomers] = useState([]);
-  const [customerAddress, setCustomerAddress] = useState("");
   const [searchResponse, setSearchResponse] = useState(false);
-  // const [falseSearchResponse, setFalseSearchResponse] = useState(false);
-  const [theData, setTheData] = useState({});
 
   const { mutate: searchMutate, isLoading: searchLoader } =
-    useGetCustomerDetailSearchMutate({
+    useGetDispositionReportMutate({
       onSuccess: (res: any) => {
         console.log(res);
-        // console.log(res?.document?.data[0]);
-        setTheData(res?.document?.data[0]);
-        setCustomerID(res?.document?.data[0]?.id);
-        setCustomerFirstname(res?.document?.data[0]?.firstname);
-        setCustomerLastname(res?.document?.data[0]?.lastname);
-        setCustomerMsisdn(res?.document?.data[0]?.msisdn);
-        setCustomerBVN(res?.document?.data[0]?.bvn);
-        setCustomerActivationDate(res?.document?.data[0]?.activationDate);
-        setPreCustomers(res?.document?.data[0]?.preCustomers);
-        setCustomerAddress(res?.document?.data[0]?.preCustomers[0]?.address1);
-        console.log(res?.document?.data[0]?.preCustomers);
         setAllSearchedUserData(res?.document?.records);
-        setNoSearchRecord(res?.message);
         setSearchResponse(true);
-        if (res?.document?.data?.length === 0) {
+        setNoSearchRecord(res?.message);
+        if (res?.document === null) {
+          errorToast(res?.message);
           setSearchResponse(false);
-          errorToast(res?.document?.message);
         } else {
-          successToast(res?.document?.message);
+          successToast(res?.message);
           // setFalseSearchResponse(true);
         }
       },
@@ -77,17 +57,17 @@ const CustomerBook = () => {
       errorToast("Empty Field");
       return false;
     }
-    if (searchedWords.length < 11) {
-      errorToast("Invalid Number");
-      return false;
-    }
+
     if (noSearchRecord === "No Record Found") {
       errorToast("No Record Found");
     }
 
     searchMutate({
       // phoneNumber: "08036975694",
-      phoneNumber: searchedWords,
+      page: 1,
+      itemsPerPage: 100,
+      searchKey: 15,
+      searchDate: searchedWords,
     });
   };
 
@@ -102,8 +82,8 @@ const CustomerBook = () => {
           border="1px solid black"
         >
           <Input
-            type="number"
-            placeholder="Search with Msisdn"
+            type="date"
+            placeholder="Filter with Date"
             value={searchedWords}
             onChange={(e) => setSearchedWords(e.target.value)}
           />
@@ -121,32 +101,63 @@ const CustomerBook = () => {
             <Table size="sm">
               <Thead>
                 <Tr>
-                  <Th>Customer ID</Th>
-                  <Th>Full Name</Th>
-                  <Th>Msisdn</Th>
-                  <Th>BVN</Th>
-                  <Th>Address</Th>
-                  <Th>Activation Date</Th>
+                  <Th color="#26C6DA">Agent ID</Th>
+                  <Th color="#26C6DA">Customer Name</Th>
+                  <Th color="#26C6DA">Email</Th>
+                  <Th color="#26C6DA">Amount to Pay Today</Th>
+                  <Th color="#26C6DA">Phone Number</Th>
+                  <Th color="#26C6DA">Reason For No Payment</Th>
+                  <Th color="#26C6DA">Promise To Pay </Th>
+                  <Th color="#26C6DA">Comment</Th>
+                  <Th color="#26C6DA">Enter Date</Th>
                 </Tr>
               </Thead>
               {}
               <Tbody>
-                <Tr
-                  cursor="pointer"
-                  _hover={{ bgColor: "whitesmoke" }}
-                  onClick={() => {
-                    window.location.href = "/customer-book-details";
-                  }}
-                >
-                  <Td>{customerID}</Td>
-                  <Td>
-                    {customerFirstname} {customerLastname}
-                  </Td>
-                  <Td>{customerMsisdn}</Td>
-                  <Td>{customerBVN}</Td>
-                  <Td>{customerAddress?.toUpperCase()}</Td>
-                  <Td>{customerActivationDate}</Td>
-                </Tr>
+                {allSearchedUserData?.map((info: any) => (
+                  <Tr
+                    key={info.id}
+                    cursor="pointer"
+                    _hover={{ background: "whitesmoke" }}
+                  >
+                    <Td>{info?.agentId}</Td>
+
+                    <Td>{info?.nameOfBrowser}</Td>
+                    <Td>{info?.email}</Td>
+                    <Td>{info?.amountToPayToday}</Td>
+                    <Td>{info?.phoneNumber}</Td>
+                    <Td>{info?.reasonForNoPayment}</Td>
+                    <Td>{info?.promiseToPay}</Td>
+                    <Td>{info?.comment}</Td>
+                    <Td>{info?.dateCreated?.slice(0, 10)}</Td>
+
+                    {/* 
+                      <Td>{info?.category}</Td>
+                      <Td>{info?.callStatus}</Td>
+                      <Td>{info?.cc}</Td>
+                      <Td>{info?.commitmentDate}</Td>
+                      <Td>{info?.numberOfDays}</Td>
+                      <Td>{info?.subReasonForNoPayment}</Td>
+                      <Td>{info?.subject}</Td>
+                      <Td>{info?.messageBody}</Td>
+                      <Td>{info?.flag}</Td> */}
+                    <Td>
+                      {/* <Icon
+                          onClick={() => {
+                            setEditID(info?.id);
+                            onOpenEdit();
+                            byIdMutate({
+                              id: info?.id,
+                            });
+                          }}
+                          as={EditIcon}
+                          boxSize={5}
+                          mr="3"
+                          cursor="pointer"
+                        /> */}
+                    </Td>
+                  </Tr>
+                ))}
               </Tbody>
             </Table>
           </TableContainer>
@@ -160,7 +171,7 @@ const CustomerBook = () => {
               <Box margin="auto" textAlign="center">
                 <>
                   <Search2Icon boxSize={10} color="#26C6DA" mb="3" />
-                  <Text>Search with phone number to get a response</Text>
+                  <Text>Search with Date to get a response</Text>
                 </>
               </Box>
             </Box>
@@ -171,4 +182,4 @@ const CustomerBook = () => {
   );
 };
 
-export default CustomerBook;
+export default Report;

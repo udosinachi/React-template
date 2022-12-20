@@ -56,3 +56,18 @@ export const getDispositionByIdMutate = async (body: any) => {
   const res = await axiosInstance.get(`${apiURL}${DISPOSITION}/${body.id}`);
   return res?.data;
 };
+
+export const getDispositionReport = async ({ queryKey }: any) => {
+  const [, searchDate, searchKey, page, itemsPerPage] = queryKey;
+  const res = await axiosInstance.get(
+    `${apiURL}${DISPOSITION}/report?searchKey=${searchKey}&searchDate=${searchDate}&page=${page}&itemsPerPage=${itemsPerPage}&orderBy=Id|DESC`
+  );
+  return res?.data;
+};
+
+export const getDispositionReportMutate = async (body: any) => {
+  const res = await axiosInstance.get(
+    `${apiURL}${DISPOSITION}/report?searchKey=${body.searchKey}&searchDate=${body.searchDate}&page=${body.page}&itemsPerPage=${body.itemsPerPage}&orderBy=Id|DESC`
+  );
+  return res?.data;
+};
