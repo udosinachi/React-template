@@ -8,3 +8,4 @@ export const CUSTOMER_DETAILS = "/AccountManager/customerdetails";
 export const CUSTOMER_INFO = "/CustomerInfos";
 export const DROP_DOWN = "/Dropdowns";
 export const DASHBOARD = "/Dashboard";
+export const AGENT_MAPPING = "/AgentMappings";

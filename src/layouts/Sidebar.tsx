@@ -34,6 +34,7 @@ const LinkItems: Array<LinkItemProps> = [
   { name: "Disposition", icon: MdOutlineRestartAlt, path: "/disposition" },
   { name: "Team Members", icon: RiTeamLine, path: "/team-members" },
   { name: "Report", icon: TbReportAnalytics, path: "/report" },
+  { name: "Agent Mapping", icon: FiBook, path: "/agent-mapping" },
 ];
 
 const activeStyle: React.CSSProperties = {
@@ -71,7 +72,7 @@ export default function Sidebar({ children }: { children: ReactNode }) {
       </Drawer>
       {/* mobilenav */}
       <Navbar onOpen={onOpen} />
-      <Box ml={{ base: 0, md: 60 }} p="4">
+      <Box ml={{ base: 0, md: 60 }} p="4" position="relative">
         <Box height="100vh">{children}</Box>
       </Box>
       {/* <Footer /> */}

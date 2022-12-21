@@ -13,6 +13,7 @@ const {
   DISPOSITION,
   TEAMMEMBERS,
   REPORT,
+  AGENTMAPPING,
 } = PRIVATE_PATHS;
 
 const Home = WithSuspense(lazy(() => import("../pages/Home/Home")));
@@ -34,6 +35,9 @@ const TeamMembers = WithSuspense(
   lazy(() => import("../pages/TeamMembers/TeamMembers"))
 );
 const Report = WithSuspense(lazy(() => import("../pages/Report/Report")));
+const AgentMapping = WithSuspense(
+  lazy(() => import("../pages/AgentMapping/AgentMapping"))
+);
 
 export const PUBLIC_ROUTES: AppRoute[] = [
   { path: HOME, element: <Home /> },
@@ -51,5 +55,6 @@ export const PRIVATE_ROUTES: AppRoute[] = [
   { path: DISPOSITION, element: <Disposition /> },
   { path: TEAMMEMBERS, element: <TeamMembers /> },
   { path: REPORT, element: <Report /> },
+  { path: AGENTMAPPING, element: <AgentMapping /> },
   { path: "*", element: <Navigate to="/dashboard" replace /> },
 ];

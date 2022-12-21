@@ -16,8 +16,10 @@ import { useState } from "react";
 import { useLogin, useLoginAccount } from "../../services/query/login";
 import useCustomToast from "../../utils/notification";
 import { LogoImage } from "../../assets/index";
+import { useNavigate } from "react-router-dom";
 
 export default function Login() {
+  const navigate = useNavigate();
   const { errorToast, successToast } = useCustomToast();
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
@@ -51,8 +53,11 @@ export default function Login() {
           res?.document?.accessTokens?.authorizationToken?.accessToken
         )
       );
+      localStorage.setItem("agentID", res?.document?.id);
+      localStorage.setItem("role", res?.document?.role);
       setTimeout(() => {
-        window.location.href = "/dashboard";
+        navigate("/dashboard");
+        // window.location.href = "/dashboard";
       }, 200);
     },
     onError: (err: any) => {

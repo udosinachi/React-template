@@ -15,47 +15,33 @@ import {
   Td,
   TableCaption,
   TableContainer,
+  Flex,
+  Select,
 } from "@chakra-ui/react";
 import { useState } from "react";
-import { NavLink } from "react-router-dom";
+import { NavLink, useNavigate } from "react-router-dom";
 import { Loader } from "../../components/WithSuspense";
-import { useGetCustomerDetailSearchMutate } from "../../services/query/customer";
+import {
+  useGetCustomerDetailSearch,
+  useGetCustomerDetailSearchMutate,
+} from "../../services/query/customer";
 import useCustomToast from "../../utils/notification";
 
 const CustomerBook = () => {
+  const navigate = useNavigate();
   const { errorToast, successToast } = useCustomToast();
 
   const [searchedWords, setSearchedWords] = useState("");
   const [noSearchRecord, setNoSearchRecord] = useState("");
   const [allSearchedUserData, setAllSearchedUserData] = useState([]);
-  const [customerID, setCustomerID] = useState("");
-  const [customerFirstname, setCustomerFirstname] = useState("");
-  const [customerLastname, setCustomerLastname] = useState("");
-  const [customerMsisdn, setCustomerMsisdn] = useState("");
-  const [customerBVN, setCustomerBVN] = useState("");
-  const [customerActivationDate, setCustomerActivationDate] = useState("");
-  const [preCustomers, setPreCustomers] = useState([]);
-  const [customerAddress, setCustomerAddress] = useState("");
   const [searchResponse, setSearchResponse] = useState(false);
-  // const [falseSearchResponse, setFalseSearchResponse] = useState(false);
-  const [theData, setTheData] = useState({});
 
   const { mutate: searchMutate, isLoading: searchLoader } =
     useGetCustomerDetailSearchMutate({
       onSuccess: (res: any) => {
         console.log(res);
-        // console.log(res?.document?.data[0]);
-        setTheData(res?.document?.data[0]);
-        setCustomerID(res?.document?.data[0]?.id);
-        setCustomerFirstname(res?.document?.data[0]?.firstname);
-        setCustomerLastname(res?.document?.data[0]?.lastname);
-        setCustomerMsisdn(res?.document?.data[0]?.msisdn);
-        setCustomerBVN(res?.document?.data[0]?.bvn);
-        setCustomerActivationDate(res?.document?.data[0]?.activationDate);
-        setPreCustomers(res?.document?.data[0]?.preCustomers);
-        setCustomerAddress(res?.document?.data[0]?.preCustomers[0]?.address1);
-        console.log(res?.document?.data[0]?.preCustomers);
-        setAllSearchedUserData(res?.document?.records);
+        console.log(res?.document?.data);
+        setAllSearchedUserData(res?.document?.data);
         setNoSearchRecord(res?.message);
         setSearchResponse(true);
         if (res?.document?.data?.length === 0) {
@@ -63,7 +49,6 @@ const CustomerBook = () => {
           errorToast(res?.document?.message);
         } else {
           successToast(res?.document?.message);
-          // setFalseSearchResponse(true);
         }
       },
       onError: (err: any) => {
@@ -91,66 +76,161 @@ const CustomerBook = () => {
     });
   };
 
+  const {
+    data: allCustomerData,
+    isLoading: itsLoading,
+    refetch: toRefetch,
+  } = useGetCustomerDetailSearch();
+  const useAllCustomerData = allCustomerData?.document?.data;
+  const totalCustomerNumber = allCustomerData?.document?.meta?.totalCount;
+  console.log(allCustomerData);
+  console.log(allCustomerData?.document?.meta);
+
   return (
     <div>
-      {searchLoader && <Loader />}
-      <Box>
-        {/* <Text mb="5">Customer Book Loan</Text> */}
-        <InputGroup
-          w={["100%", "200px", "200px", "300px"]}
-          size={"sm"}
-          border="1px solid black"
-        >
-          <Input
-            type="number"
-            placeholder="Search with Msisdn"
-            value={searchedWords}
-            onChange={(e) => setSearchedWords(e.target.value)}
-          />
-          <InputRightAddon
-            children="Search"
-            bgColor="#26C6DA"
-            color="white"
-            cursor="pointer"
-            onClick={() => searchHandler()}
-            // onClick={() => setUserInfoToggle("Searched")}
-          />
-        </InputGroup>
-        <Box mt="5">
-          <TableContainer bg="white">
-            <Table size="sm">
-              <Thead>
-                <Tr>
-                  <Th>Customer ID</Th>
-                  <Th>Full Name</Th>
-                  <Th>Msisdn</Th>
-                  <Th>BVN</Th>
-                  <Th>Address</Th>
-                  <Th>Activation Date</Th>
-                </Tr>
-              </Thead>
-              {}
-              <Tbody>
-                <Tr
+      {itsLoading || searchLoader ? (
+        <Loader />
+      ) : (
+        <Box pb="5">
+          {/* <Text mb="5">Customer Book Loan</Text> */}
+          <InputGroup
+            w={["100%", "200px", "200px", "300px"]}
+            size={"sm"}
+            border="1px solid black"
+          >
+            <Input
+              type="number"
+              placeholder="Search with Msisdn"
+              value={searchedWords}
+              onChange={(e) => setSearchedWords(e.target.value)}
+            />
+            <InputRightAddon
+              children="Search"
+              bgColor="#26C6DA"
+              color="white"
+              cursor="pointer"
+              onClick={() => searchHandler()}
+              // onClick={() => setUserInfoToggle("Searched")}
+            />
+          </InputGroup>
+          <Box mt="5">
+            <TableContainer bg="white" pb="5">
+              <Table size="sm">
+                <Thead>
+                  <Tr>
+                    <Th>Customer ID</Th>
+                    <Th>Full Name</Th>
+                    <Th>Msisdn</Th>
+                    <Th>BVN</Th>
+                    <Th>Activation Date</Th>
+                    <Th>Address</Th>
+                  </Tr>
+                </Thead>
+                {!allSearchedUserData || allSearchedUserData?.length === 0
+                  ? useAllCustomerData?.map((customerList: any) => (
+                      <Tbody key={customerList?.id}>
+                        <Tr
+                          cursor="pointer"
+                          _hover={{ bgColor: "whitesmoke" }}
+                          onClick={() => {
+                            navigate(
+                              `/customer-book-details/${customerList?.msisdn}`
+                            );
+                          }}
+                        >
+                          <Td>{customerList?.id}</Td>
+                          <Td>
+                            {customerList?.firstname} {customerList?.lastname}
+                          </Td>
+                          <Td>{customerList?.msisdn}</Td>
+                          <Td>{customerList?.bvn}</Td>
+                          <Td>{customerList?.activationDate}</Td>
+                          <Td>{customerList?.preCustomers[0]?.address1}</Td>
+                        </Tr>
+                      </Tbody>
+                    ))
+                  : allSearchedUserData?.map((customerList: any) => (
+                      <Tbody key={customerList?.id}>
+                        <Tr
+                          cursor="pointer"
+                          _hover={{ bgColor: "whitesmoke" }}
+                          onClick={() => {
+                            navigate(
+                              `/customer-book-details/${customerList?.msisdn}`
+                            );
+                          }}
+                        >
+                          <Td>{customerList?.id}</Td>
+                          <Td>
+                            {customerList?.firstname} {customerList?.lastname}
+                          </Td>
+                          <Td>{customerList?.msisdn}</Td>
+                          <Td>{customerList?.bvn}</Td>
+                          <Td>{customerList?.activationDate}</Td>
+                          <Td>{customerList?.preCustomers[0]?.address1}</Td>
+                        </Tr>
+                      </Tbody>
+                    ))}
+              </Table>
+            </TableContainer>
+            {/* <Box>
+            <Flex flexWrap="wrap" mt="3" fontSize="13px">
+              <Box
+                p="1"
+                px="2"
+                border="grey"
+                bgColor="#26C6DA"
+                color="white"
+                cursor="pointer"
+                onClick={prevPage}
+                mr="3"
+              >
+                Previous
+              </Box>
+              {pageNumbers.map((pgNumber: any) => (
+                <Box
+                  p="1"
+                  px="2"
+                  border="grey"
                   cursor="pointer"
-                  _hover={{ bgColor: "whitesmoke" }}
+                  color={`${currentPage === pgNumber ? "white" : "#26C6DA"}`}
+                  key={pgNumber}
+                  bgColor={`${currentPage === pgNumber ? "#26C6DA" : "white"}`}
                   onClick={() => {
-                    window.location.href = "/customer-book-details";
+                    setCurrentPage(pgNumber);
                   }}
                 >
-                  <Td>{customerID}</Td>
-                  <Td>
-                    {customerFirstname} {customerLastname}
-                  </Td>
-                  <Td>{customerMsisdn}</Td>
-                  <Td>{customerBVN}</Td>
-                  <Td>{customerAddress?.toUpperCase()}</Td>
-                  <Td>{customerActivationDate}</Td>
-                </Tr>
-              </Tbody>
-            </Table>
-          </TableContainer>
-          {searchResponse === false && (
+                  {pgNumber}
+                </Box>
+              ))}
+              <Box
+                p="1"
+                px="2"
+                border="grey"
+                bgColor="#26C6DA"
+                color="white"
+                cursor="pointer"
+                onClick={nextPage}
+                ml="3"
+              >
+                Next
+              </Box>
+              <Flex p="1" px="2" align="center">
+                PageSize
+                <Select
+                  size="xs"
+                  ml="3"
+                  onChange={tableSizeChanger}
+                  border="grey"
+                >
+                  <option value="10">10</option>
+                  <option value="15">15</option>
+                  <option value="20">20</option>
+                </Select>
+              </Flex>
+            </Flex>
+          </Box> */}
+            {/* {searchResponse === false && (
             <Box
               bgColor="white"
               height="200px"
@@ -164,9 +244,10 @@ const CustomerBook = () => {
                 </>
               </Box>
             </Box>
-          )}
+          )} */}
+          </Box>
         </Box>
-      </Box>
+      )}
     </div>
   );
 };

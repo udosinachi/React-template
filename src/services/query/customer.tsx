@@ -3,18 +3,29 @@ import {
   getCustomerDetailSearch,
   getCustomerDetailSearchMutate,
   addNewCustomerInfo,
+  getCustomerDetailSearchByNumber,
 } from "../api/customer";
 
 import { CUSTOMER_DETAILS, ADD_CUSTOMER_INFO } from "../queryKeys";
 
-export const useGetCustomerDetailSearch = (
-  //   phoneNumber: number,
+export const useGetCustomerDetailSearch = (options = {}) => {
+  const { data, isLoading, refetch } = useQuery(
+    [CUSTOMER_DETAILS],
+    getCustomerDetailSearch,
+    {
+      ...options,
+    }
+  );
+  return { data, isLoading, refetch };
+};
+
+export const useGetCustomerDetailSearchByNumber = (
+  phoneNumber: any,
   options = {}
 ) => {
   const { data, isLoading, refetch } = useQuery(
-    // [CUSTOMER_DETAILS, phoneNumber],
-    [CUSTOMER_DETAILS],
-    getCustomerDetailSearch,
+    [CUSTOMER_DETAILS, phoneNumber],
+    getCustomerDetailSearchByNumber,
     {
       ...options,
     }

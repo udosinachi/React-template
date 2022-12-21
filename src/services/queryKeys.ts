@@ -29,3 +29,10 @@ export const SEARCH_DROP_DOWN = "search_drop_down";
 
 export const DASHBOARD_GET_STATISTICS = "dashboard_get_statistics";
 export const DASHBOARD_CHARTS = "dashboard_chart";
+
+export const GET_ALL_AGENT_MAPPING = "get_all_agent_mapping";
+export const ADD_AGENT_MAPPING = "add_agent_mapping";
+export const DELETE_AGENT_MAPPING = "delete_agent_mapping";
+export const EDIT_AGENT_MAPPING = "edit_agent_mapping";
+export const GET_AGENT_MAPPING = "get_agent_mapping";
+export const SEARCH_AGENT_MAPPING = "search_agent_mapping";

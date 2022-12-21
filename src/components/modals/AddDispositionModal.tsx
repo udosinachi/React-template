@@ -21,6 +21,7 @@ import { useQueryClient } from "react-query";
 import { ADD_DISPOSITION, ADD_USER_INFO } from "../../services/queryKeys";
 import { useAddNewDisposition } from "../../services/query/disposition";
 import { useGetAllDropDown } from "../../services/query/drop-down";
+import { useParams } from "react-router-dom";
 
 export const AddDispositionModal = ({
   isOpen,
@@ -49,6 +50,8 @@ export const AddDispositionModal = ({
   const [AmountToPayToday, setAmountToPayToday] = useState("");
   const [NumberOfDays, setNumberOfDays] = useState("");
   const [Comment, setComment] = useState("");
+
+  const { id } = useParams();
 
   const { mutate, isLoading: loader } = useAddNewDisposition({
     onSuccess: (res: any) => {
@@ -118,10 +121,11 @@ export const AddDispositionModal = ({
   const handleSubmit = () => {
     mutate({
       CustomerId: "1",
-      AgentId: "15",
+      AgentId: "6",
+      // AgentId: localStorage.getItem("agentID"),
       CommitmentDate: "2022-12-12",
       NameOfBrowser: "Lionel Messi",
-      Email: "messi@test.com",
+      Email: "bruhh@test.com",
       PhoneNumber: "0967897556",
       DisbursementDate: "12 Dec 2022",
       LoanId: "30",
@@ -143,7 +147,7 @@ export const AddDispositionModal = ({
       <Modal isOpen={isOpen} onClose={onClose} size="lg">
         <ModalOverlay />
         <ModalContent>
-          <ModalHeader>Add a New Disposition</ModalHeader>
+          <ModalHeader>Add a New Disposition for {id}</ModalHeader>
           <ModalCloseButton />
           <ModalBody pb={6}>
             <Box display="flex" justifyContent="space-between">

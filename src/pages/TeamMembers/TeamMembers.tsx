@@ -185,87 +185,90 @@ const TeamMembers = () => {
 
   return (
     <div>
-      {isLoading && <Loader />}
-      <Box>
-        <Flex
-          justifyContent="space-between"
-          mb="3"
-          flexWrap="wrap"
-          alignItems="center"
-        >
-          <InputGroup
-            w={["100%", "200px", "200px", "300px"]}
-            size={"sm"}
-            border="grey"
-          >
-            <Input
-              type="text"
-              placeholder="Search User"
-              value={searchedWords}
-              onChange={(e) => setSearchedWords(e.target.value)}
-            />
-            <InputRightAddon
-              children="Search"
-              bgColor="#26C6DA"
-              color="white"
-              cursor="pointer"
-              onClick={() => searchHandler()}
-              // onClick={() => setUserInfoToggle("Searched")}
-            />
-          </InputGroup>
-          {/* <Button size={"sm"} bgColor="#26C6DA" color="white" onClick={onOpen}>
+      {isLoading ? (
+        <Loader />
+      ) : (
+        <>
+          <Box>
+            <Flex
+              justifyContent="space-between"
+              mb="3"
+              flexWrap="wrap"
+              alignItems="center"
+            >
+              <InputGroup
+                w={["100%", "200px", "200px", "300px"]}
+                size={"sm"}
+                border="grey"
+              >
+                <Input
+                  type="text"
+                  placeholder="Search User"
+                  value={searchedWords}
+                  onChange={(e) => setSearchedWords(e.target.value)}
+                />
+                <InputRightAddon
+                  children="Search"
+                  bgColor="#26C6DA"
+                  color="white"
+                  cursor="pointer"
+                  onClick={() => searchHandler()}
+                  // onClick={() => setUserInfoToggle("Searched")}
+                />
+              </InputGroup>
+              {/* <Button size={"sm"} bgColor="#26C6DA" color="white" onClick={onOpen}>
             Add New User
           </Button> */}
-          <Box fontSize="14px">Total of {totalRecords} Team Members</Box>
-        </Flex>
-        <TableContainer bg="white">
-          <Table size="sm">
-            {/* <TableCaption>Imperial to metric conversion factors</TableCaption> */}
-            <Thead>
-              <Tr>
-                <Th color="#26C6DA">ID</Th>
-                <Th color="#26C6DA">Email </Th>
-                <Th color="#26C6DA">Role Name </Th>
-                <Th color="#26C6DA">First Name </Th>
-                <Th color="#26C6DA">Last Name </Th>
-                <Th color="#26C6DA">Logged In Status </Th>
-                {/* <Th>Last Login </Th> */}
-              </Tr>
-            </Thead>
+              <Box fontSize="14px">Total of {totalRecords} Team Members</Box>
+            </Flex>
+            <TableContainer bg="white">
+              <Table size="sm">
+                {/* <TableCaption>Imperial to metric conversion factors</TableCaption> */}
+                <Thead>
+                  <Tr>
+                    <Th color="#26C6DA">ID</Th>
+                    <Th color="#26C6DA">Email </Th>
+                    <Th color="#26C6DA">Role Name </Th>
+                    <Th color="#26C6DA">First Name </Th>
+                    <Th color="#26C6DA">Last Name </Th>
+                    <Th color="#26C6DA">Logged In Status </Th>
+                    {/* <Th>Last Login </Th> */}
+                  </Tr>
+                </Thead>
 
-            <Tbody>
-              {!allSearchedUserData || allSearchedUserData?.length === 0
-                ? allUserData?.map((info: any) => (
-                    <Tr
-                      key={info.id}
-                      //   onClick={() => {
-                      //     setEditID(info?.id);
-                      //     onOpenEdit();
-                      //     byIdMutate({
-                      //       id: info?.id,
-                      //     });
-                      //   }}
-                      cursor="pointer"
-                      _hover={{ background: "whitesmoke" }}
-                    >
-                      <Td>{info?.id}</Td>
-                      <Td>{info?.email}</Td>
-                      <Td>{info?.roleName}</Td>
-                      <Td>{info?.firstName}</Td>
-                      <Td>{info?.lastName}</Td>
-                      {info?.id % 2 ? (
-                        <Td bgColor="green.200" color="green">
-                          Logged In
-                        </Td>
-                      ) : (
-                        <Td bgColor="red.200" color="red">
-                          Logged Out
-                        </Td>
-                      )}
+                <Tbody>
+                  {!allSearchedUserData || allSearchedUserData?.length === 0
+                    ? allUserData?.map((info: any) => (
+                        <Tr
+                          key={info.id}
+                          //   onClick={() => {
+                          //     setEditID(info?.id);
+                          //     onOpenEdit();
+                          //     byIdMutate({
+                          //       id: info?.id,
+                          //     });
+                          //   }}
+                          cursor="pointer"
+                          _hover={{ background: "whitesmoke" }}
+                        >
+                          <Td>{info?.id}</Td>
+                          <Td>{info?.email}</Td>
+                          <Td>{info?.roleName}</Td>
+                          <Td>{info?.firstName}</Td>
+                          <Td>{info?.lastName}</Td>
+                          {info?.id % 2 ? (
+                            <Td bgColor="green.200" color="green">
+                              Logged In
+                            </Td>
+                          ) : (
+                            <Td bgColor="red.200" color="red">
+                              Logged Out
+                            </Td>
+                          )}
 
-                      {/* <Td>{info?.lastLogin}</Td> */}
-                      <Td>
-                        {/* <Icon
+                          {/* <Td>{info?.lastLogin}</Td> */}
+                          <Td>
+                            {/* <Icon
                           onClick={() => {
                             setEditID(info?.id);
                             onOpenEdit();
@@ -278,27 +281,27 @@ const TeamMembers = () => {
                           mr="3"
                           cursor="pointer"
                         /> */}
-                        <Icon
-                          onClick={() => deleteUserInfo(info?.id)}
-                          as={DeleteIcon}
-                          boxSize={5}
-                          color="red.500"
-                          cursor="pointer"
-                        />
-                      </Td>
-                    </Tr>
-                  ))
-                : allSearchedUserData?.map((info: any) => (
-                    <Tr key={info.id}>
-                      <Td>{info?.id}</Td>
-                      <Td>{info?.email}</Td>
-                      <Td>{info?.roleName}</Td>
-                      <Td>{info?.firstName}</Td>
-                      <Td>{info?.lastName}</Td>
-                      <Td>Logged In</Td>
-                      {/* <Td>{info?.lastLogin}</Td> */}
-                      <Td>
-                        {/* <Icon
+                            <Icon
+                              onClick={() => deleteUserInfo(info?.id)}
+                              as={DeleteIcon}
+                              boxSize={5}
+                              color="red.500"
+                              cursor="pointer"
+                            />
+                          </Td>
+                        </Tr>
+                      ))
+                    : allSearchedUserData?.map((info: any) => (
+                        <Tr key={info.id}>
+                          <Td>{info?.id}</Td>
+                          <Td>{info?.email}</Td>
+                          <Td>{info?.roleName}</Td>
+                          <Td>{info?.firstName}</Td>
+                          <Td>{info?.lastName}</Td>
+                          <Td>Logged In</Td>
+                          {/* <Td>{info?.lastLogin}</Td> */}
+                          <Td>
+                            {/* <Icon
                           onClick={() => {
                             setEditID(info?.id);
                             onOpenEdit();
@@ -311,23 +314,23 @@ const TeamMembers = () => {
                           mr="3"
                           cursor="pointer"
                         /> */}
-                        <Icon
-                          onClick={() => deleteUserInfo(info?.id)}
-                          as={DeleteIcon}
-                          boxSize={5}
-                          color="red.500"
-                          cursor="pointer"
-                        />
-                      </Td>
-                    </Tr>
-                  ))}
-            </Tbody>
-            {/* ) : ( */}
+                            <Icon
+                              onClick={() => deleteUserInfo(info?.id)}
+                              as={DeleteIcon}
+                              boxSize={5}
+                              color="red.500"
+                              cursor="pointer"
+                            />
+                          </Td>
+                        </Tr>
+                      ))}
+                </Tbody>
+                {/* ) : ( */}
 
-            {/* )} */}
-          </Table>
-        </TableContainer>
-        {/* <Pagination
+                {/* )} */}
+              </Table>
+            </TableContainer>
+            {/* <Pagination
           nPages={nPages}
           currentPage={currentPage}
           setCurrentPage={setCurrentPage}
@@ -335,77 +338,81 @@ const TeamMembers = () => {
           setRecordsPerPage={setRecordsPerPage}
         /> */}
 
-        <Box>
-          <Flex flexWrap="wrap" mt="3" fontSize="13px">
-            <Box
-              p="1"
-              px="2"
-              border="grey"
-              bgColor="#26C6DA"
-              color="white"
-              cursor="pointer"
-              onClick={prevPage}
-              mr="3"
-            >
-              Previous
+            <Box>
+              <Flex flexWrap="wrap" mt="3" fontSize="13px">
+                <Box
+                  p="1"
+                  px="2"
+                  border="grey"
+                  bgColor="#26C6DA"
+                  color="white"
+                  cursor="pointer"
+                  onClick={prevPage}
+                  mr="3"
+                >
+                  Previous
+                </Box>
+                {pageNumbers.map((pgNumber: any) => (
+                  <Box
+                    p="1"
+                    px="2"
+                    border="grey"
+                    cursor="pointer"
+                    color={`${currentPage === pgNumber ? "white" : "#26C6DA"}`}
+                    key={pgNumber}
+                    bgColor={`${
+                      currentPage === pgNumber ? "#26C6DA" : "white"
+                    }`}
+                    onClick={() => {
+                      setCurrentPage(pgNumber);
+                    }}
+                  >
+                    {pgNumber}
+                  </Box>
+                ))}
+                <Box
+                  p="1"
+                  px="2"
+                  border="grey"
+                  bgColor="#26C6DA"
+                  color="white"
+                  cursor="pointer"
+                  onClick={nextPage}
+                  ml="3"
+                >
+                  Next
+                </Box>
+                <Flex p="1" px="2" align="center">
+                  PageSize
+                  <Select
+                    size="xs"
+                    ml="3"
+                    onChange={tableSizeChanger}
+                    border="grey"
+                  >
+                    {/* <option value="5">5</option> */}
+                    <option value="10">10</option>
+                    <option value="15">15</option>
+                    <option value="20">20</option>
+                  </Select>
+                </Flex>
+              </Flex>
             </Box>
-            {pageNumbers.map((pgNumber: any) => (
-              <Box
-                p="1"
-                px="2"
-                border="grey"
-                cursor="pointer"
-                color={`${currentPage === pgNumber ? "white" : "#26C6DA"}`}
-                key={pgNumber}
-                bgColor={`${currentPage === pgNumber ? "#26C6DA" : "white"}`}
-                onClick={() => {
-                  setCurrentPage(pgNumber);
-                }}
-              >
-                {pgNumber}
-              </Box>
-            ))}
-            <Box
-              p="1"
-              px="2"
-              border="grey"
-              bgColor="#26C6DA"
-              color="white"
-              cursor="pointer"
-              onClick={nextPage}
-              ml="3"
-            >
-              Next
-            </Box>
-            <Flex p="1" px="2" align="center">
-              PageSize
-              <Select
-                size="xs"
-                ml="3"
-                onChange={tableSizeChanger}
-                border="grey"
-              >
-                {/* <option value="5">5</option> */}
-                <option value="10">10</option>
-                <option value="15">15</option>
-                <option value="20">20</option>
-              </Select>
-            </Flex>
-          </Flex>
-        </Box>
-      </Box>
-      <AddUserModal
-        isOpen={isOpen}
-        onClose={onClose}
-        refetchAllUser={refetchAllUser}
-      />
-      <EditUserModal
-        editID={editID}
-        isOpenEdit={isOpenEdit}
-        onCloseEdit={onCloseEdit}
-        userIdData={userIdData}
-        refetchAllUser={refetchAllUser}
-      />
+          </Box>
+          <AddUserModal
+            isOpen={isOpen}
+            onClose={onClose}
+            refetchAllUser={refetchAllUser}
+          />
+          <EditUserModal
+            editID={editID}
+            isOpenEdit={isOpenEdit}
+            onCloseEdit={onCloseEdit}
+            userIdData={userIdData}
+            refetchAllUser={refetchAllUser}
+          />
+        </>
+      )}
     </div>
   );
 };
