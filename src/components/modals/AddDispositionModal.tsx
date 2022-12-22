@@ -42,7 +42,7 @@ export const AddDispositionModal = ({
   // const [messageBody, setMessageBody] = useState("");
   // const [flag, setFlag] = useState("");
   const [DateCreated, setDateCreated] = useState("");
-  const [CallAnswered, setCallAnswered] = useState("Yes");
+  const [CallAnswered, setCallAnswered] = useState("");
   const [CallStatus, setCallStatus] = useState("");
   const [ReasonForNoPayment, setReasonForNoPayment] = useState("");
   const [SubReasonForNoPayment, setSubReasonForNoPayment] = useState("");
@@ -160,6 +160,7 @@ export const AddDispositionModal = ({
                   onChange={(e) => setAgentID(e.target.value)}
                 /> */}
                 <Select onChange={(e) => setCallAnswered(e.target.value)}>
+                  <option value="">-- Select --</option>
                   {callAnsweredOptionData?.reverse()?.map((choose) => (
                     <option key={choose?.id} value={choose?.optionText}>
                       {choose?.optionText}
@@ -178,6 +179,7 @@ export const AddDispositionModal = ({
                   onChange={(e) => setCustomerID(e.target.value)}
                 /> */}
                 <Select onChange={(e) => setCallStatus(e.target.value)}>
+                  <option value="">-- Select --</option>
                   {callStatusOptionData?.map((choose) => (
                     <option key={choose?.id} value={choose?.optionText}>
                       {choose?.optionText}
@@ -202,6 +204,7 @@ export const AddDispositionModal = ({
               /> */}
 
                 <Select onChange={(e) => setReasonForNoPayment(e.target.value)}>
+                  <option value="">-- Select --</option>
                   {reasonForNonPaymentOptionData?.reverse()?.map((choose) => (
                     <option key={choose?.id} value={choose?.optionText}>
                       {choose?.optionText}
@@ -225,6 +228,7 @@ export const AddDispositionModal = ({
                 <Select
                   onChange={(e) => setSubReasonForNoPayment(e.target.value)}
                 >
+                  <option value="">-- Select --</option>
                   {subReasonForNonPaymentOptionData
                     ?.reverse()
                     ?.map((choose) => (
@@ -250,6 +254,7 @@ export const AddDispositionModal = ({
                   onChange={(e) => setSubject(e.target.value)}
                 /> */}
                 <Select onChange={(e) => setPromiseToPay(e.target.value)}>
+                  <option value="">-- Select --</option>
                   {promiseToPayOptionData?.reverse()?.map((choose) => (
                     <option key={choose?.id} value={choose?.optionText}>
                       {choose?.optionText}

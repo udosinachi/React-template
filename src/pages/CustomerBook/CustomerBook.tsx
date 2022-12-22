@@ -81,10 +81,46 @@ const CustomerBook = () => {
     isLoading: itsLoading,
     refetch: toRefetch,
   } = useGetCustomerDetailSearch();
-  const useAllCustomerData = allCustomerData?.document?.data;
+  const useAllCustomerData = allCustomerData?.document?.records?.data;
   const totalCustomerNumber = allCustomerData?.document?.meta?.totalCount;
   console.log(allCustomerData);
   console.log(allCustomerData?.document?.meta);
+
+  const pageNumbers: any = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10];
+  // const indexOfLastRecord = currentPage * recordsPerPage;
+  // const indexOfFirstRecord = indexOfLastRecord - recordsPerPage;
+  // const currentRecords = useAllCustomerData?.slice(
+  //   indexOfFirstRecord,
+  //   indexOfLastRecord
+  // );
+  // console.log(currentRecords, "Recc");
+  // const nPages = Math.ceil(allUserData?.length / recordsPerPage);
+  // console.log(nPages, "npage");
+
+  const nextPage = () => {
+    // if (currentPage !== nPages) {
+    // setCurrentPage(currentPage + 1);
+    // searchMutate({
+    //   searchKey: searchedWords,
+    //   page: currentPage,
+    //   itemsPerPage: recordsPerPage,
+    // });
+    // }
+  };
+  const prevPage = () => {
+    // if (currentPage !== 1) {
+    //   setCurrentPage(currentPage - 1);
+    //   // searchMutate({
+    //   //   searchKey: searchedWords,
+    //   //   page: currentPage,
+    //   //   itemsPerPage: recordsPerPage,
+    //   // });
+    // }
+  };
+
+  const tableSizeChanger = (e: any) => {
+    // setRecordsPerPage(e.target.value);
+  };
 
   return (
     <div>
@@ -93,26 +129,33 @@ const CustomerBook = () => {
       ) : (
         <Box pb="5">
           {/* <Text mb="5">Customer Book Loan</Text> */}
-          <InputGroup
-            w={["100%", "200px", "200px", "300px"]}
-            size={"sm"}
-            border="1px solid black"
+          <Box
+            display="flex"
+            justifyContent="space-between"
+            alignItems="center"
           >
-            <Input
-              type="number"
-              placeholder="Search with Msisdn"
-              value={searchedWords}
-              onChange={(e) => setSearchedWords(e.target.value)}
-            />
-            <InputRightAddon
-              children="Search"
-              bgColor="#26C6DA"
-              color="white"
-              cursor="pointer"
-              onClick={() => searchHandler()}
-              // onClick={() => setUserInfoToggle("Searched")}
-            />
-          </InputGroup>
+            <InputGroup
+              w={["100%", "200px", "200px", "300px"]}
+              size={"sm"}
+              border="1px solid black"
+            >
+              <Input
+                type="number"
+                placeholder="Search with Msisdn"
+                value={searchedWords}
+                onChange={(e) => setSearchedWords(e.target.value)}
+              />
+              <InputRightAddon
+                children="Search"
+                bgColor="#26C6DA"
+                color="white"
+                cursor="pointer"
+                onClick={() => searchHandler()}
+                // onClick={() => setUserInfoToggle("Searched")}
+              />
+            </InputGroup>
+            {/* <Text>Total of {totalCustomerNumber} Customers</Text> */}
+          </Box>
           <Box mt="5">
             <TableContainer bg="white" pb="5">
               <Table size="sm">
@@ -173,78 +216,63 @@ const CustomerBook = () => {
                     ))}
               </Table>
             </TableContainer>
-            {/* <Box>
-            <Flex flexWrap="wrap" mt="3" fontSize="13px">
-              <Box
-                p="1"
-                px="2"
-                border="grey"
-                bgColor="#26C6DA"
-                color="white"
-                cursor="pointer"
-                onClick={prevPage}
-                mr="3"
-              >
-                Previous
-              </Box>
-              {pageNumbers.map((pgNumber: any) => (
+            <Box mb="5">
+              <Flex flexWrap="wrap" mt="3" fontSize="13px">
                 <Box
                   p="1"
                   px="2"
                   border="grey"
+                  bgColor="#26C6DA"
+                  color="white"
                   cursor="pointer"
-                  color={`${currentPage === pgNumber ? "white" : "#26C6DA"}`}
-                  key={pgNumber}
-                  bgColor={`${currentPage === pgNumber ? "#26C6DA" : "white"}`}
-                  onClick={() => {
-                    setCurrentPage(pgNumber);
-                  }}
+                  onClick={prevPage}
+                  mr="3"
                 >
-                  {pgNumber}
+                  Previous
                 </Box>
-              ))}
-              <Box
-                p="1"
-                px="2"
-                border="grey"
-                bgColor="#26C6DA"
-                color="white"
-                cursor="pointer"
-                onClick={nextPage}
-                ml="3"
-              >
-                Next
-              </Box>
-              <Flex p="1" px="2" align="center">
-                PageSize
-                <Select
-                  size="xs"
-                  ml="3"
-                  onChange={tableSizeChanger}
+                {pageNumbers.map((pgNumber: any) => (
+                  <Box
+                    p="1"
+                    px="2"
+                    border="grey"
+                    cursor="pointer"
+                    // color={`${currentPage === pgNumber ? "white" : "#26C6DA"}`}
+                    key={pgNumber}
+                    // bgColor={`${currentPage === pgNumber ? "#26C6DA" : "white"}`}
+                    onClick={() => {
+                      // setCurrentPage(pgNumber);
+                    }}
+                  >
+                    {pgNumber}
+                  </Box>
+                ))}
+                <Box
+                  p="1"
+                  px="2"
                   border="grey"
+                  bgColor="#26C6DA"
+                  color="white"
+                  cursor="pointer"
+                  onClick={nextPage}
+                  ml="3"
                 >
-                  <option value="10">10</option>
-                  <option value="15">15</option>
-                  <option value="20">20</option>
-                </Select>
+                  Next
+                </Box>
+                <Flex p="1" px="2" align="center">
+                  PageSize
+                  <Select
+                    size="xs"
+                    ml="3"
+                    onChange={tableSizeChanger}
+                    border="grey"
+                  >
+                    <option value="10">10</option>
+                    <option value="15">15</option>
+                    <option value="20">20</option>
+                  </Select>
+                </Flex>
               </Flex>
-            </Flex>
-          </Box> */}
-            {/* {searchResponse === false && (
-            <Box
-              bgColor="white"
-              height="200px"
-              display="flex"
-              justifyContent="center"
-            >
-              <Box margin="auto" textAlign="center">
-                <>
-                  <Search2Icon boxSize={10} color="#26C6DA" mb="3" />
-                  <Text>Search with phone number to get a response</Text>
-                </>
-              </Box>
             </Box>
-          )} */}
           </Box>
         </Box>
       )}
