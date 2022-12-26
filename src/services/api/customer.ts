@@ -2,7 +2,8 @@ import { apiURL } from "../../enivironment";
 import { CUSTOMER_DETAILS, CUSTOMER_INFO } from "../apiUrl";
 import axiosInstance from "../axiosInstance";
 
-export const getCustomerDetailSearch = async () => {
+export const getCustomerDetailSearch = async ({ queryKey }: any) => {
+  const [, phoneNumber, dateFrom, dateTo, page, itemsPerPage] = queryKey;
   const res = await axiosInstance.get(`${apiURL}${CUSTOMER_DETAILS}`);
   return res?.data;
 };
