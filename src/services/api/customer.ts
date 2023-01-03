@@ -3,8 +3,11 @@ import { CUSTOMER_DETAILS, CUSTOMER_INFO } from "../apiUrl";
 import axiosInstance from "../axiosInstance";
 
 export const getCustomerDetailSearch = async ({ queryKey }: any) => {
-  const [, phoneNumber, dateFrom, dateTo, page, itemsPerPage] = queryKey;
-  const res = await axiosInstance.get(`${apiURL}${CUSTOMER_DETAILS}`);
+  const [, dateFrom, dateTo, page, itemsPerPage] = queryKey;
+  const res = await axiosInstance.get(
+    // `${apiURL}${CUSTOMER_DETAILS}?phoneNumber=&dateFrom=${dateFrom}&dateTo=${dateTo}&page=${page}&itemsPerPage=${itemsPerPage}`
+    `${apiURL}${CUSTOMER_DETAILS}?phoneNumber=&dateFrom=2021-12-10&dateTo=2022-12-11&page=1&itemsPerPage=100`
+  );
   return res?.data;
 };
 

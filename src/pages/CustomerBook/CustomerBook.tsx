@@ -81,7 +81,7 @@ const CustomerBook = () => {
     isLoading: itsLoading,
     refetch: toRefetch,
   } = useGetCustomerDetailSearch();
-  const useAllCustomerData = allCustomerData?.document?.records?.data;
+  const useAllCustomerData = allCustomerData?.document?.records;
   const totalCustomerNumber = allCustomerData?.document?.meta?.totalCount;
   console.log(allCustomerData);
   console.log(allCustomerData?.document?.meta);

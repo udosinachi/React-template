@@ -222,16 +222,19 @@ const TeamMembers = () => {
               <Box fontSize="14px">Total of {totalRecords} Team Members</Box>
             </Flex>
             <TableContainer bg="white">
-              <Table size="sm">
+              <Table size="sm" variant="simple">
                 {/* <TableCaption>Imperial to metric conversion factors</TableCaption> */}
-                <Thead>
+                <Thead bgColor="gray.200">
                   <Tr>
-                    <Th color="#26C6DA">ID</Th>
+                    <Th color="#26C6DA" py="4">
+                      ID
+                    </Th>
                     <Th color="#26C6DA">Email </Th>
                     <Th color="#26C6DA">Role Name </Th>
                     <Th color="#26C6DA">First Name </Th>
                     <Th color="#26C6DA">Last Name </Th>
                     <Th color="#26C6DA">Logged In Status </Th>
+                    <Th color="#26C6DA"></Th>
                     {/* <Th>Last Login </Th> */}
                   </Tr>
                 </Thead>

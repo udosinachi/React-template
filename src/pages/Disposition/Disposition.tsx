@@ -229,12 +229,21 @@ const Disposition = () => {
             Add Disposition
           </Button> */}
           </Flex>
-          <TableContainer bg="white">
+          <TableContainer
+            bg="white"
+            // sx={{
+            //   "::-webkit-scrollbar": {
+            //     display: "none",
+            //   },
+            // }}
+          >
             <Table size="sm">
               {/* <TableCaption>Imperial to metric conversion factors</TableCaption> */}
-              <Thead>
+              <Thead bgColor="gray.200">
                 <Tr>
-                  <Th color="#26C6DA">Agent ID</Th>
+                  <Th color="#26C6DA" py="5">
+                    Agent ID
+                  </Th>
                   {/* <Th color="#26C6DA">Loan ID</Th> */}
                   {/* <Th color="#26C6DA">Disbursement Date</Th> */}
                   <Th color="#26C6DA">Customer Name</Th>
@@ -245,6 +254,7 @@ const Disposition = () => {
                   <Th color="#26C6DA">Promise To Pay </Th>
                   <Th color="#26C6DA">Comment</Th>
                   <Th color="#26C6DA">Enter Date</Th>
+                  <Th color="#26C6DA"></Th>
 
                   {/* <Th color="#26C6DA">Customer ID </Th>
                 <Th color="#26C6DA">Call Status </Th>
