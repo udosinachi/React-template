@@ -34,6 +34,7 @@ import { GET_ALL_USER_INFO } from "../../services/queryKeys";
 import { EditUserModal } from "../../components/modals/EditUserModal";
 import { NavLink } from "react-router-dom";
 import Pagination from "../CustomerBook/Pagination";
+import { ArrowRightIcon, ArrowLeftIcon } from "@chakra-ui/icons";
 
 const TeamMembers = () => {
   const queryClient = useQueryClient();
@@ -197,8 +198,8 @@ const TeamMembers = () => {
               alignItems="center"
             >
               <InputGroup
-                w={["100%", "200px", "200px", "300px"]}
-                size={"sm"}
+                w={["100%", "300px", "300px", "300px"]}
+                size={"md"}
                 border="grey"
               >
                 <Input
@@ -219,7 +220,7 @@ const TeamMembers = () => {
               {/* <Button size={"sm"} bgColor="#26C6DA" color="white" onClick={onOpen}>
             Add New User
           </Button> */}
-              <Box fontSize="14px">Total of {totalRecords} Team Members</Box>
+              {/* <Box fontSize="14px">Total of {totalRecords} Team Members</Box> */}
             </Flex>
             <TableContainer bg="white">
               <Table size="sm" variant="simple">
@@ -343,24 +344,34 @@ const TeamMembers = () => {
 
             <Box>
               <Flex flexWrap="wrap" mt="3" fontSize="13px">
-                <Box
-                  p="1"
-                  px="2"
+                <Flex
+                  justifyContent="center"
+                  alignItems="center"
+                  mr="2"
                   border="grey"
-                  bgColor="#26C6DA"
-                  color="white"
+                  borderRadius="5px"
+                  w="35px"
+                  h="35px"
                   cursor="pointer"
+                  bgColor="white"
                   onClick={prevPage}
-                  mr="3"
+                  color="#26C6DA"
+                  // mr="3"
+                  _hover={{ background: "#26C6DA", color: "white" }}
                 >
-                  Previous
-                </Box>
+                  <ArrowLeftIcon />
+                </Flex>
                 {pageNumbers.map((pgNumber: any) => (
-                  <Box
-                    p="1"
-                    px="2"
+                  <Flex
+                    justifyContent="center"
+                    alignItems="center"
+                    mr="2"
                     border="grey"
+                    borderRadius="5px"
+                    w="35px"
+                    h="35px"
                     cursor="pointer"
+                    mb="2"
                     color={`${currentPage === pgNumber ? "white" : "#26C6DA"}`}
                     key={pgNumber}
                     bgColor={`${
@@ -369,29 +380,39 @@ const TeamMembers = () => {
                     onClick={() => {
                       setCurrentPage(pgNumber);
                     }}
+                    _hover={{ background: "#26C6DA", color: "white" }}
                   >
                     {pgNumber}
-                  </Box>
+                  </Flex>
                 ))}
-                <Box
-                  p="1"
-                  px="2"
+                <Flex
+                  justifyContent="center"
+                  alignItems="center"
+                  mr="2"
                   border="grey"
-                  bgColor="#26C6DA"
-                  color="white"
+                  borderRadius="5px"
+                  w="35px"
+                  h="35px"
+                  bgColor="white"
                   cursor="pointer"
                   onClick={nextPage}
-                  ml="3"
+                  color="#26C6DA"
+                  _hover={{ background: "#26C6DA", color: "white" }}
+                  // ml="3"
                 >
-                  Next
-                </Box>
+                  <ArrowRightIcon />
+                </Flex>
                 <Flex p="1" px="2" align="center">
                   PageSize
                   <Select
                     size="xs"
                     ml="3"
+                    w="55px"
+                    h="35px"
                     onChange={tableSizeChanger}
                     border="grey"
+                    bgColor="white"
+                    borderRadius="5px"
                   >
                     {/* <option value="5">5</option> */}
                     <option value="10">10</option>

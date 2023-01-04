@@ -22,6 +22,7 @@ import { IconType } from "react-icons";
 import Navbar from "./Navbar";
 import Footer from "./Footer";
 import { LogoImage } from "../assets";
+import useCustomToast from "../utils/notification";
 
 interface LinkItemProps {
   name: string;
@@ -38,8 +39,8 @@ const LinkItems: Array<LinkItemProps> = [
 ];
 
 const activeStyle: React.CSSProperties = {
-  color: "white",
-  background: "#26C6DA",
+  color: "#26C6DA",
+  background: "white",
   display: "flex",
   alignItems: "center",
   padding: "10px",
@@ -64,7 +65,7 @@ export default function Sidebar({ children }: { children: ReactNode }) {
         onClose={onClose}
         returnFocusOnClose={false}
         onOverlayClick={onClose}
-        size="full"
+        // size="full"
       >
         <DrawerContent>
           <SidebarContent onClose={onClose} />
@@ -73,7 +74,7 @@ export default function Sidebar({ children }: { children: ReactNode }) {
       {/* mobilenav */}
       <Navbar onOpen={onOpen} />
       <Box ml={{ base: 0, md: 60 }} p="4" position="relative">
-        <Box height="100vh">{children}</Box>
+        <Box>{children}</Box>
       </Box>
       {/* <Footer /> */}
     </Box>
@@ -85,6 +86,14 @@ interface SidebarProps extends BoxProps {
 }
 
 const SidebarContent = ({ onClose, ...rest }: SidebarProps) => {
+  const { successToast } = useCustomToast();
+  const logout = () => {
+    localStorage.removeItem("user");
+    successToast("Logout Successful");
+    setTimeout(() => {
+      window.location.reload();
+    }, 500);
+  };
   return (
     <Box
       transition="3s ease"
@@ -94,6 +103,7 @@ const SidebarContent = ({ onClose, ...rest }: SidebarProps) => {
       w={{ base: "full", md: 60 }}
       pos="fixed"
       h="full"
+      bgColor="#26C6DA"
       {...rest}
     >
       <Flex h="20" alignItems="center" mx="8" justifyContent="space-between">
@@ -114,22 +124,11 @@ const SidebarContent = ({ onClose, ...rest }: SidebarProps) => {
                 : {
                     ...activeStyle,
                     background: "none",
-                    color: "black",
+                    color: "white",
                   }
             }
           >
-            <Flex
-            // align="center"
-            // p="4"
-            // mx="4"
-            // borderRadius="lg"
-            // role="group"
-            // cursor="pointer"
-            // _hover={{
-            //   bg: "cyan.400",
-            //   color: "white",
-            // }}
-            >
+            <Flex>
               <Icon
                 mr="4"
                 mt="1"
@@ -145,6 +144,25 @@ const SidebarContent = ({ onClose, ...rest }: SidebarProps) => {
           </NavLink>
         </div>
       ))}
+      {/* <Flex
+        onClick={logout}
+        color="white"
+        background="#26C6DA"
+        display="flex"
+        alignItems="center"
+        padding="10px"
+        margin="10px"
+      >
+        <Icon
+          mr="4"
+          mt="1"
+          fontSize="16"
+          _groupHover={{
+            color: "white",
+          }}
+        />
+        Logout
+      </Flex> */}
     </Box>
   );
 };

@@ -142,9 +142,12 @@ const AgentMapping = () => {
 
             <Button
               mt="5"
-              bgColor="green.400"
-              color="white"
               onClick={handleSubmit}
+              bgColor="#26C6DA"
+              color="white"
+              _hover={{ background: "#26C6DA", color: "white" }}
+              _active={{ background: "#26C6DA", color: "white" }}
+              _focus={{ background: "#26C6DA", color: "white" }}
             >
               Map Supervisor to Agent
             </Button>

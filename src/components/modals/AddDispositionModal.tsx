@@ -316,6 +316,10 @@ export const AddDispositionModal = ({
               mr={3}
               onClick={handleSubmit}
               bgColor="#26C6DA"
+              color="white"
+              _hover={{ background: "#26C6DA", color: "white" }}
+              _active={{ background: "#26C6DA", color: "white" }}
+              _focus={{ background: "#26C6DA", color: "white" }}
             >
               Save & Post
             </Button>

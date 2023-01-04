@@ -1,5 +1,12 @@
 import { useState } from "react";
-import { EditIcon, DeleteIcon, PhoneIcon, SearchIcon } from "@chakra-ui/icons";
+import {
+  EditIcon,
+  DeleteIcon,
+  PhoneIcon,
+  SearchIcon,
+  ArrowLeftIcon,
+  ArrowRightIcon,
+} from "@chakra-ui/icons";
 import {
   Box,
   Table,
@@ -206,13 +213,13 @@ const Disposition = () => {
             alignItems="center"
           >
             <InputGroup
-              w={["100%", "200px", "200px", "300px"]}
-              size={"sm"}
+              w={["100%", "300px", "300px", "300px"]}
+              size={"md"}
               border="grey"
             >
               <Input
                 type="text"
-                placeholder="Search User"
+                placeholder="Search Disposition"
                 value={searchedWords}
                 onChange={(e) => setSearchedWords(e.target.value)}
               />
@@ -231,11 +238,11 @@ const Disposition = () => {
           </Flex>
           <TableContainer
             bg="white"
-            // sx={{
-            //   "::-webkit-scrollbar": {
-            //     display: "none",
-            //   },
-            // }}
+            sx={{
+              "::-webkit-scrollbar": {
+                display: "none",
+              },
+            }}
           >
             <Table size="sm">
               {/* <TableCaption>Imperial to metric conversion factors</TableCaption> */}
@@ -375,53 +382,73 @@ const Disposition = () => {
 
           <Box>
             <Flex flexWrap="wrap" mt="3" fontSize="13px">
-              <Box
-                p="1"
-                px="2"
+              <Flex
+                justifyContent="center"
+                alignItems="center"
+                mr="2"
                 border="grey"
-                bgColor="#26C6DA"
-                color="white"
+                borderRadius="5px"
+                w="35px"
+                h="35px"
                 cursor="pointer"
+                bgColor="white"
                 onClick={prevPage}
-                mr="3"
+                color="#26C6DA"
+                // mr="3"
+                _hover={{ background: "#26C6DA", color: "white" }}
               >
-                Previous
-              </Box>
+                <ArrowLeftIcon />
+              </Flex>
               {pageNumbers.map((pgNumber: any) => (
-                <Box
-                  p="1"
-                  px="2"
-                  border="1px solid grey"
+                <Flex
+                  justifyContent="center"
+                  alignItems="center"
+                  mr="2"
+                  border="grey"
+                  borderRadius="5px"
+                  w="35px"
+                  h="35px"
                   cursor="pointer"
+                  mb="2"
                   color={`${currentPage === pgNumber ? "white" : "#26C6DA"}`}
                   key={pgNumber}
                   bgColor={`${currentPage === pgNumber ? "#26C6DA" : "white"}`}
                   onClick={() => {
                     setCurrentPage(pgNumber);
                   }}
+                  _hover={{ background: "#26C6DA", color: "white" }}
                 >
                   {pgNumber}
-                </Box>
+                </Flex>
               ))}
-              <Box
-                p="1"
-                px="2"
+              <Flex
+                justifyContent="center"
+                alignItems="center"
+                mr="2"
                 border="grey"
-                bgColor="#26C6DA"
-                color="white"
+                borderRadius="5px"
+                w="35px"
+                h="35px"
+                bgColor="white"
                 cursor="pointer"
                 onClick={nextPage}
-                ml="3"
+                color="#26C6DA"
+                _hover={{ background: "#26C6DA", color: "white" }}
+                // ml="3"
               >
-                Next
-              </Box>
+                <ArrowRightIcon />
+              </Flex>
               <Flex p="1" px="2" align="center">
                 PageSize
                 <Select
                   size="xs"
                   ml="3"
+                  w="55px"
+                  h="35px"
                   onChange={tableSizeChanger}
                   border="grey"
+                  bgColor="white"
+                  borderRadius="5px"
                 >
                   {/* <option value="5">5</option> */}
                   <option value="10">10</option>

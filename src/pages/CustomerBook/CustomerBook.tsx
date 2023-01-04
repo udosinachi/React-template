@@ -1,4 +1,4 @@
-import { Search2Icon } from "@chakra-ui/icons";
+import { ArrowLeftIcon, ArrowRightIcon, Search2Icon } from "@chakra-ui/icons";
 import {
   Box,
   Button,
@@ -40,15 +40,15 @@ const CustomerBook = () => {
     useGetCustomerDetailSearchMutate({
       onSuccess: (res: any) => {
         console.log(res);
-        console.log(res?.document?.data);
-        setAllSearchedUserData(res?.document?.data);
+        console.log(res?.document?.records);
+        setAllSearchedUserData(res?.document?.records);
         setNoSearchRecord(res?.message);
         setSearchResponse(true);
-        if (res?.document?.data?.length === 0) {
+        if (res?.document?.records?.length === 0) {
           setSearchResponse(false);
-          errorToast(res?.document?.message);
+          errorToast("No Record Found");
         } else {
-          successToast(res?.document?.message);
+          successToast("Record Found");
         }
       },
       onError: (err: any) => {
@@ -84,7 +84,7 @@ const CustomerBook = () => {
   const useAllCustomerData = allCustomerData?.document?.records;
   const totalCustomerNumber = allCustomerData?.document?.meta?.totalCount;
   console.log(allCustomerData);
-  console.log(allCustomerData?.document?.meta);
+  // console.log(allCustomerData?.document?.meta);
 
   const pageNumbers: any = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10];
   // const indexOfLastRecord = currentPage * recordsPerPage;
@@ -135,12 +135,12 @@ const CustomerBook = () => {
             alignItems="center"
           >
             <InputGroup
-              w={["100%", "200px", "200px", "300px"]}
-              size={"sm"}
-              border="1px solid black"
+              w={["100%", "300px", "300px", "300px"]}
+              size={"md"}
+              border="grey"
             >
               <Input
-                type="number"
+                type="text"
                 placeholder="Search with Msisdn"
                 value={searchedWords}
                 onChange={(e) => setSearchedWords(e.target.value)}
@@ -157,16 +157,26 @@ const CustomerBook = () => {
             {/* <Text>Total of {totalCustomerNumber} Customers</Text> */}
           </Box>
           <Box mt="5">
-            <TableContainer bg="white" pb="5">
+            <TableContainer
+              bg="white"
+              pb="5"
+              sx={{
+                "::-webkit-scrollbar": {
+                  display: "none",
+                },
+              }}
+            >
               <Table size="sm">
-                <Thead>
+                <Thead bgColor="gray.200">
                   <Tr>
-                    <Th>Customer ID</Th>
-                    <Th>Full Name</Th>
-                    <Th>Msisdn</Th>
-                    <Th>BVN</Th>
-                    <Th>Activation Date</Th>
-                    <Th>Address</Th>
+                    <Th color="#26C6DA" py="4">
+                      Customer ID
+                    </Th>
+                    <Th color="#26C6DA">Full Name</Th>
+                    <Th color="#26C6DA">Msisdn</Th>
+                    <Th color="#26C6DA">BVN</Th>
+                    <Th color="#26C6DA">Activation Date</Th>
+                    <Th color="#26C6DA">Address</Th>
                   </Tr>
                 </Thead>
                 {!allSearchedUserData || allSearchedUserData?.length === 0
@@ -216,56 +226,80 @@ const CustomerBook = () => {
                     ))}
               </Table>
             </TableContainer>
-            <Box mb="5">
+            <Box>
               <Flex flexWrap="wrap" mt="3" fontSize="13px">
-                <Box
-                  p="1"
-                  px="2"
+                <Flex
+                  justifyContent="center"
+                  alignItems="center"
+                  mr="2"
                   border="grey"
-                  bgColor="#26C6DA"
-                  color="white"
+                  borderRadius="5px"
+                  w="35px"
+                  h="35px"
                   cursor="pointer"
+                  bgColor="white"
                   onClick={prevPage}
-                  mr="3"
+                  color="#26C6DA"
+                  // mr="3"
+                  _hover={{ background: "#26C6DA", color: "white" }}
                 >
-                  Previous
-                </Box>
+                  <ArrowLeftIcon />
+                </Flex>
                 {pageNumbers.map((pgNumber: any) => (
-                  <Box
-                    p="1"
-                    px="2"
+                  <Flex
+                    justifyContent="center"
+                    alignItems="center"
+                    mr="2"
                     border="grey"
+                    borderRadius="5px"
+                    w="35px"
+                    h="35px"
                     cursor="pointer"
+                    mb="2"
                     // color={`${currentPage === pgNumber ? "white" : "#26C6DA"}`}
                     key={pgNumber}
-                    // bgColor={`${currentPage === pgNumber ? "#26C6DA" : "white"}`}
+                    // bgColor={`${
+                    //   currentPage === pgNumber ? "#26C6DA" : "white"
+                    // }`}
+                    bgColor="white"
                     onClick={() => {
                       // setCurrentPage(pgNumber);
                     }}
+                    _hover={{ background: "#26C6DA", color: "white" }}
                   >
                     {pgNumber}
-                  </Box>
+                  </Flex>
                 ))}
-                <Box
-                  p="1"
-                  px="2"
+                <Flex
+                  justifyContent="center"
+                  alignItems="center"
+                  mr="2"
                   border="grey"
-                  bgColor="#26C6DA"
-                  color="white"
+                  borderRadius="5px"
+                  w="35px"
+                  h="35px"
+                  bgColor="white"
                   cursor="pointer"
                   onClick={nextPage}
-                  ml="3"
+                  color="#26C6DA"
+                  _hover={{ background: "#26C6DA", color: "white" }}
+                  // ml="3"
                 >
-                  Next
-                </Box>
+                  <ArrowRightIcon />
+                </Flex>
                 <Flex p="1" px="2" align="center">
                   PageSize
                   <Select
                     size="xs"
                     ml="3"
+                    w="55px"
+                    h="35px"
                     onChange={tableSizeChanger}
                     border="grey"
+                    bgColor="white"
+                    borderRadius="5px"
                   >
+                    {/* <option value="5">5</option> */}
                     <option value="10">10</option>
                     <option value="15">15</option>
                     <option value="20">20</option>

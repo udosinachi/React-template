@@ -57,7 +57,15 @@ const CustomerBookDetails = () => {
           <Box>
             <Box>
               <Flex justifyContent="flex-end">
-                <Button mb="3" onClick={onOpen}>
+                <Button
+                  mb="3"
+                  onClick={onOpen}
+                  bgColor="#26C6DA"
+                  color="white"
+                  _hover={{ background: "#26C6DA", color: "white" }}
+                  _active={{ background: "#26C6DA", color: "white" }}
+                  _focus={{ background: "#26C6DA", color: "white" }}
+                >
                   Fill Disposition
                 </Button>
               </Flex>

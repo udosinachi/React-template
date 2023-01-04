@@ -79,13 +79,13 @@ const Report = () => {
         <Box>
           {/* <Text mb="5">Customer Book Loan</Text> */}
           <InputGroup
-            w={["100%", "200px", "200px", "300px"]}
-            size={"sm"}
-            border="1px solid black"
+            w={["100%", "300px", "300px", "300px"]}
+            size={"md"}
+            border="grey"
           >
             <Input
               type="date"
-              placeholder="Filter with Date"
+              placeholder="Search User"
               value={searchedWords}
               onChange={(e) => setSearchedWords(e.target.value)}
             />
@@ -99,11 +99,20 @@ const Report = () => {
             />
           </InputGroup>
           <Box mt="5">
-            <TableContainer bg="white">
+            <TableContainer
+              bg="white"
+              sx={{
+                "::-webkit-scrollbar": {
+                  display: "none",
+                },
+              }}
+            >
               <Table size="sm">
-                <Thead>
+                <Thead bgColor="gray.200">
                   <Tr>
-                    <Th color="#26C6DA">Agent ID</Th>
+                    <Th color="#26C6DA" py="4">
+                      Agent ID
+                    </Th>
                     <Th color="#26C6DA">Customer Name</Th>
                     <Th color="#26C6DA">Email</Th>
                     <Th color="#26C6DA">Amount to Pay Today</Th>
