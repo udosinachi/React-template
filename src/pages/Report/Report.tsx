@@ -1,5 +1,16 @@
 import { Search2Icon } from "@chakra-ui/icons";
 import {
+  EditIcon,
+  DeleteIcon,
+  PhoneIcon,
+  SearchIcon,
+  ArrowLeftIcon,
+  ArrowRightIcon,
+  EmailIcon,
+  InfoOutlineIcon,
+  ChatIcon,
+} from "@chakra-ui/icons";
+import {
   Box,
   Button,
   Input,
@@ -15,6 +26,7 @@ import {
   Td,
   TableCaption,
   TableContainer,
+  Icon,
 } from "@chakra-ui/react";
 import { useState } from "react";
 import { NavLink } from "react-router-dom";
@@ -22,6 +34,8 @@ import { Loader } from "../../components/WithSuspense";
 import { useGetCustomerDetailSearchMutate } from "../../services/query/customer";
 import { useGetDispositionReportMutate } from "../../services/query/disposition";
 import useCustomToast from "../../utils/notification";
+import { CgProfile } from "react-icons/cg";
+import { MdOutlineMonetizationOn } from "react-icons/md";
 
 const Report = () => {
   const { errorToast, successToast } = useCustomToast();
@@ -131,15 +145,45 @@ const Report = () => {
                       cursor="pointer"
                       _hover={{ background: "whitesmoke" }}
                     >
-                      <Td>{info?.agentId}</Td>
-
-                      <Td>{info?.nameOfBrowser}</Td>
-                      <Td>{info?.email}</Td>
-                      <Td>{info?.amountToPayToday}</Td>
-                      <Td>{info?.phoneNumber}</Td>
-                      <Td>{info?.reasonForNoPayment}</Td>
+                      <Td py="3">{info?.agentId}</Td>
+                      {/* <Td>{info?.customerId}</Td> */}
+                      {/* <Td>{info?.loanId}</Td> */}
+                      {/* <Td>{info?.disbursementDate?.slice(0, 10)}</Td> */}
+                      <Td py="3" display="flex" alignItems="center">
+                        <Icon
+                          as={CgProfile}
+                          mr="3"
+                          color="#26C6DA"
+                          boxSize="4"
+                        />
+                        {info?.nameOfBrowser}
+                      </Td>
+                      <Td py="3">
+                        <EmailIcon mr="3" color="#26C6DA" />
+                        {info?.email}
+                      </Td>
+                      <Td py="3" display="flex" alignItems="center">
+                        <Icon
+                          as={MdOutlineMonetizationOn}
+                          mr="3"
+                          color="green"
+                          boxSize="4"
+                        />
+                        {info?.amountToPayToday}
+                      </Td>
+                      <Td py="3">
+                        <PhoneIcon mr="3" color="green" />
+                        {info?.phoneNumber}
+                      </Td>
+                      <Td py="3">
+                        <InfoOutlineIcon mr="3" color="orange" />
+                        {info?.reasonForNoPayment}
+                      </Td>
                       <Td>{info?.promiseToPay}</Td>
-                      <Td>{info?.comment}</Td>
+                      <Td py="3">
+                        <ChatIcon mr="3" />
+                        {info?.comment}
+                      </Td>
                       <Td>{info?.dateCreated?.slice(0, 10)}</Td>
 
                       {/* 

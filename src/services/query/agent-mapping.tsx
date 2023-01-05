@@ -8,6 +8,7 @@ import {
   editAgentMapping,
   addNewAgentMapping,
   deleteAgentMapping,
+  getAllSupervisorAgentsMapping,
 } from "../api/agent-mapping";
 import {
   GET_ALL_AGENT_MAPPING,
@@ -16,6 +17,7 @@ import {
   DELETE_AGENT_MAPPING,
   SEARCH_AGENT_MAPPING,
   EDIT_AGENT_MAPPING,
+  GET_ALL_SUPERVISOR_AGENT_MAPPING,
 } from "../queryKeys";
 
 export const useGetAllAgentMapping = (
@@ -98,4 +100,20 @@ export const useGetAgentMappingByIdMutate = (options = {}) => {
     ...options,
   });
   return { mutate, isLoading };
+};
+
+export const useGetAllSupervisorAgentsMapping = (
+  supervisorId: any,
+  page: number,
+  itemPerPage: number,
+  options = {}
+) => {
+  const { data, isLoading, refetch } = useQuery(
+    [GET_ALL_SUPERVISOR_AGENT_MAPPING, supervisorId, page, itemPerPage],
+    getAllSupervisorAgentsMapping,
+    {
+      ...options,
+    }
+  );
+  return { data, isLoading, refetch };
 };

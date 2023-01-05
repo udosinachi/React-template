@@ -53,3 +53,13 @@ export const getUserInfoByIdMutate = async (body: any) => {
   const res = await axiosInstance.get(`${apiURL}${USER_INFO}/${body.id}`);
   return res?.data;
 };
+
+export const getUserInfoForSupervisor = async (body: any) => {
+  const res = await axiosInstance.get(`${apiURL}${USER_INFO}/supervisors`);
+  return res?.data;
+};
+
+export const getUserInfoForAgent = async (body: any) => {
+  const res = await axiosInstance.get(`${apiURL}${USER_INFO}/agents`);
+  return res?.data;
+};

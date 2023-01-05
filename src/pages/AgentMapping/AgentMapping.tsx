@@ -1,3 +1,4 @@
+import { EmailIcon } from "@chakra-ui/icons";
 import {
   Box,
   Button,
@@ -5,16 +6,26 @@ import {
   FormLabel,
   Select,
   Text,
+  Table,
+  Thead,
+  Tbody,
+  Tr,
+  Th,
+  Td,
+  TableContainer,
 } from "@chakra-ui/react";
 import React, { useState } from "react";
 import { Loader } from "../../components/WithSuspense";
 import {
   useAddNewAgentMapping,
   useGetAllAgentMapping,
+  useGetAllSupervisorAgentsMapping,
 } from "../../services/query/agent-mapping";
 import {
   useGetAllUserInfo,
   useGetUserInfoById,
+  useGetUserInfoForAgents,
+  useGetUserInfoForSupervisor,
 } from "../../services/query/user";
 import useCustomToast from "../../utils/notification";
 
@@ -29,30 +40,37 @@ const AgentMapping = () => {
   const allUserData = data?.document?.records;
   //   console.log(allUserData);
 
+  const {
+    data: dataSupervisor,
+    isLoading: isLoadingSupervisor,
+    refetch: refetchSupervisor,
+  } = useGetUserInfoForSupervisor();
+  const SupervisorData = dataSupervisor?.document;
+  console.log(SupervisorData);
+
+  const {
+    data: dataAgent,
+    isLoading: isLoadingAgent,
+    refetch: refetchAgent,
+  } = useGetUserInfoForAgents();
+  const AgentData = dataAgent?.document;
+  console.log(AgentData);
+
   const [listOfSupervisors, setListOfSupervisors] = useState("");
   const [listOfAgent, setListOfAgent] = useState("");
   const [listOfSupervisorToAgent, setListOfSupervisorToAgent] = useState("");
   const [listofAgentsUnderaSupervisor, setListofAgentsUnderaSupervisor] =
     useState("");
-  console.log(listofAgentsUnderaSupervisor, "Id of all under agents");
+  // console.log(listofAgentsUnderaSupervisor, "Id of all under agents");
 
-  const supervisorRole = [];
-  for (let i = 0; i < allUserData?.length; i++) {
-    if (allUserData[i].roleName === "Supervisor") {
-      supervisorRole.push(allUserData[i]);
-    }
-  }
-  //   console.log(supervisorRole, "For supervisors");
-
-  const agentRole = [];
-  for (let i = 0; i < allUserData?.length; i++) {
-    if (allUserData[i].roleName === "Agent") {
-      agentRole.push(allUserData[i]);
-    }
-  }
-  //   console.log(agentRole, "For agents");
-  //   console.log(listOfSupervisors);
-  //   console.log(listOfAgent);
+  const {
+    data: dataSupervisorAgentsMapping,
+    isLoading: isLoadingSupervisorAgentsMapping,
+    refetch: refetchSupervisorAgentsMapping,
+  } = useGetAllSupervisorAgentsMapping(listOfSupervisorToAgent, 1, 100);
+  const SupervisorAgentsMappingData =
+    dataSupervisorAgentsMapping?.document?.records;
+  console.log(SupervisorAgentsMappingData);
 
   const { mutate, isLoading: isCreateLoading } = useAddNewAgentMapping({
     onSuccess: (res: any) => {
@@ -84,29 +102,6 @@ const AgentMapping = () => {
   //   console.log(allMappingDataArray);
   //   console.log(allMappingData?.document?.records);
 
-  const IdOfMappedSupervisor = [];
-  for (let i = 0; i < allMappingDataArray?.length; i++) {
-    if (allMappingDataArray[i].supervisorId === +listOfSupervisorToAgent) {
-      IdOfMappedSupervisor.push(allMappingDataArray[i]);
-    }
-  }
-  console.log(listOfSupervisorToAgent);
-  console.log(IdOfMappedSupervisor);
-
-  //   const {
-  //     data: allUserById,
-  //     isLoading: itsUserByIdLoader,
-  //     refetch: toUserByIdRefetch,
-  //   } = useGetUserInfoById(1);
-  //     console.log(allUserById);
-
-  const agentsUnderSupervisor: any = [];
-  for (let i = 0; i < allUserData?.length; i++) {
-    if (allUserData[i].id === +listofAgentsUnderaSupervisor) {
-      agentsUnderSupervisor.push(allUserData[i]);
-    }
-  }
-
   return (
     <div>
       {isCreateLoading ? (
@@ -119,9 +114,9 @@ const AgentMapping = () => {
 
               <Select onChange={(e) => setListOfSupervisors(e.target.value)}>
                 <option value="">-- Select a Supervisor --</option>
-                {supervisorRole?.reverse()?.map((choose) => (
+                {SupervisorData?.reverse()?.map((choose: any) => (
                   <option key={choose?.id} value={choose?.id}>
-                    {choose?.firstName} {choose?.lastName} {choose?.id}
+                    {choose?.id} {choose?.firstName} {choose?.lastName}
                   </option>
                 ))}
               </Select>
@@ -132,9 +127,9 @@ const AgentMapping = () => {
 
               <Select onChange={(e) => setListOfAgent(e.target.value)}>
                 <option value="">-- Select an Agent --</option>
-                {agentRole?.reverse()?.map((choose) => (
+                {AgentData?.reverse()?.map((choose: any) => (
                   <option key={choose?.id} value={choose?.id}>
-                    {choose?.firstName} {choose?.lastName} {choose?.id}
+                    {choose?.id} {choose?.firstName} {choose?.lastName}
                   </option>
                 ))}
               </Select>
@@ -161,27 +156,103 @@ const AgentMapping = () => {
                 onChange={(e) => setListOfSupervisorToAgent(e.target.value)}
               >
                 <option value="">-- Select a Supervisor --</option>
-                {supervisorRole?.map((choose) => (
+                {SupervisorData?.map((choose: any) => (
                   <option key={choose?.id} value={choose?.id}>
-                    {choose?.firstName} {choose?.lastName} {choose?.id}
+                    {choose?.id} {choose?.firstName} {choose?.lastName}
                   </option>
                 ))}
               </Select>
             </FormControl>
-            {IdOfMappedSupervisor?.map((mappedAgents: any) => (
+            {/* {SupervisorAgentsMappingData?.map((mappedAgents: any) => (
               <Box key={mappedAgents?.id}>
-                <Box
-                //   onChange={() =>
-                //     setListofAgentsUnderaSupervisor(mappedAgents?.agentId)
-                //   }
-                >
-                  {agentsUnderSupervisor?.map((one: any) => (
-                    <Box key={one?.id}>{one?.firstName}</Box>
-                  ))}
-                  {mappedAgents?.supervisorId} {mappedAgents?.agentId}
-                </Box>
+                <Box>{mappedAgents?.id}</Box>
               </Box>
-            ))}
+            ))} */}
+            {isLoadingSupervisorAgentsMapping ? (
+              <Loader />
+            ) : (
+              <TableContainer bg="white" my="5">
+                <Table size="sm" variant="simple">
+                  {/* <TableCaption>Imperial to metric conversion factors</TableCaption> */}
+                  <Thead bgColor="gray.200">
+                    <Tr>
+                      <Th color="#26C6DA" py="4">
+                        ID
+                      </Th>
+                      <Th color="#26C6DA">Email </Th>
+                      <Th color="#26C6DA">Role Name </Th>
+                      <Th color="#26C6DA">First Name </Th>
+                      <Th color="#26C6DA">Last Name </Th>
+                      <Th color="#26C6DA">Logged In Status </Th>
+                      {/* <Th color="#26C6DA"></Th> */}
+                      {/* <Th>Last Login </Th> */}
+                    </Tr>
+                  </Thead>
+
+                  <Tbody>
+                    {SupervisorAgentsMappingData?.map((info: any) => (
+                      <Tr
+                        key={info.id}
+                        //   onClick={() => {
+                        //     setEditID(info?.id);
+                        //     onOpenEdit();
+                        //     byIdMutate({
+                        //       id: info?.id,
+                        //     });
+                        //   }}
+                        cursor="pointer"
+                        _hover={{ background: "whitesmoke" }}
+                      >
+                        <Td py="3">{info?.id}</Td>
+                        <Td py="3">
+                          <EmailIcon mr="3" color="#26C6DA" />
+                          {info?.email}
+                        </Td>
+                        <Td>{info?.roleName}</Td>
+                        <Td>{info?.firstName}</Td>
+                        <Td>{info?.lastName}</Td>
+                        {info?.id % 2 ? (
+                          <Td bgColor="green.200" color="green">
+                            Logged In
+                          </Td>
+                        ) : (
+                          <Td bgColor="red.200" color="red">
+                            Logged Out
+                          </Td>
+                        )}
+
+                        {/* <Td>{info?.lastLogin}</Td> */}
+                        {/* <Td>
+                        <Icon
+                          onClick={() => {
+                            setEditID(info?.id);
+                            onOpenEdit();
+                            byIdMutate({
+                              id: info?.id,
+                            });
+                          }}
+                          as={EditIcon}
+                          boxSize={5}
+                          mr="3"
+                          cursor="pointer"
+                        />
+                        <Icon
+                              onClick={() => deleteUserInfo(info?.id)}
+                              as={DeleteIcon}
+                              boxSize={5}
+                              color="red.500"
+                              cursor="pointer"
+                            />
+                      </Td> */}
+                      </Tr>
+                    ))}
+                  </Tbody>
+                  {/* ) : ( */}
+
+                  {/* )} */}
+                </Table>
+              </TableContainer>
+            )}
           </Box>
         </>
       )}

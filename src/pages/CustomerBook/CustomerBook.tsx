@@ -1,4 +1,9 @@
-import { ArrowLeftIcon, ArrowRightIcon, Search2Icon } from "@chakra-ui/icons";
+import {
+  ArrowLeftIcon,
+  ArrowRightIcon,
+  LinkIcon,
+  Search2Icon,
+} from "@chakra-ui/icons";
 import {
   Box,
   Button,
@@ -17,9 +22,12 @@ import {
   TableContainer,
   Flex,
   Select,
+  Icon,
 } from "@chakra-ui/react";
 import { useState } from "react";
 import { NavLink, useNavigate } from "react-router-dom";
+import { PhoneIcon, CalendarIcon } from "@chakra-ui/icons";
+import { CgProfile } from "react-icons/cg";
 import { Loader } from "../../components/WithSuspense";
 import {
   useGetCustomerDetailSearch,
@@ -63,6 +71,10 @@ const CustomerBook = () => {
       return false;
     }
     if (searchedWords.length < 11) {
+      errorToast("Invalid Number");
+      return false;
+    }
+    if (searchedWords.length > 11) {
       errorToast("Invalid Number");
       return false;
     }
@@ -191,14 +203,29 @@ const CustomerBook = () => {
                             );
                           }}
                         >
-                          <Td>{customerList?.id}</Td>
-                          <Td>
+                          <Td py="3">{customerList?.id}</Td>
+                          <Td py="3" display="flex" alignItems="center">
+                            <Icon
+                              as={CgProfile}
+                              mr="3"
+                              color="#26C6DA"
+                              boxSize="4"
+                            />
                             {customerList?.firstname} {customerList?.lastname}
                           </Td>
-                          <Td>{customerList?.msisdn}</Td>
+                          <Td py="3">
+                            <PhoneIcon mr="3" color="green" />
+                            {customerList?.msisdn}
+                          </Td>
                           <Td>{customerList?.bvn}</Td>
-                          <Td>{customerList?.activationDate}</Td>
-                          <Td>{customerList?.preCustomers[0]?.address1}</Td>
+                          <Td py="3">
+                            <CalendarIcon mr="3" color="#26C6DA" />
+                            {customerList?.activationDate}
+                          </Td>
+                          <Td py="3">
+                            <LinkIcon mr="3" color="green" />
+                            {customerList?.preCustomers[0]?.address1}
+                          </Td>
                         </Tr>
                       </Tbody>
                     ))
@@ -214,13 +241,28 @@ const CustomerBook = () => {
                           }}
                         >
                           <Td>{customerList?.id}</Td>
-                          <Td>
+                          <Td py="3" display="flex" alignItems="center">
+                            <Icon
+                              as={CgProfile}
+                              mr="3"
+                              color="#26C6DA"
+                              boxSize="4"
+                            />
                             {customerList?.firstname} {customerList?.lastname}
                           </Td>
-                          <Td>{customerList?.msisdn}</Td>
+                          <Td py="3">
+                            <PhoneIcon mr="3" color="green" />
+                            {customerList?.msisdn}
+                          </Td>
                           <Td>{customerList?.bvn}</Td>
-                          <Td>{customerList?.activationDate}</Td>
-                          <Td>{customerList?.preCustomers[0]?.address1}</Td>
+                          <Td py="3">
+                            <CalendarIcon mr="3" color="#26C6DA" />
+                            {customerList?.activationDate}
+                          </Td>
+                          <Td py="3">
+                            <LinkIcon mr="3" color="green" />
+                            {customerList?.preCustomers[0]?.address1}
+                          </Td>
                         </Tr>
                       </Tbody>
                     ))}

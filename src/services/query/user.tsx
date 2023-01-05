@@ -8,6 +8,8 @@ import {
   getUserInfoByIdMutate,
   getSearchUserInfo,
   getSearchUserInfoMutate,
+  getUserInfoForSupervisor,
+  getUserInfoForAgent,
 } from "../api/user";
 import {
   GET_ALL_USER_INFO,
@@ -16,6 +18,8 @@ import {
   EDIT_USER_INFO,
   GET_USER_INFO,
   SEARCH_USER_INFO,
+  GET_USER_INFO_SUPERVISOR,
+  GET_USER_INFO_AGENTS,
 } from "../queryKeys";
 
 export const useGetAllUserInfo = (
@@ -98,4 +102,26 @@ export const useGetUserInfoByIdMutate = (options = {}) => {
     ...options,
   });
   return { mutate, isLoading };
+};
+
+export const useGetUserInfoForSupervisor = (options = {}) => {
+  const { data, isLoading, refetch } = useQuery(
+    [GET_USER_INFO_SUPERVISOR],
+    getUserInfoForSupervisor,
+    {
+      ...options,
+    }
+  );
+  return { data, isLoading, refetch };
+};
+
+export const useGetUserInfoForAgents = (options = {}) => {
+  const { data, isLoading, refetch } = useQuery(
+    [GET_USER_INFO_AGENTS],
+    getUserInfoForAgent,
+    {
+      ...options,
+    }
+  );
+  return { data, isLoading, refetch };
 };

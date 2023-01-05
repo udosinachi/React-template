@@ -44,8 +44,8 @@ export const AddDispositionModal = ({
   const [DateCreated, setDateCreated] = useState("");
   const [CallAnswered, setCallAnswered] = useState("");
   const [CallStatus, setCallStatus] = useState("");
-  const [ReasonForNoPayment, setReasonForNoPayment] = useState("");
-  const [SubReasonForNoPayment, setSubReasonForNoPayment] = useState("");
+  const [ReasonForNoPayment, setReasonForNoPayment] = useState("Null");
+  const [SubReasonForNoPayment, setSubReasonForNoPayment] = useState("Null");
   const [PromiseToPay, setPromiseToPay] = useState("");
   const [AmountToPayToday, setAmountToPayToday] = useState("");
   const [NumberOfDays, setNumberOfDays] = useState("");
@@ -124,10 +124,10 @@ export const AddDispositionModal = ({
       AgentId: "6",
       // AgentId: localStorage.getItem("agentID"),
       CommitmentDate: "2022-12-12",
-      NameOfBrowser: "Lionel Messi",
-      Email: "bruhh@test.com",
-      PhoneNumber: "0967897556",
-      DisbursementDate: "12 Dec 2022",
+      NameOfBrowser: "Thiago Silva",
+      Email: "Intelligra@test.com",
+      PhoneNumber: "08012345678",
+      DisbursementDate: "5 Jan 2023",
       LoanId: "30",
 
       DateCreated,
@@ -193,56 +193,60 @@ export const AddDispositionModal = ({
               </FormControl>
             </Box>
 
-            <Box display="flex" justifyContent="space-between" mt="4">
-              <FormControl w="90%" mr="2">
-                <FormLabel>Reason for Non Payment</FormLabel>
-                {/* <Input
+            {CallStatus === "Completed" && (
+              <Box display="flex" justifyContent="space-between" mt="4">
+                <FormControl w="90%" mr="2">
+                  <FormLabel>Reason for Non Payment</FormLabel>
+                  {/* <Input
                 type="text"
                 name="Category"
                 value={category}
                 onChange={(e) => setCategory(e.target.value)}
               /> */}
 
-                <Select onChange={(e) => setReasonForNoPayment(e.target.value)}>
-                  <option value="">-- Select --</option>
-                  {reasonForNonPaymentOptionData?.reverse()?.map((choose) => (
-                    <option key={choose?.id} value={choose?.optionText}>
-                      {choose?.optionText}
-                    </option>
-                  ))}
-                  {/* <option value=""></option>
+                  <Select
+                    onChange={(e) => setReasonForNoPayment(e.target.value)}
+                  >
+                    <option value="null">-- Select --</option>
+                    {reasonForNonPaymentOptionData?.reverse()?.map((choose) => (
+                      <option key={choose?.id} value={choose?.optionText}>
+                        {choose?.optionText}
+                      </option>
+                    ))}
+                    {/* <option value=""></option>
                   <option value="Promise to payback">Promise to payback</option>
                   <option value="Call Back">Call Back</option>
                   <option value="Unable to pay">Unable to pay</option> */}
-                </Select>
-              </FormControl>
+                  </Select>
+                </FormControl>
 
-              <FormControl w="90%" ml="2">
-                <FormLabel>Sub Reason</FormLabel>
-                {/* <Input
+                <FormControl w="90%" ml="2">
+                  <FormLabel>Sub Reason</FormLabel>
+                  {/* <Input
                   type="text"
                   name="CC"
                   value={cc}
                   onChange={(e) => setCc(e.target.value)}
                 /> */}
-                <Select
-                  onChange={(e) => setSubReasonForNoPayment(e.target.value)}
-                >
-                  <option value="">-- Select --</option>
-                  {subReasonForNonPaymentOptionData
-                    ?.reverse()
-                    ?.map((choose) => (
-                      <option key={choose?.id} value={choose?.optionText}>
-                        {choose?.optionText}
-                      </option>
-                    ))}
-                  {/* <option value=""></option>
+                  <Select
+                    onChange={(e) => setSubReasonForNoPayment(e.target.value)}
+                  >
+                    <option value="null">-- Select --</option>
+                    {subReasonForNonPaymentOptionData
+                      ?.reverse()
+                      ?.map((choose) => (
+                        <option key={choose?.id} value={choose?.optionText}>
+                          {choose?.optionText}
+                        </option>
+                      ))}
+                    {/* <option value=""></option>
                   <option value="Promise to payback">Promise to payback</option>
                   <option value="Call Back">Call Back</option>
                   <option value="Unable to pay">Unable to pay</option> */}
-                </Select>
-              </FormControl>
-            </Box>
+                  </Select>
+                </FormControl>
+              </Box>
+            )}
 
             <Box display="flex" justifyContent="space-between" mt="4">
               <FormControl w="90%" mr="2">

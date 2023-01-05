@@ -1,5 +1,11 @@
 import { useState } from "react";
-import { EditIcon, DeleteIcon, PhoneIcon, SearchIcon } from "@chakra-ui/icons";
+import {
+  EditIcon,
+  DeleteIcon,
+  PhoneIcon,
+  SearchIcon,
+  EmailIcon,
+} from "@chakra-ui/icons";
 import {
   Box,
   Table,
@@ -255,8 +261,11 @@ const TeamMembers = () => {
                           cursor="pointer"
                           _hover={{ background: "whitesmoke" }}
                         >
-                          <Td>{info?.id}</Td>
-                          <Td>{info?.email}</Td>
+                          <Td py="3">{info?.id}</Td>
+                          <Td py="3">
+                            <EmailIcon mr="3" color="#26C6DA" />
+                            {info?.email}
+                          </Td>
                           <Td>{info?.roleName}</Td>
                           <Td>{info?.firstName}</Td>
                           <Td>{info?.lastName}</Td>
@@ -298,7 +307,10 @@ const TeamMembers = () => {
                     : allSearchedUserData?.map((info: any) => (
                         <Tr key={info.id}>
                           <Td>{info?.id}</Td>
-                          <Td>{info?.email}</Td>
+                          <Td py="3">
+                            <EmailIcon mr="3" color="#26C6DA" />
+                            {info?.email}
+                          </Td>
                           <Td>{info?.roleName}</Td>
                           <Td>{info?.firstName}</Td>
                           <Td>{info?.lastName}</Td>

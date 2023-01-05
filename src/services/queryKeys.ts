@@ -8,6 +8,8 @@ export const DELETE_USER_INFO = "delete_user_info";
 export const EDIT_USER_INFO = "edit_user_info";
 export const GET_USER_INFO = "get_user_info";
 export const SEARCH_USER_INFO = "search_user_info";
+export const GET_USER_INFO_SUPERVISOR = "get_user_info_supervisor";
+export const GET_USER_INFO_AGENTS = "get_user_info_agents";
 
 export const GET_ALL_DISPOSITION = "get_all_disposition";
 export const ADD_DISPOSITION = "add_disposition";
@@ -31,6 +33,8 @@ export const DASHBOARD_GET_STATISTICS = "dashboard_get_statistics";
 export const DASHBOARD_CHARTS = "dashboard_chart";
 
 export const GET_ALL_AGENT_MAPPING = "get_all_agent_mapping";
+export const GET_ALL_SUPERVISOR_AGENT_MAPPING =
+  "get_all_supervisor_agent_mapping";
 export const ADD_AGENT_MAPPING = "add_agent_mapping";
 export const DELETE_AGENT_MAPPING = "delete_agent_mapping";
 export const EDIT_AGENT_MAPPING = "edit_agent_mapping";

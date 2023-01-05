@@ -58,3 +58,11 @@ export const getAgentMappingByIdMutate = async (body: any) => {
   const res = await axiosInstance.get(`${apiURL}${AGENT_MAPPING}/${body.id}`);
   return res?.data;
 };
+
+export const getAllSupervisorAgentsMapping = async ({ queryKey }: any) => {
+  const [, supervisorId, page, itemsPerPage] = queryKey;
+  const res = await axiosInstance.get(
+    `${apiURL}${AGENT_MAPPING}/supervisoragents?supervisorId=${supervisorId}&page=${page}&itemsPerPage=${itemsPerPage}&orderBy=Id|DESC`
+  );
+  return res.data;
+};
