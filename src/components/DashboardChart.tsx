@@ -10,6 +10,7 @@ import {
   Progress,
 } from "@chakra-ui/react";
 import { useGetDashboardChart } from "../services/query/dashboard";
+import { useGetAgentDashboardCharts } from "../services/query/agent-mapping";
 
 const CircleIcon = (props: any) => (
   <Icon viewBox="0 0 200 200" {...props}>
@@ -20,13 +21,20 @@ const CircleIcon = (props: any) => (
   </Icon>
 );
 
-const BarChart = () => {
+const BarChart = ({ listOfAgent }: any) => {
   const {
     data: chartData,
     isLoading: isLoaded,
     refetch: refetchAllUser,
   } = useGetDashboardChart();
   console.log(chartData);
+
+  const {
+    data: dataAgentCharts,
+    isLoading: isLoadingAgentCharts,
+    refetch: refetchAgentCharts,
+  } = useGetAgentDashboardCharts(listOfAgent);
+  console.log(dataAgentCharts);
 
   //   const { data } = useGetDashboardStats()
   //   const [chartData, setChartData] = useState([]);
@@ -42,17 +50,17 @@ const BarChart = () => {
       data: [
         {
           x: "Apple",
-          y: `${chartData?.document?.promiseToPay}`,
+          y: `${dataAgentCharts?.document?.promiseToPay}`,
           fillColor: "#e53e3e",
         },
         {
           x: "Orange",
-          y: `${chartData?.document?.callBack}`,
+          y: `${dataAgentCharts?.document?.callBack}`,
           fillColor: "#d69e2e",
         },
         {
           x: "Orange",
-          y: `${chartData?.document?.loanPaid}`,
+          y: `${dataAgentCharts?.document?.loanPaid}`,
           fillColor: "#38a169",
         },
       ],
@@ -173,11 +181,11 @@ const BarChart = () => {
               <Flex mb="2" justifyContent="space-between">
                 <Text fontSize="12">Promise to pay</Text>
                 <Text fontSize="12">
-                  {chartData?.document?.promiseToPay} Count
+                  {dataAgentCharts?.document?.promiseToPay} Count
                 </Text>
               </Flex>
               <Progress
-                value={chartData?.document?.promiseToPay}
+                value={dataAgentCharts?.document?.promiseToPay}
                 size="xs"
                 colorScheme="red"
               />
@@ -188,10 +196,12 @@ const BarChart = () => {
             <Box w="100%">
               <Flex mb="2" justifyContent="space-between">
                 <Text fontSize="12">Call Back</Text>
-                <Text fontSize="12">{chartData?.document?.callBack} Count</Text>
+                <Text fontSize="12">
+                  {dataAgentCharts?.document?.callBack} Count
+                </Text>
               </Flex>
               <Progress
-                value={chartData?.document?.callBack}
+                value={dataAgentCharts?.document?.callBack}
                 size="xs"
                 colorScheme="yellow"
               />
@@ -202,10 +212,12 @@ const BarChart = () => {
             <Box w="100%">
               <Flex mb="2" justifyContent="space-between">
                 <Text fontSize="12">Loan Paid</Text>
-                <Text fontSize="12">{chartData?.document?.loanPaid} Count</Text>
+                <Text fontSize="12">
+                  {dataAgentCharts?.document?.loanPaid} Count
+                </Text>
               </Flex>
               <Progress
-                value={chartData?.document?.loanPaid}
+                value={dataAgentCharts?.document?.loanPaid}
                 size="xs"
                 colorScheme="green"
               />

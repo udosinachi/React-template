@@ -40,3 +40,6 @@ export const DELETE_AGENT_MAPPING = "delete_agent_mapping";
 export const EDIT_AGENT_MAPPING = "edit_agent_mapping";
 export const GET_AGENT_MAPPING = "get_agent_mapping";
 export const SEARCH_AGENT_MAPPING = "search_agent_mapping";
+export const AGENT_DASHBOARD_STATISTICS = "agent_dashboard_statistics";
+export const AGENT_DASHBOARD_CHARTS = "agent_dashboard_charts";
+export const AGENT_DISPOSITION_REPORT = "agent_disposition_report";

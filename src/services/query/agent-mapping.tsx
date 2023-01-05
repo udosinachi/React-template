@@ -9,6 +9,9 @@ import {
   addNewAgentMapping,
   deleteAgentMapping,
   getAllSupervisorAgentsMapping,
+  getAgentDashboardStatistics,
+  getAgentDashboardCharts,
+  getAgentDispositionReport,
 } from "../api/agent-mapping";
 import {
   GET_ALL_AGENT_MAPPING,
@@ -18,6 +21,9 @@ import {
   SEARCH_AGENT_MAPPING,
   EDIT_AGENT_MAPPING,
   GET_ALL_SUPERVISOR_AGENT_MAPPING,
+  AGENT_DASHBOARD_STATISTICS,
+  AGENT_DASHBOARD_CHARTS,
+  AGENT_DISPOSITION_REPORT,
 } from "../queryKeys";
 
 export const useGetAllAgentMapping = (
@@ -111,6 +117,50 @@ export const useGetAllSupervisorAgentsMapping = (
   const { data, isLoading, refetch } = useQuery(
     [GET_ALL_SUPERVISOR_AGENT_MAPPING, supervisorId, page, itemPerPage],
     getAllSupervisorAgentsMapping,
+    {
+      ...options,
+    }
+  );
+  return { data, isLoading, refetch };
+};
+
+export const useGetAgentDashboardStatistics = (agentId: any, options = {}) => {
+  const { data, isLoading, refetch } = useQuery(
+    [AGENT_DASHBOARD_STATISTICS, agentId],
+    getAgentDashboardStatistics,
+    {
+      ...options,
+    }
+  );
+  return { data, isLoading, refetch };
+};
+
+export const useGetAgentDashboardCharts = (
+  agentId: any,
+  // searchDate: any,
+  options = {}
+) => {
+  const { data, isLoading, refetch } = useQuery(
+    [AGENT_DASHBOARD_CHARTS, agentId],
+    getAgentDashboardCharts,
+    {
+      ...options,
+    }
+  );
+  return { data, isLoading, refetch };
+};
+
+export const useGetAgentDispositionReport = (
+  searchKey: any,
+  agentId: any,
+  // searchDate: any,
+  page: number,
+  itemsPerPage: number,
+  options = {}
+) => {
+  const { data, isLoading, refetch } = useQuery(
+    [AGENT_DISPOSITION_REPORT, searchKey, agentId, page, itemsPerPage],
+    getAgentDispositionReport,
     {
       ...options,
     }
