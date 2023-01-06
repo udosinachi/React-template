@@ -61,7 +61,7 @@ const Dashboard = () => {
     data: dataAgentDispositionReport,
     isLoading: isLoadingAgentDispositionReport,
     refetch: refetchAgentDispositionReport,
-  } = useGetAgentDispositionReport(29, listOfAgent, 1, 100);
+  } = useGetAgentDispositionReport(listOfAgent, 1, 100);
   const agentDispositionReport = dataAgentDispositionReport?.document?.records;
   console.log(dataAgentDispositionReport);
 

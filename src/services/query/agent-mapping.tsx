@@ -151,7 +151,7 @@ export const useGetAgentDashboardCharts = (
 };
 
 export const useGetAgentDispositionReport = (
-  searchKey: any,
+  // searchKey: any,
   agentId: any,
   // searchDate: any,
   page: number,
@@ -159,7 +159,7 @@ export const useGetAgentDispositionReport = (
   options = {}
 ) => {
   const { data, isLoading, refetch } = useQuery(
-    [AGENT_DISPOSITION_REPORT, searchKey, agentId, page, itemsPerPage],
+    [AGENT_DISPOSITION_REPORT, agentId, page, itemsPerPage],
     getAgentDispositionReport,
     {
       ...options,
