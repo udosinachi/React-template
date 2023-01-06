@@ -201,7 +201,6 @@ const Dashboard = () => {
                 mb="50px"
               >
                 <Table size="sm">
-                  {/* <TableCaption>Imperial to metric conversion factors</TableCaption> */}
                   <Thead bgColor="gray.200">
                     <Tr>
                       <Th color="#26C6DA" py="5">
