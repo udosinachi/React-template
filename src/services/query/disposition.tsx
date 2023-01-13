@@ -10,6 +10,8 @@ import {
   deleteDisposition,
   getDispositionReport,
   getDispositionReportMutate,
+  getDispositionAgentReportMutate,
+  getDispositionAgentReport,
 } from "../api/disposition";
 import {
   GET_ALL_DISPOSITION,
@@ -19,6 +21,7 @@ import {
   SEARCH_DISPOSITION,
   EDIT_DISPOSITION,
   DISPOSITION_REPORT,
+  AGENT_TOP_DISPOSITION_REPORT,
 } from "../queryKeys";
 
 export const useGetAllDisposition = (
@@ -126,4 +129,27 @@ export const useGetDispositionReportMutate = (options = {}) => {
     ...options,
   });
   return { mutate, isLoading };
+};
+
+export const useGetDispositionAgentReportMutate = (options = {}) => {
+  const { mutate, isLoading } = useMutation(getDispositionAgentReportMutate, {
+    mutationKey: AGENT_TOP_DISPOSITION_REPORT,
+    ...options,
+  });
+  return { mutate, isLoading };
+};
+
+export const useGetDispositionAgentReport = (
+  agentId: any,
+  itemsNumber: number,
+  options = {}
+) => {
+  const { data, isLoading, refetch } = useQuery(
+    [AGENT_TOP_DISPOSITION_REPORT, agentId, itemsNumber],
+    getDispositionAgentReport,
+    {
+      ...options,
+    }
+  );
+  return { data, isLoading, refetch };
 };

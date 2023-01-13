@@ -71,3 +71,16 @@ export const getDispositionReportMutate = async (body: any) => {
   );
   return res?.data;
 };
+export const getDispositionAgentReportMutate = async (body: any) => {
+  const res = await axiosInstance.get(
+    `${apiURL}${DISPOSITION}/agenttopreport?agentId=${body.agentId}&itemNumber=${body.itemsNumber}`
+  );
+  return res?.data;
+};
+export const getDispositionAgentReport = async ({ queryKey }: any) => {
+  const [, agentId, itemsNumber] = queryKey;
+  const res = await axiosInstance.get(
+    `${apiURL}${DISPOSITION}/agenttopreport?agentId=${agentId}&itemNumber=${itemsNumber}`
+  );
+  return res?.data;
+};

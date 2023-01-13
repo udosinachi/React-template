@@ -50,17 +50,29 @@ const BarChart = ({ listOfAgent }: any) => {
       data: [
         {
           x: "Apple",
-          y: `${dataAgentCharts?.document?.promiseToPay}`,
+          y: `${
+            localStorage.getItem("role")?.toString() !== "customerserv1"
+              ? dataAgentCharts?.document?.promiseToPay
+              : chartData?.document?.promiseToPay
+          }`,
           fillColor: "#e53e3e",
         },
         {
           x: "Orange",
-          y: `${dataAgentCharts?.document?.callBack}`,
+          y: `${
+            localStorage.getItem("role")?.toString() !== "customerserv1"
+              ? dataAgentCharts?.document?.callBack
+              : chartData?.document?.callBack
+          }`,
           fillColor: "#d69e2e",
         },
         {
           x: "Orange",
-          y: `${dataAgentCharts?.document?.loanPaid}`,
+          y: `${
+            localStorage.getItem("role")?.toString() !== "customerserv1"
+              ? dataAgentCharts?.document?.loanPaid
+              : chartData?.document?.loanPaid
+          }`,
           fillColor: "#38a169",
         },
       ],
@@ -174,56 +186,111 @@ const BarChart = ({ listOfAgent }: any) => {
           />
         </Box>
 
-        <Box w={["100%", "100%", "100%", "50%"]} mt="40px">
-          <Flex mb="5">
-            <CircleIcon boxSize={6} color="red.500" mr="2" />
-            <Box w="100%">
-              <Flex mb="2" justifyContent="space-between">
-                <Text fontSize="12">Promise to pay</Text>
-                <Text fontSize="12">
-                  {dataAgentCharts?.document?.promiseToPay} Count
-                </Text>
-              </Flex>
-              <Progress
-                value={dataAgentCharts?.document?.promiseToPay}
-                size="xs"
-                colorScheme="red"
-              />
-            </Box>
-          </Flex>
-          <Flex mb="5">
-            <CircleIcon boxSize={6} color="yellow.500" mr="2" />
-            <Box w="100%">
-              <Flex mb="2" justifyContent="space-between">
-                <Text fontSize="12">Call Back</Text>
-                <Text fontSize="12">
-                  {dataAgentCharts?.document?.callBack} Count
-                </Text>
-              </Flex>
-              <Progress
-                value={dataAgentCharts?.document?.callBack}
-                size="xs"
-                colorScheme="yellow"
-              />
-            </Box>
-          </Flex>
-          <Flex mb="5">
-            <CircleIcon boxSize={6} color="green.500" mr="2" />
-            <Box w="100%">
-              <Flex mb="2" justifyContent="space-between">
-                <Text fontSize="12">Loan Paid</Text>
-                <Text fontSize="12">
-                  {dataAgentCharts?.document?.loanPaid} Count
-                </Text>
-              </Flex>
-              <Progress
-                value={dataAgentCharts?.document?.loanPaid}
-                size="xs"
-                colorScheme="green"
-              />
-            </Box>
-          </Flex>
-        </Box>
+        {localStorage.getItem("role")?.toString() !== "customerserv1" && (
+          <Box w={["100%", "100%", "100%", "50%"]} mt="40px">
+            <Flex mb="5">
+              <CircleIcon boxSize={6} color="red.500" mr="2" />
+              <Box w="100%">
+                <Flex mb="2" justifyContent="space-between">
+                  <Text fontSize="12">Promise to pay</Text>
+                  <Text fontSize="12">
+                    {dataAgentCharts?.document?.promiseToPay} Count
+                  </Text>
+                </Flex>
+                <Progress
+                  value={dataAgentCharts?.document?.promiseToPay}
+                  size="xs"
+                  colorScheme="red"
+                />
+              </Box>
+            </Flex>
+            <Flex mb="5">
+              <CircleIcon boxSize={6} color="yellow.500" mr="2" />
+              <Box w="100%">
+                <Flex mb="2" justifyContent="space-between">
+                  <Text fontSize="12">Call Back</Text>
+                  <Text fontSize="12">
+                    {dataAgentCharts?.document?.callBack} Count
+                  </Text>
+                </Flex>
+                <Progress
+                  value={dataAgentCharts?.document?.callBack}
+                  size="xs"
+                  colorScheme="yellow"
+                />
+              </Box>
+            </Flex>
+            <Flex mb="5">
+              <CircleIcon boxSize={6} color="green.500" mr="2" />
+              <Box w="100%">
+                <Flex mb="2" justifyContent="space-between">
+                  <Text fontSize="12">Loan Paid</Text>
+                  <Text fontSize="12">
+                    {dataAgentCharts?.document?.loanPaid} Count
+                  </Text>
+                </Flex>
+                <Progress
+                  value={dataAgentCharts?.document?.loanPaid}
+                  size="xs"
+                  colorScheme="green"
+                />
+              </Box>
+            </Flex>
+          </Box>
+        )}
+
+        {localStorage.getItem("role")?.toString() === "customerserv1" && (
+          <Box w={["100%", "100%", "100%", "50%"]} mt="40px">
+            <Flex mb="5">
+              <CircleIcon boxSize={6} color="red.500" mr="2" />
+              <Box w="100%">
+                <Flex mb="2" justifyContent="space-between">
+                  <Text fontSize="12">Promise to pay</Text>
+                  <Text fontSize="12">
+                    {chartData?.document?.promiseToPay} Count
+                  </Text>
+                </Flex>
+                <Progress
+                  value={chartData?.document?.promiseToPay}
+                  size="xs"
+                  colorScheme="red"
+                />
+              </Box>
+            </Flex>
+            <Flex mb="5">
+              <CircleIcon boxSize={6} color="yellow.500" mr="2" />
+              <Box w="100%">
+                <Flex mb="2" justifyContent="space-between">
+                  <Text fontSize="12">Call Back</Text>
+                  <Text fontSize="12">
+                    {chartData?.document?.callBack} Count
+                  </Text>
+                </Flex>
+                <Progress
+                  value={chartData?.document?.callBack}
+                  size="xs"
+                  colorScheme="yellow"
+                />
+              </Box>
+            </Flex>
+            <Flex mb="5">
+              <CircleIcon boxSize={6} color="green.500" mr="2" />
+              <Box w="100%">
+                <Flex mb="2" justifyContent="space-between">
+                  <Text fontSize="12">Loan Paid</Text>
+                  <Text fontSize="12">
+                    {chartData?.document?.loanPaid} Count
+                  </Text>
+                </Flex>
+                <Progress
+                  value={chartData?.document?.loanPaid}
+                  size="xs"
+                  colorScheme="green"
+                />
+              </Box>
+            </Flex>
+          </Box>
+        )}
       </Box>
     </Box>
   );
