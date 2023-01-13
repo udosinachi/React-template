@@ -4,7 +4,7 @@ import { PRIVATE_PATHS, PUBLIC_PATHS } from "./constants";
 import { Navigate } from "react-router-dom";
 import { AppRoute } from "../types";
 
-const { LOGIN, SIGNUP, HOME } = PUBLIC_PATHS;
+const { LOGIN, AGENTLOGIN, HOME } = PUBLIC_PATHS;
 
 const {
   DASHBOARD,
@@ -21,7 +21,9 @@ const Dashboard = WithSuspense(
   lazy(() => import("../pages/Dashboard/Dashboard"))
 );
 const Login = WithSuspense(lazy(() => import("../pages/Login/Login")));
-const SignUp = WithSuspense(lazy(() => import("../pages/Signup/Signup")));
+const AgentLogin = WithSuspense(
+  lazy(() => import("../pages/Login/AgentLogin"))
+);
 const CustomerBook = WithSuspense(
   lazy(() => import("../pages/CustomerBook/CustomerBook"))
 );
@@ -42,7 +44,7 @@ const AgentMapping = WithSuspense(
 export const PUBLIC_ROUTES: AppRoute[] = [
   { path: HOME, element: <Home /> },
   { path: LOGIN, element: <Login /> },
-  { path: SIGNUP, element: <SignUp /> },
+  // { path: AGENTLOGIN, element: <AgentLogin /> },
   { path: "*", element: <Navigate to="/login" replace /> },
 
   // non existing url will redirect to home page
@@ -53,8 +55,32 @@ export const PRIVATE_ROUTES: AppRoute[] = [
   { path: CUSTOMERSBOOK, element: <CustomerBook /> },
   { path: CUSTOMERSBOOKDETAILS, element: <CustomerBookDetails /> },
   { path: DISPOSITION, element: <Disposition /> },
-  { path: TEAMMEMBERS, element: <TeamMembers /> },
-  { path: REPORT, element: <Report /> },
-  { path: AGENTMAPPING, element: <AgentMapping /> },
+  {
+    path: TEAMMEMBERS,
+    element:
+      localStorage.getItem("role")?.toString() !== "customerserv1" ? (
+        <TeamMembers />
+      ) : (
+        <Navigate to="/dashboard" replace />
+      ),
+  },
+  {
+    path: REPORT,
+    element:
+      localStorage.getItem("role")?.toString() !== "customerserv1" ? (
+        <Report />
+      ) : (
+        <Navigate to="/dashboard" replace />
+      ),
+  },
+  {
+    path: AGENTMAPPING,
+    element:
+      localStorage.getItem("role")?.toString() === "superadmin" ? (
+        <AgentMapping />
+      ) : (
+        <Navigate to="/dashboard" replace />
+      ),
+  },
   { path: "*", element: <Navigate to="/dashboard" replace /> },
 ];

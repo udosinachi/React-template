@@ -10,6 +10,7 @@ export const GET_USER_INFO = "get_user_info";
 export const SEARCH_USER_INFO = "search_user_info";
 export const GET_USER_INFO_SUPERVISOR = "get_user_info_supervisor";
 export const GET_USER_INFO_AGENTS = "get_user_info_agents";
+export const USER_INFO_AGENT_LOGIN = "user_info_agent_login";
 
 export const GET_ALL_DISPOSITION = "get_all_disposition";
 export const ADD_DISPOSITION = "add_disposition";

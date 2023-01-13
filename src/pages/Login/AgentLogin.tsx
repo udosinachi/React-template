@@ -11,13 +11,13 @@ import {
   Heading,
   useColorModeValue,
   Image,
-  Text,
 } from "@chakra-ui/react";
 import { useState } from "react";
 import { useLogin, useLoginAccount } from "../../services/query/login";
 import useCustomToast from "../../utils/notification";
 import { LogoImage } from "../../assets/index";
-import { NavLink, useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
+import { useUserInfoAgentLogin } from "../../services/query/user";
 
 export default function Login() {
   const navigate = useNavigate();
@@ -43,7 +43,7 @@ export default function Login() {
   //     errorToast("Failed");
   //   },
   // });
-  const { mutate, isLoading: isCreateLoading } = useLoginAccount({
+  const { mutate, isLoading: isCreateLoading } = useUserInfoAgentLogin({
     onSuccess: (res: any) => {
       console.log(res);
       if (res?.message === "Record Found") {
@@ -51,12 +51,10 @@ export default function Login() {
         localStorage.setItem("user", JSON.stringify(res));
         localStorage.setItem(
           "accessToken",
-          JSON.stringify(
-            res?.document?.accessTokens?.authorizationToken?.accessToken
-          )
+          JSON.stringify(res?.document?.accessTokens?.accessToken)
         );
         localStorage.setItem("agentID", res?.document?.id);
-        localStorage.setItem("role", res?.document?.role);
+        localStorage.setItem("role", res?.document?.roleName);
         setTimeout(() => {
           navigate("/dashboard");
           // window.location.href = "/dashboard";
@@ -100,9 +98,9 @@ export default function Login() {
           boxShadow={"lg"}
           p={8}
         >
-          {/* <Heading textAlign="center" color="#26C6DA" mb="3" fontSize="20px">
-            Supervisor Login
-          </Heading> */}
+          <Heading textAlign="center" color="#26C6DA" mb="3" fontSize="20px">
+            Agent Login
+          </Heading>
           <form>
             <Stack spacing={4}>
               <FormControl id="email">
@@ -130,9 +128,7 @@ export default function Login() {
                   justify={"space-between"}
                 >
                   <Checkbox>Remember me</Checkbox>
-                  {/* <NavLink to="/agent-login" style={{ color: "#26C6DA" }}>
-                    Agent Login
-                  </NavLink> */}
+                  {/* <Link color={"blue.400"}>Forgot password?</Link> */}
                 </Stack>
                 <Button
                   bg={"blue.400"}
@@ -148,13 +144,13 @@ export default function Login() {
                   Login
                 </Button>
                 {/* <Stack pt={6}>
-                  <Text align={"center"}>
-                    Don't have an account?{" "}
-                    <NavLink to="/signup" style={{ color: "#26C6DA" }}>
-                      Sign Up
-                    </NavLink>
-                  </Text>
-                </Stack> */}
+                    <Text align={"center"}>
+                      Don't have an account?{" "}
+                      <NavLink to="/signup" style={{ color: "#26C6DA" }}>
+                        Sign Up
+                      </NavLink>
+                    </Text>
+                  </Stack> */}
               </Stack>
             </Stack>
           </form>

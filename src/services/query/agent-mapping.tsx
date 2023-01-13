@@ -151,9 +151,9 @@ export const useGetAgentDashboardCharts = (
 };
 
 export const useGetAgentDispositionReport = (
-  // searchKey: any,
+  // fromDate: any,
+  // toDate: any,
   agentId: any,
-  // searchDate: any,
   page: number,
   itemsPerPage: number,
   options = {}
@@ -166,4 +166,11 @@ export const useGetAgentDispositionReport = (
     }
   );
   return { data, isLoading, refetch };
+};
+export const useGetAgentDispositionReportMutate = (options = {}) => {
+  const { mutate, isLoading } = useMutation(getAgentDispositionReport, {
+    mutationKey: AGENT_DISPOSITION_REPORT,
+    ...options,
+  });
+  return { mutate, isLoading };
 };

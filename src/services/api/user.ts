@@ -63,3 +63,11 @@ export const getUserInfoForAgent = async (body: any) => {
   const res = await axiosInstance.get(`${apiURL}${USER_INFO}/agents`);
   return res?.data;
 };
+
+export const userInfoAgentLogin = async (body: any) => {
+  const res = await axiosInstance.post(
+    `${apiURL}${USER_INFO}/agentlogin`,
+    body
+  );
+  return res?.data;
+};

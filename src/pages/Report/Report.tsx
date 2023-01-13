@@ -41,6 +41,8 @@ const Report = () => {
   const { errorToast, successToast } = useCustomToast();
 
   const [searchedWords, setSearchedWords] = useState("");
+  const [FromDate, setFromDate] = useState("");
+  const [ToDate, setToDate] = useState("");
   const [noSearchRecord, setNoSearchRecord] = useState("");
   const [allSearchedUserData, setAllSearchedUserData] = useState([]);
   const [searchResponse, setSearchResponse] = useState(false);
@@ -67,8 +69,12 @@ const Report = () => {
     });
 
   const searchHandler = () => {
-    if (searchedWords.length === 0) {
-      errorToast("Empty Field");
+    if (FromDate.length === 0) {
+      errorToast("Enter a Start Date");
+      return false;
+    }
+    if (ToDate.length === 0) {
+      errorToast("Enter an End Date");
       return false;
     }
 
@@ -81,7 +87,8 @@ const Report = () => {
       page: 1,
       itemsPerPage: 100,
       searchKey: 15,
-      searchDate: searchedWords,
+      fromDate: FromDate,
+      toDate: ToDate,
     });
   };
 
@@ -91,27 +98,37 @@ const Report = () => {
         <Loader />
       ) : (
         <Box>
-          {/* <Text mb="5">Customer Book Loan</Text> */}
-          <InputGroup
-            w={["100%", "300px", "300px", "300px"]}
-            size={"md"}
-            border="grey"
-          >
-            <Input
-              type="date"
-              placeholder="Search User"
-              value={searchedWords}
-              onChange={(e) => setSearchedWords(e.target.value)}
-            />
-            <InputRightAddon
-              children="Search"
+          <Box bgColor="white" p="5">
+            <Box>
+              <Text>Start Date</Text>
+              <Input
+                type="date"
+                placeholder="Search User"
+                value={FromDate}
+                onChange={(e) => setFromDate(e.target.value)}
+                mb="5"
+              />
+            </Box>
+            <Box>
+              <Text>End Date</Text>
+              <Input
+                type="date"
+                placeholder="Search User"
+                value={ToDate}
+                onChange={(e) => setToDate(e.target.value)}
+                mb="5"
+              />
+            </Box>
+            <Button
               bgColor="#26C6DA"
               color="white"
               cursor="pointer"
               onClick={() => searchHandler()}
               // onClick={() => setUserInfoToggle("Searched")}
-            />
-          </InputGroup>
+            >
+              Search
+            </Button>
+          </Box>
           <Box mt="5">
             <TableContainer
               bg="white"

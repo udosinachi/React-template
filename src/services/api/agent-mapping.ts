@@ -86,7 +86,15 @@ export const getAgentDashboardCharts = async ({ queryKey }: any) => {
 export const getAgentDispositionReport = async ({ queryKey }: any) => {
   const [, agentId, page, itemsPerPage] = queryKey;
   const res = await axiosInstance.get(
-    `${apiURL}/Dispositions/agentreport?searchDate=2022-12-07&agentId=${agentId}&page=${page}&itemsPerPage=${itemsPerPage}&orderBy=Id|DESC`
+    `${apiURL}/Dispositions/agentreport?&searchDate=2022-12-07&agentId=${agentId}&page=${page}&itemsPerPage=${itemsPerPage}&orderBy=Id|DESC`
+  );
+  return res.data;
+};
+
+export const getAgentDispositionReportMutate = async (body: any) => {
+  // const [, fromDate, toDate, agentId, page, itemsPerPage] = queryKey;
+  const res = await axiosInstance.get(
+    `${apiURL}/Dispositions/agentreport?fromDate=${body.fromDate}&toDate=${body.toDate}&agentId=${body.agentId}&page=${body.page}&itemsPerPage=${body.itemsPerPage}&orderBy=Id|DESC`
   );
   return res.data;
 };

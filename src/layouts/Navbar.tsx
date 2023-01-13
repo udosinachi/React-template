@@ -15,6 +15,7 @@ import {
   MenuList,
   Image,
 } from "@chakra-ui/react";
+import { useState } from "react";
 import { FiMenu, FiBell, FiChevronDown } from "react-icons/fi";
 
 import { LogoImage, User } from "../assets/index";
@@ -53,9 +54,15 @@ interface MobileProps extends FlexProps {
 }
 
 const Navbar = ({ onOpen, ...rest }: MobileProps) => {
+  // const [user, setUser] = useState("");
+  // const Auser = JSON.parse(localStorage.getItem("user"));
+
   const { successToast } = useCustomToast();
   const logout = () => {
     localStorage.removeItem("user");
+    localStorage.removeItem("accessToken");
+    localStorage.removeItem("agentID");
+    localStorage.removeItem("role");
     successToast("Logout Successful");
     setTimeout(() => {
       window.location.reload();
@@ -127,7 +134,7 @@ const Navbar = ({ onOpen, ...rest }: MobileProps) => {
                 >
                   <Text fontSize="sm">Justina Clark</Text>
                   <Text fontSize="xs" color="gray.600">
-                    Admin
+                    {localStorage.getItem("role")}
                   </Text>
                 </VStack>
                 <Box display={{ base: "none", md: "flex" }}>

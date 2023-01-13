@@ -37,6 +37,18 @@ const LinkItems: Array<LinkItemProps> = [
   { name: "Report", icon: TbReportAnalytics, path: "/report" },
   { name: "Agent Mapping", icon: FiBook, path: "/agent-mapping" },
 ];
+const SupervisorLinkItems: Array<LinkItemProps> = [
+  { name: "Dashboard", icon: FiHome, path: "/dashboard" },
+  { name: "Customer Book", icon: FiBook, path: "/customer-book" },
+  { name: "Disposition", icon: MdOutlineRestartAlt, path: "/disposition" },
+  { name: "Team Members", icon: RiTeamLine, path: "/team-members" },
+  { name: "Report", icon: TbReportAnalytics, path: "/report" },
+];
+const AgentLinkItems: Array<LinkItemProps> = [
+  { name: "Dashboard", icon: FiHome, path: "/dashboard" },
+  { name: "Customer Book", icon: FiBook, path: "/customer-book" },
+  { name: "Disposition", icon: MdOutlineRestartAlt, path: "/disposition" },
+];
 
 const activeStyle: React.CSSProperties = {
   color: "#26C6DA",
@@ -113,56 +125,111 @@ const SidebarContent = ({ onClose, ...rest }: SidebarProps) => {
         <Image src={LogoImage} w={["200px", "200px", "200px", "100%"]} />
         <CloseButton display={{ base: "flex", md: "none" }} onClick={onClose} />
       </Flex>
-      {LinkItems.map((link) => (
-        <div key={link.name}>
-          <NavLink
-            onClick={onClose}
-            to={link.path}
-            style={({ isActive }) =>
-              isActive
-                ? activeStyle
-                : {
-                    ...activeStyle,
-                    background: "none",
-                    color: "white",
-                  }
-            }
-          >
-            <Flex>
-              <Icon
-                mr="4"
-                mt="1"
-                fontSize="16"
-                _groupHover={{
-                  color: "white",
-                }}
-                as={link.icon}
-              />
+      {localStorage.getItem("role")?.toString() === "superadmin" && (
+        <div>
+          {LinkItems.map((link) => (
+            <div key={link.name}>
+              <NavLink
+                onClick={onClose}
+                to={link.path}
+                style={({ isActive }) =>
+                  isActive
+                    ? activeStyle
+                    : {
+                        ...activeStyle,
+                        background: "none",
+                        color: "white",
+                      }
+                }
+              >
+                <Flex>
+                  <Icon
+                    mr="4"
+                    mt="1"
+                    fontSize="16"
+                    _groupHover={{
+                      color: "white",
+                    }}
+                    as={link.icon}
+                  />
 
-              {link.name}
-            </Flex>
-          </NavLink>
+                  {link.name}
+                </Flex>
+              </NavLink>
+            </div>
+          ))}
         </div>
-      ))}
-      {/* <Flex
-        onClick={logout}
-        color="white"
-        background="#26C6DA"
-        display="flex"
-        alignItems="center"
-        padding="10px"
-        margin="10px"
-      >
-        <Icon
-          mr="4"
-          mt="1"
-          fontSize="16"
-          _groupHover={{
-            color: "white",
-          }}
-        />
-        Logout
-      </Flex> */}
+      )}
+      {localStorage.getItem("role")?.toString() === "customerserv2" && (
+        <div>
+          {SupervisorLinkItems.map((link) => (
+            <div key={link.name}>
+              <NavLink
+                onClick={onClose}
+                to={link.path}
+                style={({ isActive }) =>
+                  isActive
+                    ? activeStyle
+                    : {
+                        ...activeStyle,
+                        background: "none",
+                        color: "white",
+                      }
+                }
+              >
+                <Flex>
+                  <Icon
+                    mr="4"
+                    mt="1"
+                    fontSize="16"
+                    _groupHover={{
+                      color: "white",
+                    }}
+                    as={link.icon}
+                  />
+
+                  {link.name}
+                </Flex>
+              </NavLink>
+            </div>
+          ))}
+        </div>
+      )}
+      {localStorage.getItem("role")?.toString() === "customerserv1" && (
+        <div>
+          {AgentLinkItems.map((link) => (
+            <div key={link.name}>
+              <NavLink
+                onClick={onClose}
+                to={link.path}
+                style={({ isActive }) =>
+                  isActive
+                    ? activeStyle
+                    : {
+                        ...activeStyle,
+                        background: "none",
+                        color: "white",
+                      }
+                }
+              >
+                <Flex>
+                  <Icon
+                    mr="4"
+                    mt="1"
+                    fontSize="16"
+                    _groupHover={{
+                      color: "white",
+                    }}
+                    as={link.icon}
+                  />
+
+                  {link.name}
+                </Flex>
+              </NavLink>
+            </div>
+          ))}
+        </div>
+      )}
     </Box>
   );
 };

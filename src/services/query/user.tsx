@@ -10,6 +10,7 @@ import {
   getSearchUserInfoMutate,
   getUserInfoForSupervisor,
   getUserInfoForAgent,
+  userInfoAgentLogin,
 } from "../api/user";
 import {
   GET_ALL_USER_INFO,
@@ -20,6 +21,7 @@ import {
   SEARCH_USER_INFO,
   GET_USER_INFO_SUPERVISOR,
   GET_USER_INFO_AGENTS,
+  USER_INFO_AGENT_LOGIN,
 } from "../queryKeys";
 
 export const useGetAllUserInfo = (
@@ -124,4 +126,12 @@ export const useGetUserInfoForAgents = (options = {}) => {
     }
   );
   return { data, isLoading, refetch };
+};
+
+export const useUserInfoAgentLogin = (options = {}) => {
+  const { mutate, isLoading } = useMutation(userInfoAgentLogin, {
+    mutationKey: USER_INFO_AGENT_LOGIN,
+    ...options,
+  });
+  return { mutate, isLoading };
 };

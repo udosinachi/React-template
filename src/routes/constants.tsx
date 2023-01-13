@@ -1,7 +1,7 @@
 export const PUBLIC_PATHS = {
   HOME: "/",
   LOGIN: "/login",
-  SIGNUP: "/signup",
+  AGENTLOGIN: "/agent-login",
 };
 
 export const PRIVATE_PATHS = {
