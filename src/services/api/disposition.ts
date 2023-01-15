@@ -84,3 +84,9 @@ export const getDispositionAgentReport = async ({ queryKey }: any) => {
   );
   return res?.data;
 };
+export const getDispositionReportByDateMutate = async (body: any) => {
+  const res = await axiosInstance.get(
+    `${apiURL}${DISPOSITION}/dispositionsanalysis?fromDate=${body.fromDate}&toDate=${body.toDate}&page=${body.page}&itemsPerPage=${body.itemsPerPage}`
+  );
+  return res?.data;
+};

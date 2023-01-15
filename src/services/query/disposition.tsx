@@ -12,6 +12,7 @@ import {
   getDispositionReportMutate,
   getDispositionAgentReportMutate,
   getDispositionAgentReport,
+  getDispositionReportByDateMutate,
 } from "../api/disposition";
 import {
   GET_ALL_DISPOSITION,
@@ -22,6 +23,7 @@ import {
   EDIT_DISPOSITION,
   DISPOSITION_REPORT,
   AGENT_TOP_DISPOSITION_REPORT,
+  DISPOSITION_REPORT_ANALYSIS_BY_DATE,
 } from "../queryKeys";
 
 export const useGetAllDisposition = (
@@ -152,4 +154,12 @@ export const useGetDispositionAgentReport = (
     }
   );
   return { data, isLoading, refetch };
+};
+
+export const useGetDispositionReportByDateMutate = (options = {}) => {
+  const { mutate, isLoading } = useMutation(getDispositionReportByDateMutate, {
+    mutationKey: DISPOSITION_REPORT_ANALYSIS_BY_DATE,
+    ...options,
+  });
+  return { mutate, isLoading };
 };

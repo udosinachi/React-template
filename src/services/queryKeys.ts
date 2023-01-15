@@ -20,6 +20,8 @@ export const GET_DISPOSITION = "get_disposition";
 export const SEARCH_DISPOSITION = "search_disposition";
 export const DISPOSITION_REPORT = "disposition_report";
 export const AGENT_TOP_DISPOSITION_REPORT = "agent_top_disposition_report";
+export const DISPOSITION_REPORT_ANALYSIS_BY_DATE =
+  "disposition_report_analysis_by_date";
 
 export const CUSTOMER_DETAILS = "customer_details";
 export const ADD_CUSTOMER_INFO = "add_customer_info";

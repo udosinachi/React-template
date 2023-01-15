@@ -28,6 +28,7 @@ import {
   InputRightElement,
   InputRightAddon,
   Select,
+  Text,
 } from "@chakra-ui/react";
 import {
   useGetAllUserInfo,
@@ -50,6 +51,8 @@ import {
   useDeleteDisposition,
   useGetAllDisposition,
   useGetDispositionByIdMutate,
+  useGetDispositionReportByDateMutate,
+  useGetDispositionReportMutate,
   useGetSearchDispositionMutate,
 } from "../../services/query/disposition";
 import { AddDispositionModal } from "../../components/modals/AddDispositionModal";
@@ -207,42 +210,146 @@ const Disposition = () => {
 
   // console.log(editID);
 
+  const {
+    mutate: searchMutateAgentReport,
+    isLoading: searchLoaderAgentReport,
+  } = useGetDispositionReportMutate({
+    onSuccess: (res: any) => {
+      console.log(res);
+      // setAllSearchedUserData(res?.document?.records);
+      // setSearchResponse(true);
+      // setNoSearchRecord(res?.message);
+      if (res?.document?.totalRecords === 0) {
+        errorToast("No Record Found");
+        // setSearchResponse(false);
+      } else {
+        successToast("RecordFound");
+        // setFalseSearchResponse(true);
+      }
+    },
+    onError: (err: any) => {
+      console.log(err?.response?.data);
+      errorToast(err?.response?.data);
+    },
+  });
+
+  const [FromDate, setFromDate] = useState("");
+  const [ToDate, setToDate] = useState("");
+
+  const [searchResponse, setSearchResponse] = useState(false);
+
+  const {
+    mutate: searchDispositionDateMutate,
+    isLoading: searchDispositionDateLoader,
+  } = useGetDispositionReportMutate({
+    onSuccess: (res: any) => {
+      console.log(res);
+      setAllSearchedUserData(res?.document?.records);
+      setSearchResponse(true);
+      setNoSearchRecord(res?.message);
+      if (res?.document === null) {
+        errorToast(res?.message);
+        setSearchResponse(false);
+      } else {
+        successToast(res?.message);
+        // setFalseSearchResponse(true);
+      }
+    },
+    onError: (err: any) => {
+      console.log(err?.response?.data);
+      errorToast(err?.response?.data);
+    },
+  });
+
+  const searchDispositionDateHandler = () => {
+    if (FromDate.length === 0) {
+      errorToast("Enter a Start Date");
+      return false;
+    }
+    if (ToDate.length === 0) {
+      errorToast("Enter an End Date");
+      return false;
+    }
+
+    if (noSearchRecord === "No Record Found") {
+      errorToast("No Record Found");
+    }
+
+    searchDispositionDateMutate({
+      page: 1,
+      itemsPerPage: 100,
+      searchKey: 15,
+      fromDate: FromDate,
+      toDate: ToDate,
+    });
+  };
+
   return (
     <div>
-      {isLoading || searchLoader ? (
+      {isLoading || searchLoader || searchDispositionDateLoader ? (
         <Loader />
       ) : (
         <Box>
-          <Flex
-            justifyContent="space-between"
-            mb="3"
-            flexWrap="wrap"
-            alignItems="center"
-          >
-            <InputGroup
-              w={["100%", "300px", "300px", "300px"]}
-              size={"md"}
-              border="grey"
+          <Box bg="white" p="5" mb="5">
+            <Flex
+              justifyContent="space-between"
+              mb="3"
+              flexWrap="wrap"
+              alignItems="center"
             >
-              <Input
-                type="text"
-                placeholder="Search Disposition"
-                value={searchedWords}
-                onChange={(e) => setSearchedWords(e.target.value)}
-              />
-              <InputRightAddon
-                children="Search"
-                bgColor="#26C6DA"
-                color="white"
-                cursor="pointer"
-                onClick={() => searchHandler()}
-                // onClick={() => setUserInfoToggle("Searched")}
-              />
-            </InputGroup>
-            {/* <Button size={"sm"} bgColor="#26C6DA" color="white" onClick={onOpen}>
+              <InputGroup
+                w={["100%", "300px", "300px", "300px"]}
+                size={"md"}
+                border="grey"
+              >
+                <Input
+                  type="text"
+                  placeholder="Search Disposition"
+                  value={searchedWords}
+                  onChange={(e) => setSearchedWords(e.target.value)}
+                />
+                <InputRightAddon
+                  children="Search"
+                  bgColor="#26C6DA"
+                  color="white"
+                  cursor="pointer"
+                  onClick={() => searchHandler()}
+                  // onClick={() => setUserInfoToggle("Searched")}
+                />
+              </InputGroup>
+              {/* <Button size={"sm"} bgColor="#26C6DA" color="white" onClick={onOpen}>
             Add Disposition
           </Button> */}
-          </Flex>
+            </Flex>
+            <Box>
+              <Text>Start Date</Text>
+              <Input
+                type="date"
+                placeholder="Search User"
+                value={FromDate}
+                onChange={(e) => setFromDate(e.target.value)}
+                mb="5"
+              />
+            </Box>
+            <Box>
+              <Text>End Date</Text>
+              <Input
+                type="date"
+                placeholder="Search User"
+                value={ToDate}
+                onChange={(e) => setToDate(e.target.value)}
+                mb="5"
+              />
+            </Box>
+            <Button
+              bgColor="#26C6DA"
+              color="white"
+              cursor="pointer"
+              onClick={() => searchDispositionDateHandler()}
+            >
+              Filter
+            </Button>
+          </Box>
           <TableContainer
             bg="white"
             sx={{

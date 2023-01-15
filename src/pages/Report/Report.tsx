@@ -38,6 +38,7 @@ import { useGetCustomerDetailSearchMutate } from "../../services/query/customer"
 import {
   useGetDispositionAgentReport,
   useGetDispositionAgentReportMutate,
+  useGetDispositionReportByDateMutate,
   useGetDispositionReportMutate,
 } from "../../services/query/disposition";
 import useCustomToast from "../../utils/notification";
@@ -56,7 +57,7 @@ const Report = () => {
   const [searchResponse, setSearchResponse] = useState(false);
 
   const { mutate: searchMutate, isLoading: searchLoader } =
-    useGetDispositionReportMutate({
+    useGetDispositionReportByDateMutate({
       onSuccess: (res: any) => {
         console.log(res);
         setAllSearchedUserData(res?.document?.records);
@@ -91,10 +92,8 @@ const Report = () => {
     }
 
     searchMutate({
-      // phoneNumber: "08036975694",
       page: 1,
       itemsPerPage: 100,
-      searchKey: 15,
       fromDate: FromDate,
       toDate: ToDate,
     });
@@ -190,7 +189,7 @@ const Report = () => {
               Search
             </Button>
 
-            <Box bg="white" mb="5" mt="3">
+            {/* <Box bg="white" mb="5" mt="3">
               <FormControl mr="2">
                 <FormLabel>List of Agents</FormLabel>
 
@@ -203,11 +202,12 @@ const Report = () => {
                   ))}
                 </Select>
               </FormControl>
-            </Box>
+            </Box> */}
           </Box>
           <Box mt="5">
             <TableContainer
               bg="white"
+              mb="5"
               sx={{
                 "::-webkit-scrollbar": {
                   display: "none",
@@ -220,14 +220,13 @@ const Report = () => {
                     <Th color="#26C6DA" py="4">
                       Agent ID
                     </Th>
-                    <Th color="#26C6DA">Customer Name</Th>
+                    <Th color="#26C6DA">First Name</Th>
+                    <Th color="#26C6DA">Last Name</Th>
                     <Th color="#26C6DA">Email</Th>
-                    <Th color="#26C6DA">Amount to Pay Today</Th>
-                    <Th color="#26C6DA">Phone Number</Th>
-                    <Th color="#26C6DA">Reason For No Payment</Th>
-                    <Th color="#26C6DA">Promise To Pay </Th>
-                    <Th color="#26C6DA">Comment</Th>
-                    <Th color="#26C6DA">Enter Date</Th>
+                    <Th color="#26C6DA">Answered</Th>
+                    <Th color="#26C6DA">Not Answered</Th>
+                    <Th color="#26C6DA">Last Call Status </Th>
+                    <Th color="#26C6DA">Last Date Created</Th>
                   </Tr>
                 </Thead>
 
@@ -239,9 +238,6 @@ const Report = () => {
                       _hover={{ background: "whitesmoke" }}
                     >
                       <Td py="3">{info?.agentId}</Td>
-                      {/* <Td>{info?.customerId}</Td> */}
-                      {/* <Td>{info?.loanId}</Td> */}
-                      {/* <Td>{info?.disbursementDate?.slice(0, 10)}</Td> */}
                       <Td py="3" display="flex" alignItems="center">
                         <Icon
                           as={CgProfile}
@@ -249,35 +245,27 @@ const Report = () => {
                           color="#26C6DA"
                           boxSize="4"
                         />
-                        {info?.nameOfBrowser}
+                        {info?.firstName}
                       </Td>
-                      <Td py="3">
+                      <Td py="3">{info?.lastName}</Td>
+                      <Td py="3" display="flex" alignItems="center">
                         <EmailIcon mr="3" color="#26C6DA" />
                         {info?.email}
                       </Td>
-                      <Td py="3" display="flex" alignItems="center">
-                        <Icon
-                          as={MdOutlineMonetizationOn}
-                          mr="3"
-                          color="green"
-                          boxSize="4"
-                        />
-                        {info?.amountToPayToday}
-                      </Td>
                       <Td py="3">
                         <PhoneIcon mr="3" color="green" />
-                        {info?.phoneNumber}
+                        {info?.answered}
                       </Td>
                       <Td py="3">
                         <InfoOutlineIcon mr="3" color="orange" />
-                        {info?.reasonForNoPayment}
+                        {info?.notAnswered}
                       </Td>
-                      <Td>{info?.promiseToPay}</Td>
+                      <Td>{info?.lastCallStatus?.slice(0, 10)}</Td>
                       <Td py="3">
-                        <ChatIcon mr="3" />
-                        {info?.comment}
+                        {/* <ChatIcon mr="3" /> */}
+                        {info?.lastDateCreated?.slice(0, 10)}
                       </Td>
-                      <Td>{info?.dateCreated?.slice(0, 10)}</Td>
+                      {/* <Td>{info?.dateCreated?.slice(0, 10)}</Td> */}
                       {/* <Td>
                         <Icon
                           onClick={() => {
