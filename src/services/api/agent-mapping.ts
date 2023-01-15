@@ -86,7 +86,8 @@ export const getAgentDashboardCharts = async ({ queryKey }: any) => {
 export const getAgentDispositionReport = async ({ queryKey }: any) => {
   const [, agentId, page, itemsPerPage] = queryKey;
   const res = await axiosInstance.get(
-    `${apiURL}/Dispositions/agentreport?&searchDate=2022-12-07&agentId=${agentId}&page=${page}&itemsPerPage=${itemsPerPage}&orderBy=Id|DESC`
+    // `${apiURL}/Dispositions/agentreport?&searchDate=2022-12-07&agentId=${agentId}&page=${page}&itemsPerPage=${itemsPerPage}&orderBy=Id|DESC`
+    `${apiURL}/Dispositions/agentreport?fromDate=2022-11-07&toDate=2023-01-15&agentId=${agentId}&page=${page}&itemsPerPage=${itemsPerPage}&orderBy=Id|DESC`
   );
   return res.data;
 };

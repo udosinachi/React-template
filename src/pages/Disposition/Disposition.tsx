@@ -278,7 +278,7 @@ const Disposition = () => {
     searchDispositionDateMutate({
       page: 1,
       itemsPerPage: 100,
-      searchKey: 15,
+      searchKey: 7,
       fromDate: FromDate,
       toDate: ToDate,
     });

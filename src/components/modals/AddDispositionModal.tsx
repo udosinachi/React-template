@@ -121,13 +121,13 @@ export const AddDispositionModal = ({
   const handleSubmit = () => {
     mutate({
       CustomerId: "1",
-      AgentId: "22",
+      AgentId: "18",
       // AgentId: localStorage.getItem("agentID") 7 18 22,
-      CommitmentDate: "2023-01-15",
-      NameOfBrowser: "Elon Musk",
-      Email: "elon@test.com",
-      PhoneNumber: "08012845678",
-      DisbursementDate: "9 Jan 2023",
+      CommitmentDate: "2023-01-16",
+      NameOfBrowser: "Bill Gates",
+      Email: "gatesbill@test.com",
+      PhoneNumber: id,
+      DisbursementDate: "10 Jan 2023",
       LoanId: "30",
 
       DateCreated,
