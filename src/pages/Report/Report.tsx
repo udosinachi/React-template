@@ -62,12 +62,12 @@ const Report = () => {
         console.log(res);
         setAllSearchedUserData(res?.document?.records);
         setSearchResponse(true);
-        setNoSearchRecord(res?.message);
-        if (res?.document === null) {
-          errorToast(res?.message);
+        setNoSearchRecord(res?.document?.totalRecords);
+        if (res?.document?.totalRecords === 0) {
+          errorToast("No Record Found");
           setSearchResponse(false);
         } else {
-          successToast(res?.message);
+          successToast("Record Found");
           // setFalseSearchResponse(true);
         }
       },
@@ -87,9 +87,9 @@ const Report = () => {
       return false;
     }
 
-    if (noSearchRecord === "No Record Found") {
-      errorToast("No Record Found");
-    }
+    // if (noSearchRecord === 0) {
+    //   errorToast("No Record Found");
+    // }
 
     searchMutate({
       page: 1,
@@ -233,7 +233,7 @@ const Report = () => {
                 <Tbody>
                   {allSearchedUserData?.map((info: any) => (
                     <Tr
-                      key={info.id}
+                      key={info.agentId}
                       cursor="pointer"
                       _hover={{ background: "whitesmoke" }}
                     >
