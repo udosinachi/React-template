@@ -15,7 +15,7 @@ import {
   MenuList,
   Image,
 } from "@chakra-ui/react";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { FiMenu, FiBell, FiChevronDown } from "react-icons/fi";
 
 import { LogoImage, User } from "../assets/index";
@@ -68,6 +68,39 @@ const Navbar = ({ onOpen, ...rest }: MobileProps) => {
       window.location.reload();
     }, 500);
   };
+  const events = [
+    "load",
+    "mousemove",
+    "mousedown",
+    "click",
+    "scroll",
+    "keypress",
+  ];
+
+  let timer: any;
+
+  const handleLogoutTimer = () => {
+    timer = setTimeout(() => {
+      resetTimer();
+
+      Object.values(events).forEach((item) => {
+        window.removeEventListener(item, resetTimer);
+      });
+
+      logout();
+    }, 300000);
+  };
+  const resetTimer = () => {
+    if (timer) clearTimeout(timer);
+  };
+  useEffect(() => {
+    Object.values(events).forEach((item) => {
+      window.addEventListener(item, () => {
+        resetTimer();
+        handleLogoutTimer();
+      });
+    });
+  }, []);
 
   return (
     <Flex
