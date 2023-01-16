@@ -27,20 +27,17 @@ export const AddDispositionModal = ({
   isOpen,
   onClose,
   refetchAllUser,
+  firstName,
+  lastName,
 }: {
   isOpen: any;
   onClose: () => void;
   refetchAllUser: any;
+  firstName: any;
+  lastName: any;
 }) => {
   const queryClient = useQueryClient();
   const { errorToast, successToast } = useCustomToast();
-  // const [agentID, setAgentID] = useState("");
-  // const [customerID, setCustomerID] = useState("");
-  // const [category, setCategory] = useState("");
-  // const [subject, setSubject] = useState("");
-  // const [cc, setCc] = useState("");
-  // const [messageBody, setMessageBody] = useState("");
-  // const [flag, setFlag] = useState("");
   const [DateCreated, setDateCreated] = useState("");
   const [CallAnswered, setCallAnswered] = useState("");
   const [CallStatus, setCallStatus] = useState("");
@@ -117,6 +114,7 @@ export const AddDispositionModal = ({
       promiseToPayOptionData.push(dropdownList[i]);
     }
   }
+  const namesOfCustomer = firstName + " " + lastName;
 
   const handleSubmit = () => {
     mutate({
@@ -124,7 +122,7 @@ export const AddDispositionModal = ({
       AgentId: "18",
       // AgentId: localStorage.getItem("agentID") 7 18 22,
       CommitmentDate: "2023-01-16",
-      NameOfBrowser: "Bill Gates",
+      NameOfBrowser: namesOfCustomer,
       Email: "gatesbill@test.com",
       PhoneNumber: id,
       DisbursementDate: "10 Jan 2023",

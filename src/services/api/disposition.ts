@@ -67,7 +67,7 @@ export const getDispositionReport = async ({ queryKey }: any) => {
 
 export const getDispositionReportMutate = async (body: any) => {
   const res = await axiosInstance.get(
-    `${apiURL}${DISPOSITION}/report?searchKey=${body.searchKey}&&fromDate=${body.fromDate}&toDate=${body.toDate}&page=${body.page}&itemsPerPage=${body.itemsPerPage}&orderBy=Id|DESC`
+    `${apiURL}${DISPOSITION}/report?fromDate=${body.fromDate}&toDate=${body.toDate}&page=${body.page}&itemsPerPage=${body.itemsPerPage}&orderBy=Id|DESC`
   );
   return res?.data;
 };

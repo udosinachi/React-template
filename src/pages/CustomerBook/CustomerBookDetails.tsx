@@ -57,7 +57,7 @@ const CustomerBookDetails = () => {
           <Box>
             <Box>
               <Flex justifyContent="flex-end">
-                {localStorage.getItem("role")?.toString() ===
+                {localStorage.getItem("role")?.toString() !==
                   "customerserv1" && (
                   <Button
                     mb="3"
@@ -186,6 +186,8 @@ const CustomerBookDetails = () => {
             isOpen={isOpen}
             onClose={onClose}
             refetchAllUser={refetchAllUser}
+            firstName={displayedData2?.fname}
+            lastName={displayedData2?.lname}
           />
         </Box>
       )}

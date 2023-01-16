@@ -210,10 +210,11 @@ const Dashboard = () => {
                         {/* <Th color="#26C6DA">Loan ID</Th> */}
                         {/* <Th color="#26C6DA">Disbursement Date</Th> */}
                         <Th color="#26C6DA">Customer Name</Th>
-                        <Th color="#26C6DA">Email</Th>
-                        <Th color="#26C6DA">Amount to Pay Today</Th>
+                        {/* <Th color="#26C6DA">Email</Th> */}
                         <Th color="#26C6DA">Phone Number</Th>
+                        <Th color="#26C6DA">Amount to Pay Today</Th>
                         <Th color="#26C6DA">Reason For No Payment</Th>
+                        <Th color="#26C6DA">Sub Reason For No Payment</Th>
                         <Th color="#26C6DA">Promise To Pay </Th>
                         <Th color="#26C6DA">Comment</Th>
                         <Th color="#26C6DA">Enter Date</Th>
@@ -239,9 +240,13 @@ const Dashboard = () => {
                             />
                             {info?.nameOfBrowser}
                           </Td>
-                          <Td py="3">
+                          {/* <Td py="3">
                             <EmailIcon mr="3" color="#26C6DA" />
                             {info?.email}
+                          </Td> */}
+                          <Td py="3">
+                            <PhoneIcon mr="3" color="green" />
+                            {info?.phoneNumber}
                           </Td>
                           <Td py="3" display="flex" alignItems="center">
                             <Icon
@@ -252,14 +257,12 @@ const Dashboard = () => {
                             />
                             {info?.amountToPayToday}
                           </Td>
-                          <Td py="3">
-                            <PhoneIcon mr="3" color="green" />
-                            {info?.phoneNumber}
-                          </Td>
+
                           <Td py="3">
                             <InfoOutlineIcon mr="3" color="orange" />
                             {info?.reasonForNoPayment}
                           </Td>
+                          <Td py="3">{info?.subReasonForNoPayment}</Td>
                           <Td>{info?.promiseToPay}</Td>
                           <Td py="3">
                             <ChatIcon mr="3" />
