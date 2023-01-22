@@ -31,6 +31,7 @@ import {
   useGetUserInfoByIdMutate,
   useGetSearchUserInfo,
   useGetSearchUserInfoMutate,
+  useGetAllUser,
 } from "../../services/query/user";
 import useCustomToast from "../../utils/notification";
 import { AddUserModal } from "../../components/modals/AddUserModal";
@@ -70,7 +71,7 @@ const TeamMembers = () => {
     data,
     isLoading,
     refetch: refetchAllUser,
-  } = useGetAllUserInfo(currentPage, recordsPerPage);
+  } = useGetAllUser(currentPage, recordsPerPage);
   const allUserData = data?.document?.records;
   const totalRecords = data?.document?.totalRecords;
   //   console.log(data?.document?.totalRecords);
@@ -240,6 +241,7 @@ const TeamMembers = () => {
                     <Th color="#26C6DA">Role Name </Th>
                     <Th color="#26C6DA">First Name </Th>
                     <Th color="#26C6DA">Last Name </Th>
+                    <Th color="#26C6DA">Phone Number</Th>
                     <Th color="#26C6DA">Logged In Status </Th>
                     <Th color="#26C6DA"></Th>
                     {/* <Th>Last Login </Th> */}
@@ -266,9 +268,10 @@ const TeamMembers = () => {
                             <EmailIcon mr="3" color="#26C6DA" />
                             {info?.email}
                           </Td>
-                          <Td>{info?.roleName}</Td>
+                          <Td>{info?.role}</Td>
                           <Td>{info?.firstName}</Td>
                           <Td>{info?.lastName}</Td>
+                          <Td>{info?.phoneNumber}</Td>
                           {info?.id % 2 ? (
                             <Td bgColor="green.200" color="green">
                               Logged In
@@ -311,9 +314,10 @@ const TeamMembers = () => {
                             <EmailIcon mr="3" color="#26C6DA" />
                             {info?.email}
                           </Td>
-                          <Td>{info?.roleName}</Td>
+                          <Td>{info?.role}</Td>
                           <Td>{info?.firstName}</Td>
                           <Td>{info?.lastName}</Td>
+                          <Td>{info?.phoneNumber}</Td>
                           <Td>Logged In</Td>
                           {/* <Td>{info?.lastLogin}</Td> */}
                           <Td>

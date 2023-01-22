@@ -40,7 +40,7 @@ const LinkItems: Array<LinkItemProps> = [
 const SupervisorLinkItems: Array<LinkItemProps> = [
   { name: "Dashboard", icon: FiHome, path: "/dashboard" },
   { name: "Customer Book", icon: FiBook, path: "/customer-book" },
-  { name: "Disposition", icon: MdOutlineRestartAlt, path: "/disposition" },
+  // { name: "Disposition", icon: MdOutlineRestartAlt, path: "/disposition" },
   { name: "Team Members", icon: RiTeamLine, path: "/team-members" },
   { name: "Report", icon: TbReportAnalytics, path: "/report" },
 ];

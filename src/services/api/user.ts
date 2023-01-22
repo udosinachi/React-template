@@ -71,3 +71,23 @@ export const userInfoAgentLogin = async (body: any) => {
   );
   return res?.data;
 };
+
+export const getAllUser = async ({ queryKey }: any) => {
+  const [, page, itemsPerPage] = queryKey;
+  const res = await axiosInstance.get(
+    `${apiURL}/AccountManager/fetchusers?page=${page}&itemsPerPage=${itemsPerPage}`
+  );
+  return res?.data;
+};
+export const getAllSupervisors = async ({ queryKey }: any) => {
+  const [,] = queryKey;
+  const res = await axiosInstance.get(
+    `${apiURL}/AccountManager/fetchsupervisors`
+  );
+  return res?.data;
+};
+export const getAllAgents = async ({ queryKey }: any) => {
+  const [, page, itemsPerPage] = queryKey;
+  const res = await axiosInstance.get(`${apiURL}/AccountManager/fetchagents`);
+  return res?.data;
+};

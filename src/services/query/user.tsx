@@ -11,6 +11,9 @@ import {
   getUserInfoForSupervisor,
   getUserInfoForAgent,
   userInfoAgentLogin,
+  getAllUser,
+  getAllSupervisors,
+  getAllAgents,
 } from "../api/user";
 import {
   GET_ALL_USER_INFO,
@@ -22,6 +25,9 @@ import {
   GET_USER_INFO_SUPERVISOR,
   GET_USER_INFO_AGENTS,
   USER_INFO_AGENT_LOGIN,
+  GET_ALL_USER,
+  GET_ALL_SUPERVISOR,
+  GET_ALL_AGENTS,
 } from "../queryKeys";
 
 export const useGetAllUserInfo = (
@@ -134,4 +140,39 @@ export const useUserInfoAgentLogin = (options = {}) => {
     ...options,
   });
   return { mutate, isLoading };
+};
+
+export const useGetAllUser = (
+  page: number,
+  itemPerPage: number,
+  options = {}
+) => {
+  const { data, isLoading, refetch } = useQuery(
+    [GET_ALL_USER, page, itemPerPage],
+    getAllUser,
+    {
+      ...options,
+    }
+  );
+  return { data, isLoading, refetch };
+};
+export const useGetAllSupervisors = (options = {}) => {
+  const { data, isLoading, refetch } = useQuery(
+    [GET_ALL_SUPERVISOR],
+    getAllSupervisors,
+    {
+      ...options,
+    }
+  );
+  return { data, isLoading, refetch };
+};
+export const useGetAllAgents = (options = {}) => {
+  const { data, isLoading, refetch } = useQuery(
+    [GET_ALL_AGENTS],
+    getAllAgents,
+    {
+      ...options,
+    }
+  );
+  return { data, isLoading, refetch };
 };

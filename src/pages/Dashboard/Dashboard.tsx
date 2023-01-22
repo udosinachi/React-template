@@ -27,7 +27,10 @@ import {
   useGetDashboardChart,
   useGetDashboardStatistics,
 } from "../../services/query/dashboard";
-import { useGetUserInfoForAgents } from "../../services/query/user";
+import {
+  useGetAllAgents,
+  useGetUserInfoForAgents,
+} from "../../services/query/user";
 import { CgProfile } from "react-icons/cg";
 import { MdOutlineMonetizationOn } from "react-icons/md";
 import {
@@ -45,8 +48,8 @@ const Dashboard = () => {
     data: dataAgent,
     isLoading: isLoadingAgent,
     refetch: refetchAgent,
-  } = useGetUserInfoForAgents();
-  const AgentData = dataAgent?.document;
+  } = useGetAllAgents();
+  const AgentData = dataAgent?.document?.records;
   // console.log(AgentData);
   const [listOfAgent, setListOfAgent] = useState("");
 

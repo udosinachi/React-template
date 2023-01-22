@@ -47,3 +47,7 @@ export const SEARCH_AGENT_MAPPING = "search_agent_mapping";
 export const AGENT_DASHBOARD_STATISTICS = "agent_dashboard_statistics";
 export const AGENT_DASHBOARD_CHARTS = "agent_dashboard_charts";
 export const AGENT_DISPOSITION_REPORT = "agent_disposition_report";
+
+export const GET_ALL_USER = "get_all_user";
+export const GET_ALL_SUPERVISOR = "get_all_supervisor";
+export const GET_ALL_AGENTS = "get_all_agents";

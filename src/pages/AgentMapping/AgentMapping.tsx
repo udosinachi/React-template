@@ -22,6 +22,8 @@ import {
   useGetAllSupervisorAgentsMapping,
 } from "../../services/query/agent-mapping";
 import {
+  useGetAllAgents,
+  useGetAllSupervisors,
   useGetAllUserInfo,
   useGetUserInfoById,
   useGetUserInfoForAgents,
@@ -44,16 +46,16 @@ const AgentMapping = () => {
     data: dataSupervisor,
     isLoading: isLoadingSupervisor,
     refetch: refetchSupervisor,
-  } = useGetUserInfoForSupervisor();
-  const SupervisorData = dataSupervisor?.document;
+  } = useGetAllSupervisors();
+  const SupervisorData = dataSupervisor?.document?.records;
   console.log(SupervisorData);
 
   const {
     data: dataAgent,
     isLoading: isLoadingAgent,
     refetch: refetchAgent,
-  } = useGetUserInfoForAgents();
-  const AgentData = dataAgent?.document;
+  } = useGetAllAgents();
+  const AgentData = dataAgent?.document?.records;
   console.log(AgentData);
 
   const [listOfSupervisors, setListOfSupervisors] = useState("");
@@ -61,7 +63,9 @@ const AgentMapping = () => {
   const [listOfSupervisorToAgent, setListOfSupervisorToAgent] = useState("");
   const [listofAgentsUnderaSupervisor, setListofAgentsUnderaSupervisor] =
     useState("");
-  // console.log(listofAgentsUnderaSupervisor, "Id of all under agents");
+
+  const listOfAgentInfo = listOfAgent?.split(" ");
+  const listOfSupervisorInfo = listOfSupervisors?.split(" ");
 
   const {
     data: dataSupervisorAgentsMapping,
@@ -75,7 +79,11 @@ const AgentMapping = () => {
   const { mutate, isLoading: isCreateLoading } = useAddNewAgentMapping({
     onSuccess: (res: any) => {
       console.log(res);
-      successToast("Mapped Successful");
+      if (res?.code === 1) {
+        successToast(res?.message);
+      } else {
+        errorToast(res?.message);
+      }
     },
     onError: (err: any) => {
       console.log(err);
@@ -84,12 +92,12 @@ const AgentMapping = () => {
   });
 
   const handleSubmit = () => {
-    // console.log(username);
-    // console.log(password);
     toRefetch();
     mutate({
-      SupervisorId: listOfSupervisors,
-      AgentId: listOfAgent,
+      SupervisorId: listOfSupervisorInfo[0],
+      AgentId: listOfAgentInfo[0],
+      AgentEmail: listOfAgentInfo[1],
+      SupervisorEmail: listOfSupervisorInfo[1],
     });
   };
 
@@ -114,9 +122,12 @@ const AgentMapping = () => {
 
               <Select onChange={(e) => setListOfSupervisors(e.target.value)}>
                 <option value="">-- Select a Supervisor --</option>
-                {SupervisorData?.reverse()?.map((choose: any) => (
-                  <option key={choose?.id} value={choose?.id}>
-                    {choose?.id} {choose?.firstName} {choose?.lastName}
+                {SupervisorData?.map((choose: any) => (
+                  <option
+                    key={choose?.id}
+                    value={`${choose?.id} ${choose?.email}`}
+                  >
+                    {choose?.firstName} {choose?.lastName}
                   </option>
                 ))}
               </Select>
@@ -127,9 +138,12 @@ const AgentMapping = () => {
 
               <Select onChange={(e) => setListOfAgent(e.target.value)}>
                 <option value="">-- Select an Agent --</option>
-                {AgentData?.reverse()?.map((choose: any) => (
-                  <option key={choose?.id} value={choose?.id}>
-                    {choose?.id} {choose?.firstName} {choose?.lastName}
+                {AgentData?.map((choose: any) => (
+                  <option
+                    key={choose?.id}
+                    value={`${choose?.id} ${choose?.email}`}
+                  >
+                    {choose?.firstName} {choose?.lastName}
                   </option>
                 ))}
               </Select>
@@ -158,7 +172,7 @@ const AgentMapping = () => {
                 <option value="">-- Select a Supervisor --</option>
                 {SupervisorData?.map((choose: any) => (
                   <option key={choose?.id} value={choose?.id}>
-                    {choose?.id} {choose?.firstName} {choose?.lastName}
+                    {choose?.firstName} {choose?.lastName}
                   </option>
                 ))}
               </Select>
@@ -176,9 +190,9 @@ const AgentMapping = () => {
                   {/* <TableCaption>Imperial to metric conversion factors</TableCaption> */}
                   <Thead bgColor="gray.200">
                     <Tr>
-                      <Th color="#26C6DA" py="4">
+                      {/* <Th color="#26C6DA" py="4">
                         ID
-                      </Th>
+                      </Th> */}
                       <Th color="#26C6DA">Email </Th>
                       <Th color="#26C6DA">Role Name </Th>
                       <Th color="#26C6DA">First Name </Th>
@@ -203,7 +217,7 @@ const AgentMapping = () => {
                         cursor="pointer"
                         _hover={{ background: "whitesmoke" }}
                       >
-                        <Td py="3">{info?.id}</Td>
+                        {/* <Td py="3">{info?.id}</Td> */}
                         <Td py="3">
                           <EmailIcon mr="3" color="#26C6DA" />
                           {info?.email}
