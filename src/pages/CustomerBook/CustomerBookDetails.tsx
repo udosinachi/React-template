@@ -188,6 +188,7 @@ const CustomerBookDetails = () => {
             refetchAllUser={refetchAllUser}
             firstName={displayedData2?.fname}
             lastName={displayedData2?.lname}
+            idIndex={displayedData?.id}
           />
         </Box>
       )}

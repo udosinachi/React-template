@@ -29,12 +29,14 @@ export const AddDispositionModal = ({
   refetchAllUser,
   firstName,
   lastName,
+  idIndex,
 }: {
   isOpen: any;
   onClose: () => void;
   refetchAllUser: any;
   firstName: any;
   lastName: any;
+  idIndex: any;
 }) => {
   const queryClient = useQueryClient();
   const { errorToast, successToast } = useCustomToast();
@@ -118,13 +120,14 @@ export const AddDispositionModal = ({
 
   const handleSubmit = () => {
     mutate({
-      CustomerId: "1",
-      AgentId: "116",
       CommitmentDate: "2023-01-16",
       Email: "gatesbill@test.com",
       DisbursementDate: "10 Jan 2023",
       LoanId: "30",
 
+      // AgentId: localStorage.getItem("agentID"),
+      AgentId: 300,
+      CustomerId: idIndex,
       NameOfBrowser: namesOfCustomer,
       PhoneNumber: id,
       DateCreated,
