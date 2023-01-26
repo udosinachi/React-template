@@ -45,10 +45,14 @@ export const AddDispositionModal = ({
   const [CallStatus, setCallStatus] = useState("");
   const [ReasonForNoPayment, setReasonForNoPayment] = useState("Null");
   const [SubReasonForNoPayment, setSubReasonForNoPayment] = useState("Null");
+  const [InboundReason, setInboundReason] = useState("Null");
+  const [SubInboundReason, setSubInboundReason] = useState("Null");
   const [PromiseToPay, setPromiseToPay] = useState("");
   const [AmountToPayToday, setAmountToPayToday] = useState("");
   const [NumberOfDays, setNumberOfDays] = useState("");
   const [Comment, setComment] = useState("");
+  const [typeOfCall, setTypeofCall] = useState("");
+  const [typeOfCustomer, setTypeofCustomer] = useState("");
 
   const { id } = useParams();
 
@@ -69,7 +73,7 @@ export const AddDispositionModal = ({
     },
   });
 
-  const { data, isLoading, refetch } = useGetAllDropDown(1, 100);
+  const { data, isLoading, refetch } = useGetAllDropDown(1, 200);
   const dropdownList = data?.document?.records;
   // console.log(dropdownList);
   const callAnsweredOptionData = [];
@@ -118,6 +122,23 @@ export const AddDispositionModal = ({
   }
   const namesOfCustomer = firstName + " " + lastName;
 
+  const inboundReasonOptionData = [];
+  for (let i = 0; i < dropdownList?.length; i++) {
+    if (dropdownList[i]?.dropDownName === "Reason For Inbound") {
+      inboundReasonOptionData.push(dropdownList[i]);
+    }
+  }
+  console.log(inboundReasonOptionData);
+
+  const inboundSubReasonOptionData = [];
+  for (let i = 0; i < dropdownList?.length; i++) {
+    if (dropdownList[i]?.dropDownName === "Sub-Reason For Inbound") {
+      if (dropdownList[i]?.optionCode === InboundReason) {
+        inboundSubReasonOptionData.push(dropdownList[i]);
+      }
+    }
+  }
+
   const handleSubmit = () => {
     mutate({
       CommitmentDate: "2023-01-16",
@@ -150,168 +171,440 @@ export const AddDispositionModal = ({
           <ModalHeader>Add a New Disposition for {id}</ModalHeader>
           <ModalCloseButton />
           <ModalBody pb={6}>
-            <Box display="flex" justifyContent="space-between">
-              <FormControl w="90%" mr="2">
-                <FormLabel>Call Answered</FormLabel>
-                {/* <Input
-                  type="text"
-                  name="Agent ID"
-                  value={agentID}
-                  onChange={(e) => setAgentID(e.target.value)}
-                /> */}
-                <Select onChange={(e) => setCallAnswered(e.target.value)}>
-                  <option value="">-- Select --</option>
-                  {callAnsweredOptionData?.reverse()?.map((choose) => (
-                    <option key={choose?.id} value={choose?.optionText}>
-                      {choose?.optionText}
-                    </option>
-                  ))}
-                  {/* <option value="Yes">Yes</option>
-                  <option value="No">No</option> */}
-                </Select>
-              </FormControl>
-              <FormControl w="90%" ml="2">
-                <FormLabel>Call Status</FormLabel>
-                {/* <Input
-                  type="text"
-                  name="Customer ID"
-                  value={customerID}
-                  onChange={(e) => setCustomerID(e.target.value)}
-                /> */}
-                <Select onChange={(e) => setCallStatus(e.target.value)}>
-                  <option value="">-- Select --</option>
-                  {callStatusOptionData?.map((choose) => (
-                    <option key={choose?.id} value={choose?.optionText}>
-                      {choose?.optionText}
-                    </option>
-                  ))}
-                  {/* <option value=""></option>
-                  <option value="Received">Received</option>
-                  <option value="Ignored">Ignored</option>
-                  <option value="Failed">Failed</option> */}
-                </Select>
-              </FormControl>
+            <Box mb="2">
+              <FormLabel>Type of Call</FormLabel>
+              <Select onChange={(e) => setTypeofCall(e.target.value)}>
+                <option value="">-- Select --</option>
+                <option value="Outbound">Outbound</option>
+                <option value="Inbound">Inbound</option>
+                <option value="Others">Others</option>
+              </Select>
             </Box>
+            {typeOfCall === "Outbound" && (
+              <Box mb="2">
+                <FormLabel>Type of Customer</FormLabel>
+                <Select onChange={(e) => setTypeofCustomer(e.target.value)}>
+                  <option value="">-- Select --</option>
+                  <option value="Newly Activated Customers">
+                    Newly Activated Customers
+                  </option>
+                  <option value="Upcoming Renewals">Upcoming Renewals</option>
+                  <option value="Overdue Renewals">Overdue Renewals</option>
+                </Select>
+              </Box>
+            )}
 
-            {CallStatus === "Completed" && (
-              <Box display="flex" justifyContent="space-between" mt="4">
-                <FormControl w="90%" mr="2">
-                  <FormLabel>Reason for Non Payment</FormLabel>
-                  {/* <Input
-                type="text"
-                name="Category"
-                value={category}
-                onChange={(e) => setCategory(e.target.value)}
-              /> */}
+            {typeOfCall === "Outbound" &&
+              typeOfCustomer === "Overdue Renewals" && (
+                <Box>
+                  <Box display="flex" justifyContent="space-between">
+                    <FormControl w="90%" mr="2">
+                      <FormLabel>Call Answered</FormLabel>
 
-                  <Select
-                    onChange={(e) => setReasonForNoPayment(e.target.value)}
-                  >
-                    <option value="null">-- Select --</option>
-                    {reasonForNonPaymentOptionData?.reverse()?.map((choose) => (
+                      <Select onChange={(e) => setCallAnswered(e.target.value)}>
+                        <option value="">-- Select --</option>
+                        {callAnsweredOptionData?.reverse()?.map((choose) => (
+                          <option key={choose?.id} value={choose?.optionText}>
+                            {choose?.optionText}
+                          </option>
+                        ))}
+                      </Select>
+                    </FormControl>
+                    <FormControl w="90%" ml="2">
+                      <FormLabel>Call Status</FormLabel>
+
+                      <Select onChange={(e) => setCallStatus(e.target.value)}>
+                        <option value="">-- Select --</option>
+                        {callStatusOptionData?.map((choose) => (
+                          <option key={choose?.id} value={choose?.optionText}>
+                            {choose?.optionText}
+                          </option>
+                        ))}
+                      </Select>
+                    </FormControl>
+                  </Box>
+                  <>
+                    {CallStatus === "Completed" && (
+                      <Box display="flex" justifyContent="space-between" mt="4">
+                        <FormControl w="90%" mr="2">
+                          <FormLabel>Reason for Non Payment</FormLabel>
+
+                          <Select
+                            onChange={(e) =>
+                              setReasonForNoPayment(e.target.value)
+                            }
+                          >
+                            <option value="null">-- Select --</option>
+                            {reasonForNonPaymentOptionData
+                              ?.reverse()
+                              ?.map((choose) => (
+                                <option
+                                  key={choose?.id}
+                                  value={choose?.optionText}
+                                >
+                                  {choose?.optionText}
+                                </option>
+                              ))}
+                          </Select>
+                        </FormControl>
+
+                        <FormControl w="90%" ml="2">
+                          <FormLabel>Sub Reason</FormLabel>
+
+                          <Select
+                            onChange={(e) =>
+                              setSubReasonForNoPayment(e.target.value)
+                            }
+                          >
+                            <option value="null">-- Select --</option>
+                            {subReasonForNonPaymentOptionData
+                              ?.reverse()
+                              ?.map((choose) => (
+                                <option
+                                  key={choose?.id}
+                                  value={choose?.optionText}
+                                >
+                                  {choose?.optionText}
+                                </option>
+                              ))}
+                          </Select>
+                        </FormControl>
+                      </Box>
+                    )}
+
+                    <Box display="flex" justifyContent="space-between" mt="4">
+                      <FormControl w="90%" mr="2">
+                        <FormLabel>Promise to Pay</FormLabel>
+
+                        <Select
+                          onChange={(e) => setPromiseToPay(e.target.value)}
+                        >
+                          <option value="">-- Select --</option>
+                          {promiseToPayOptionData?.reverse()?.map((choose) => (
+                            <option key={choose?.id} value={choose?.optionText}>
+                              {choose?.optionText}
+                            </option>
+                          ))}
+                        </Select>
+                      </FormControl>
+
+                      <FormControl w="90%" ml="2">
+                        <FormLabel>Commitment Date</FormLabel>
+                        <Input
+                          type="date"
+                          name="Message Body"
+                          value={DateCreated}
+                          onChange={(e) => setDateCreated(e.target.value)}
+                        />
+                      </FormControl>
+                    </Box>
+
+                    <Box display="flex" justifyContent="space-between" mt="4">
+                      <FormControl w="90%" mr="2">
+                        <FormLabel>Amount to Repay Today</FormLabel>
+                        <Input
+                          type="number"
+                          name="Flag"
+                          value={AmountToPayToday}
+                          onChange={(e) => setAmountToPayToday(e.target.value)}
+                        />
+                      </FormControl>
+
+                      <FormControl w="90%" ml="2">
+                        <FormLabel>Number of Days</FormLabel>
+                        <Input
+                          type="number"
+                          name="Flag"
+                          value={NumberOfDays}
+                          onChange={(e) => setNumberOfDays(e.target.value)}
+                        />
+                      </FormControl>
+                    </Box>
+
+                    <FormControl mt={4}>
+                      <FormLabel>Comment</FormLabel>
+                      <Input
+                        type="text"
+                        name="Flag"
+                        value={Comment}
+                        onChange={(e) => setComment(e.target.value)}
+                      />
+                    </FormControl>
+                  </>
+                </Box>
+              )}
+
+            {typeOfCall === "Outbound" &&
+              typeOfCustomer === "Newly Activated Customers" && (
+                <>
+                  <Box display="flex" justifyContent="space-between">
+                    <FormControl w="90%" mr="2">
+                      <FormLabel>Call Answered</FormLabel>
+
+                      <Select onChange={(e) => setCallAnswered(e.target.value)}>
+                        <option value="">-- Select --</option>
+                        {callAnsweredOptionData?.reverse()?.map((choose) => (
+                          <option key={choose?.id} value={choose?.optionText}>
+                            {choose?.optionText}
+                          </option>
+                        ))}
+                      </Select>
+                    </FormControl>
+                    <FormControl w="90%" ml="2">
+                      <FormLabel>Call Status</FormLabel>
+
+                      <Select onChange={(e) => setCallStatus(e.target.value)}>
+                        <option value="">-- Select --</option>
+                        {callStatusOptionData?.map((choose) => (
+                          <option key={choose?.id} value={choose?.optionText}>
+                            {choose?.optionText}
+                          </option>
+                        ))}
+                      </Select>
+                    </FormControl>
+                  </Box>
+                  <Box display="flex" justifyContent="space-between">
+                    <FormControl w="90%" mr="2">
+                      <FormLabel>ID Type</FormLabel>
+
+                      <Select>
+                        <option value="">-- Select --</option>
+                        <option>NIN</option>
+                        <option>Voter's Card</option>
+                        <option>Driver's License</option>
+                        <option>Staff ID</option>
+                        <option>No ID</option>
+                        <option>Int'l Passport</option>
+                        <option>Others</option>
+                      </Select>
+                    </FormControl>
+                    <FormControl w="90%" ml="2">
+                      <FormLabel>ID Card Check</FormLabel>
+
+                      <Select>
+                        <option value="">-- Select --</option>
+                        <option>Correct</option>
+                        <option>Wrong</option>
+                        <option>To be checked further</option>
+                      </Select>
+                    </FormControl>
+                  </Box>
+                  <Box display="flex" justifyContent="space-between">
+                    <FormControl w="90%" mr="2">
+                      <FormLabel>Reason</FormLabel>
+
+                      <Select>
+                        <option value="">-- Select --</option>
+                        <option>N/A</option>
+                        <option>Impersonation</option>
+                        <option>Not Clear</option>
+                        <option>Invalid</option>
+                        <option>Others</option>
+                      </Select>
+                    </FormControl>
+                    <FormControl w="90%" ml="2">
+                      <FormLabel>Customer 360 download</FormLabel>
+
+                      <Select>
+                        <option value="">-- Select --</option>
+                        <option>Yes</option>
+                        <option>No</option>
+                      </Select>
+                    </FormControl>
+                  </Box>
+                  <FormControl>
+                    <FormLabel>Customer Review</FormLabel>
+                    <Select>
+                      <option value="">-- Select --</option>
+                      <option>Satisfied</option>
+                      <option>Unsatisfied</option>
+                      <option>Indifferent</option>
+                    </Select>
+                  </FormControl>
+                  <FormControl mt={4}>
+                    <FormLabel>Comment</FormLabel>
+                    <Input
+                      type="text"
+                      name="Flag"
+                      value={Comment}
+                      onChange={(e) => setComment(e.target.value)}
+                    />
+                  </FormControl>
+                </>
+              )}
+
+            {typeOfCall === "Outbound" &&
+              typeOfCustomer === "Upcoming Renewals" && (
+                <>
+                  <Box display="flex" justifyContent="space-between">
+                    <FormControl w="90%" mr="2">
+                      <FormLabel>Call Answered</FormLabel>
+
+                      <Select onChange={(e) => setCallAnswered(e.target.value)}>
+                        <option value="">-- Select --</option>
+                        {callAnsweredOptionData?.reverse()?.map((choose) => (
+                          <option key={choose?.id} value={choose?.optionText}>
+                            {choose?.optionText}
+                          </option>
+                        ))}
+                      </Select>
+                    </FormControl>
+                    <FormControl w="90%" ml="2">
+                      <FormLabel>Call Status</FormLabel>
+
+                      <Select onChange={(e) => setCallStatus(e.target.value)}>
+                        <option value="">-- Select --</option>
+                        {callStatusOptionData?.map((choose) => (
+                          <option key={choose?.id} value={choose?.optionText}>
+                            {choose?.optionText}
+                          </option>
+                        ))}
+                      </Select>
+                    </FormControl>
+                  </Box>
+                  <Box display="flex" justifyContent="space-between">
+                    <FormControl w="90%" mr="2">
+                      <FormLabel>Reminder Done</FormLabel>
+
+                      <Select>
+                        <option value="">-- Select --</option>
+                        <option>Yes</option>
+                        <option>No</option>
+                      </Select>
+                    </FormControl>
+                    <FormControl w="90%" ml="2">
+                      <FormLabel>Customer's Response</FormLabel>
+
+                      <Select>
+                        <option value="">-- Select --</option>
+                        <option>Positive</option>
+                        <option>Negative</option>
+                      </Select>
+                    </FormControl>
+                  </Box>
+                  <Box display="flex" justifyContent="space-between">
+                    <FormControl w="90%" mr="2">
+                      <FormLabel>Promise to Pay</FormLabel>
+
+                      <Select>
+                        <option value="">-- Select --</option>
+                        <option>Yes</option>
+                        <option>No</option>
+                      </Select>
+                    </FormControl>
+                    <FormControl w="90%" ml="2">
+                      <FormLabel>Commitment Date</FormLabel>
+                      <Input
+                        type="date"
+                        name="Message Body"
+                        value={DateCreated}
+                        onChange={(e) => setDateCreated(e.target.value)}
+                      />
+                    </FormControl>
+                  </Box>
+                  <FormControl mt={4}>
+                    <FormLabel>Comment</FormLabel>
+                    <Input
+                      type="text"
+                      name="Flag"
+                      value={Comment}
+                      onChange={(e) => setComment(e.target.value)}
+                    />
+                  </FormControl>
+                </>
+              )}
+
+            {typeOfCall === "Inbound" && (
+              <>
+                <FormControl>
+                  <FormLabel>Call Purpose</FormLabel>
+                  <Select>
+                    <option value="">-- Select --</option>
+                    <option>Complaint</option>
+                    <option>Enquiry</option>
+                    <option>Request</option>
+                    <option>Others</option>
+                  </Select>
+                </FormControl>
+                <FormControl>
+                  <FormLabel>Reason</FormLabel>
+                  <Select onChange={(e) => setInboundReason(e.target.value)}>
+                    <option value="">-- Select --</option>
+                    {inboundReasonOptionData?.reverse()?.map((choose) => (
                       <option key={choose?.id} value={choose?.optionText}>
                         {choose?.optionText}
                       </option>
                     ))}
-                    {/* <option value=""></option>
-                  <option value="Promise to payback">Promise to payback</option>
-                  <option value="Call Back">Call Back</option>
-                  <option value="Unable to pay">Unable to pay</option> */}
                   </Select>
                 </FormControl>
-
-                <FormControl w="90%" ml="2">
-                  <FormLabel>Sub Reason</FormLabel>
-                  {/* <Input
-                  type="text"
-                  name="CC"
-                  value={cc}
-                  onChange={(e) => setCc(e.target.value)}
-                /> */}
-                  <Select
-                    onChange={(e) => setSubReasonForNoPayment(e.target.value)}
-                  >
-                    <option value="null">-- Select --</option>
-                    {subReasonForNonPaymentOptionData
-                      ?.reverse()
-                      ?.map((choose) => (
-                        <option key={choose?.id} value={choose?.optionText}>
-                          {choose?.optionText}
-                        </option>
-                      ))}
-                    {/* <option value=""></option>
-                  <option value="Promise to payback">Promise to payback</option>
-                  <option value="Call Back">Call Back</option>
-                  <option value="Unable to pay">Unable to pay</option> */}
+                <FormControl>
+                  <FormLabel>Sub-Reason</FormLabel>
+                  <Select onChange={(e) => setSubInboundReason(e.target.value)}>
+                    <option value="">-- Select --</option>
+                    {inboundSubReasonOptionData?.reverse()?.map((choose) => (
+                      <option key={choose?.id} value={choose?.optionText}>
+                        {choose?.optionText}
+                      </option>
+                    ))}
                   </Select>
                 </FormControl>
-              </Box>
+                <FormControl mt={4}>
+                  <FormLabel>Comment</FormLabel>
+                  <Input
+                    type="text"
+                    name="Flag"
+                    value={Comment}
+                    onChange={(e) => setComment(e.target.value)}
+                  />
+                </FormControl>
+              </>
             )}
+            {typeOfCall === "Others" && (
+              <>
+                <FormControl>
+                  <FormLabel>Contact Platform</FormLabel>
 
-            <Box display="flex" justifyContent="space-between" mt="4">
-              <FormControl w="90%" mr="2">
-                <FormLabel>Promise to Pay</FormLabel>
-                {/* <Input
-                  type="text"
-                  name="Subject"
-                  value={subject}
-                  onChange={(e) => setSubject(e.target.value)}
-                /> */}
-                <Select onChange={(e) => setPromiseToPay(e.target.value)}>
-                  <option value="">-- Select --</option>
-                  {promiseToPayOptionData?.reverse()?.map((choose) => (
-                    <option key={choose?.id} value={choose?.optionText}>
-                      {choose?.optionText}
-                    </option>
-                  ))}
-                  {/* <option value=""></option>
-                  <option value="Yes">Yes</option>
-                  <option value="No">No</option> */}
-                </Select>
-              </FormControl>
-
-              <FormControl w="90%" ml="2">
-                <FormLabel>Commitment Date</FormLabel>
-                <Input
-                  type="date"
-                  name="Message Body"
-                  value={DateCreated}
-                  onChange={(e) => setDateCreated(e.target.value)}
-                />
-              </FormControl>
-            </Box>
-
-            <Box display="flex" justifyContent="space-between" mt="4">
-              <FormControl w="90%" mr="2">
-                <FormLabel>Amount to Repay Today</FormLabel>
-                <Input
-                  type="number"
-                  name="Flag"
-                  value={AmountToPayToday}
-                  onChange={(e) => setAmountToPayToday(e.target.value)}
-                />
-              </FormControl>
-
-              <FormControl w="90%" ml="2">
-                <FormLabel>Number of Days</FormLabel>
-                <Input
-                  type="number"
-                  name="Flag"
-                  value={NumberOfDays}
-                  onChange={(e) => setNumberOfDays(e.target.value)}
-                />
-              </FormControl>
-            </Box>
-
-            <FormControl mt={4}>
-              <FormLabel>Comment</FormLabel>
-              <Input
-                type="text"
-                name="Flag"
-                value={Comment}
-                onChange={(e) => setComment(e.target.value)}
-              />
-            </FormControl>
+                  <Select>
+                    <option value="">-- Select --</option>
+                    <option>Email</option>
+                    <option>Paytrigger</option>
+                    <option>Ticket/Customer 360</option>
+                    <option>Whatsapp</option>
+                  </Select>
+                </FormControl>
+                <FormControl>
+                  <FormLabel>Reason</FormLabel>
+                  <Select onChange={(e) => setInboundReason(e.target.value)}>
+                    <option value="">-- Select --</option>
+                    {inboundReasonOptionData?.reverse()?.map((choose) => (
+                      <option key={choose?.id} value={choose?.optionText}>
+                        {choose?.optionText}
+                      </option>
+                    ))}
+                  </Select>
+                </FormControl>
+                <FormControl>
+                  <FormLabel>Sub-Reason</FormLabel>
+                  <Select onChange={(e) => setSubInboundReason(e.target.value)}>
+                    <option value="">-- Select --</option>
+                    {inboundSubReasonOptionData?.reverse()?.map((choose) => (
+                      <option key={choose?.id} value={choose?.optionText}>
+                        {choose?.optionText}
+                      </option>
+                    ))}
+                  </Select>
+                </FormControl>
+                <FormControl mt={4}>
+                  <FormLabel>Comment</FormLabel>
+                  <Input
+                    type="text"
+                    name="Flag"
+                    value={Comment}
+                    onChange={(e) => setComment(e.target.value)}
+                  />
+                </FormControl>
+              </>
+            )}
           </ModalBody>
 
           <ModalFooter>
