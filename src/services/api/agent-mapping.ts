@@ -67,22 +67,6 @@ export const getAllSupervisorAgentsMapping = async ({ queryKey }: any) => {
   return res.data;
 };
 
-export const getAgentDashboardStatistics = async ({ queryKey }: any) => {
-  const [, agentId] = queryKey;
-  const res = await axiosInstance.get(
-    `${apiURL}/AgentDashboard/statistics?agentId=${agentId}`
-  );
-  return res.data;
-};
-
-export const getAgentDashboardCharts = async ({ queryKey }: any) => {
-  const [, agentId] = queryKey;
-  const res = await axiosInstance.get(
-    `${apiURL}/AgentDashboard/charts?searchDate=2022-12-07&agentId=${agentId}`
-  );
-  return res.data;
-};
-
 export const getAgentDispositionReport = async ({ queryKey }: any) => {
   const [, agentId, page, itemsPerPage] = queryKey;
   const res = await axiosInstance.get(

@@ -34,18 +34,8 @@ const CustomerBookDetails = () => {
     refetch: refetchAllUser,
   } = useGetCustomerDetailSearchByNumber(id);
   const displayedData = data?.document?.records[0];
-  const displayedData2 = data?.document?.records[0]?.preCustomers[0];
+  // const displayedData2 = data?.document?.records[0]?.preCustomers[0];
   console.log(data);
-  //   console.log(data?.document?.data?.preCustomers[0]);
-
-  //   console.log(data?.document?.data?.preCustomers);
-  //   const customerDetailsArray = data?.document?.data?.preCustomers;
-
-  //   const precustomerArray = [];
-  //   for (let i = 0; i < customerDetailsArray?.length; i++) {
-  //     precustomerArray.push(customerDetailsArray[i]?.kycInfos);
-  //   }
-  //   console.log(precustomerArray[0]);
 
   return (
     <div>
@@ -89,34 +79,47 @@ const CustomerBookDetails = () => {
                       Full Name:{" "}
                     </Text>
                     <Text>
-                      {displayedData?.firstname} {displayedData?.lastname}{" "}
+                      {/* {displayedData?.firstname} {displayedData?.lastname}{" "} */}
+                      {displayedData?.customerName}
                     </Text>
-                  </Flex>
-                  <Flex mb="1">
-                    <Text w="150px" fontWeight="700">
-                      Address:{" "}
-                    </Text>
-                    <Text>{displayedData2?.address1}</Text>
                   </Flex>
                   <Flex mb="1">
                     <Text w="150px" fontWeight="700">
                       Mobile No:{" "}
                     </Text>
-                    <Text>{displayedData?.msisdn}</Text>
+                    {/* <Text>{displayedData?.msisdn}</Text> */}
+                    <Text>{id}</Text>
                   </Flex>
-
                   <Flex mb="1">
+                    <Text w="150px" fontWeight="700">
+                      Financier:{" "}
+                    </Text>
+                    <Text>{displayedData?.financier}</Text>
+                  </Flex>
+                  <Flex mb="1">
+                    <Text w="150px" fontWeight="700">
+                      Store Name:{" "}
+                    </Text>
+                    <Text>{displayedData?.storeName}</Text>
+                  </Flex>
+                  {/* <Flex mb="1">
+                    <Text w="150px" fontWeight="700">
+                      Address:{" "}
+                    </Text>
+                    <Text>{displayedData2?.address1}</Text>
+                  </Flex> */}
+                  {/* <Flex mb="1">
                     <Text w="150px" fontWeight="700">
                       DOB:{" "}
                     </Text>
                     <Text>{displayedData2?.dob}</Text>
-                  </Flex>
-                  <Flex mb="1">
+                  </Flex> */}
+                  {/* <Flex mb="1">
                     <Text w="150px" fontWeight="700">
                       BVN Status:{" "}
                     </Text>
                     <Text>{displayedData2?.bvnStatus}</Text>
-                  </Flex>
+                  </Flex> */}
                 </Box>
 
                 <Box p="5" w="100%">
@@ -125,6 +128,60 @@ const CustomerBookDetails = () => {
                   </Text>
                   <Divider />
                   <Flex flexWrap="wrap" mt="2">
+                    <Box mr="10">
+                      <Flex mb="1">
+                        <Text w="200px" fontWeight="700">
+                          Alt MSISDN:{" "}
+                        </Text>
+                        <Text>{displayedData?.alternateMSISDN}</Text>
+                      </Flex>
+                      <Flex mb="1">
+                        <Text w="200px" fontWeight="700">
+                          Repayment Amount:{" "}
+                        </Text>
+                        <Text>{displayedData?.repaymentAmount}</Text>
+                      </Flex>
+                      <Flex mb="1">
+                        <Text w="200px" fontWeight="700">
+                          Device Type:{" "}
+                        </Text>
+                        <Text>{displayedData?.deviceType}</Text>
+                      </Flex>
+                      <Flex mb="1">
+                        <Text w="200px" fontWeight="700">
+                          Renewal Count:{" "}
+                        </Text>
+                        <Text>{displayedData?.renewalCount}</Text>
+                      </Flex>
+                    </Box>
+                    <Box mr="10">
+                      <Flex mb="1">
+                        <Text w="200px" fontWeight="700">
+                          Tenure:{" "}
+                        </Text>
+                        <Text>{displayedData?.tenure}</Text>
+                      </Flex>
+                      <Flex mb="1">
+                        <Text w="200px" fontWeight="700">
+                          Date Activated:{" "}
+                        </Text>
+                        <Text>{displayedData?.dateActivated}</Text>
+                      </Flex>
+                      <Flex mb="1">
+                        <Text w="200px" fontWeight="700">
+                          Date Extended:{" "}
+                        </Text>
+                        <Text>{displayedData?.dateExtended}</Text>
+                      </Flex>
+                      <Flex mb="1">
+                        <Text w="200px" fontWeight="700">
+                          Date Released:{" "}
+                        </Text>
+                        <Text>{displayedData?.dateReleased}</Text>
+                      </Flex>
+                    </Box>
+                  </Flex>
+                  {/* <Flex flexWrap="wrap" mt="2">
                     <Box mr="10">
                       <Flex mb="1">
                         <Text w="200px" fontWeight="700">
@@ -177,7 +234,7 @@ const CustomerBookDetails = () => {
                         <Text>{displayedData2?.created}</Text>
                       </Flex>
                     </Box>
-                  </Flex>
+                  </Flex> */}
                 </Box>
               </Flex>
             </Box>
@@ -186,8 +243,8 @@ const CustomerBookDetails = () => {
             isOpen={isOpen}
             onClose={onClose}
             refetchAllUser={refetchAllUser}
-            firstName={displayedData2?.fname}
-            lastName={displayedData2?.lname}
+            firstName={displayedData?.customerName}
+            lastName={displayedData?.customerName}
             idIndex={displayedData?.id}
           />
         </Box>

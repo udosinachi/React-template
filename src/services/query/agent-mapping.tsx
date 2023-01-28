@@ -9,8 +9,6 @@ import {
   addNewAgentMapping,
   deleteAgentMapping,
   getAllSupervisorAgentsMapping,
-  getAgentDashboardStatistics,
-  getAgentDashboardCharts,
   getAgentDispositionReport,
 } from "../api/agent-mapping";
 import {
@@ -117,32 +115,6 @@ export const useGetAllSupervisorAgentsMapping = (
   const { data, isLoading, refetch } = useQuery(
     [GET_ALL_SUPERVISOR_AGENT_MAPPING, supervisorId, page, itemPerPage],
     getAllSupervisorAgentsMapping,
-    {
-      ...options,
-    }
-  );
-  return { data, isLoading, refetch };
-};
-
-export const useGetAgentDashboardStatistics = (agentId: any, options = {}) => {
-  const { data, isLoading, refetch } = useQuery(
-    [AGENT_DASHBOARD_STATISTICS, agentId],
-    getAgentDashboardStatistics,
-    {
-      ...options,
-    }
-  );
-  return { data, isLoading, refetch };
-};
-
-export const useGetAgentDashboardCharts = (
-  agentId: any,
-  // searchDate: any,
-  options = {}
-) => {
-  const { data, isLoading, refetch } = useQuery(
-    [AGENT_DASHBOARD_CHARTS, agentId],
-    getAgentDashboardCharts,
     {
       ...options,
     }

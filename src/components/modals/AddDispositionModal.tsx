@@ -120,7 +120,6 @@ export const AddDispositionModal = ({
       promiseToPayOptionData.push(dropdownList[i]);
     }
   }
-  const namesOfCustomer = firstName + " " + lastName;
 
   const inboundReasonOptionData = [];
   for (let i = 0; i < dropdownList?.length; i++) {
@@ -138,6 +137,8 @@ export const AddDispositionModal = ({
       }
     }
   }
+
+  const namesOfCustomer = firstName;
 
   const handleSubmit = () => {
     mutate({
@@ -160,6 +161,7 @@ export const AddDispositionModal = ({
       AmountToPayToday,
       NumberOfDays,
       Comment,
+      DispositionType: typeOfCall,
     });
   };
 
@@ -528,7 +530,9 @@ export const AddDispositionModal = ({
                 </FormControl>
                 <FormControl>
                   <FormLabel>Reason</FormLabel>
-                  <Select onChange={(e) => setInboundReason(e.target.value)}>
+                  <Select
+                    onChange={(e) => setReasonForNoPayment(e.target.value)}
+                  >
                     <option value="">-- Select --</option>
                     {inboundReasonOptionData?.reverse()?.map((choose) => (
                       <option key={choose?.id} value={choose?.optionText}>
@@ -539,7 +543,9 @@ export const AddDispositionModal = ({
                 </FormControl>
                 <FormControl>
                   <FormLabel>Sub-Reason</FormLabel>
-                  <Select onChange={(e) => setSubInboundReason(e.target.value)}>
+                  <Select
+                    onChange={(e) => setSubReasonForNoPayment(e.target.value)}
+                  >
                     <option value="">-- Select --</option>
                     {inboundSubReasonOptionData?.reverse()?.map((choose) => (
                       <option key={choose?.id} value={choose?.optionText}>

@@ -9,8 +9,10 @@ import {
   Text,
   Progress,
 } from "@chakra-ui/react";
-import { useGetDashboardChart } from "../services/query/dashboard";
-import { useGetAgentDashboardCharts } from "../services/query/agent-mapping";
+import {
+  useGetAgentDashboardCharts,
+  useGetDashboardChart,
+} from "../services/query/dashboard";
 
 const CircleIcon = (props: any) => (
   <Icon viewBox="0 0 200 200" {...props}>
@@ -21,19 +23,19 @@ const CircleIcon = (props: any) => (
   </Icon>
 );
 
-const BarChart = ({ listOfAgent }: any) => {
+const BarChart = ({ listOfAgent }: any, { typeOfDisposition }: any) => {
   const {
     data: chartData,
     isLoading: isLoaded,
     refetch: refetchAllUser,
-  } = useGetDashboardChart();
+  } = useGetDashboardChart(typeOfDisposition);
   console.log(chartData);
 
   const {
     data: dataAgentCharts,
     isLoading: isLoadingAgentCharts,
     refetch: refetchAgentCharts,
-  } = useGetAgentDashboardCharts(listOfAgent);
+  } = useGetAgentDashboardCharts(listOfAgent, typeOfDisposition);
   console.log(dataAgentCharts);
 
   //   const { data } = useGetDashboardStats()

@@ -19,11 +19,9 @@ import { useState } from "react";
 import { FcMissedCall, FcCallTransfer, FcCallback } from "react-icons/fc";
 import DashboardChart from "../../components/DashboardChart";
 import { Loader } from "../../components/WithSuspense";
+import { useGetAgentDispositionReport } from "../../services/query/agent-mapping";
 import {
   useGetAgentDashboardStatistics,
-  useGetAgentDispositionReport,
-} from "../../services/query/agent-mapping";
-import {
   useGetDashboardChart,
   useGetDashboardStatistics,
 } from "../../services/query/dashboard";
@@ -41,7 +39,9 @@ import {
 } from "@chakra-ui/icons";
 
 const Dashboard = () => {
-  const { data, isLoading, refetch } = useGetDashboardStatistics();
+  const [typeOfDisposition, setTypeofDisposition] = useState("Outbound");
+  const { data, isLoading, refetch } =
+    useGetDashboardStatistics(typeOfDisposition);
   // console.log(data);
 
   const {
@@ -57,7 +57,7 @@ const Dashboard = () => {
     data: dataAgentStatistics,
     isLoading: isLoadingAgentStatistics,
     refetch: refetchAgentStatistics,
-  } = useGetAgentDashboardStatistics(listOfAgent);
+  } = useGetAgentDashboardStatistics(listOfAgent, typeOfDisposition);
   // console.log(dataAgentStatistics);
 
   const {
@@ -77,9 +77,19 @@ const Dashboard = () => {
           {localStorage.getItem("role")?.toString() !== "customerserv1" && (
             <Box>
               <Box bg="white" p="5" mb="5">
+                <FormControl mr="2" mb="2">
+                  <FormLabel>Type of Call</FormLabel>
+                  <Select
+                    onChange={(e) => setTypeofDisposition(e.target.value)}
+                  >
+                    <option value="">-- Select a Type --</option>
+                    <option value="Outbound">Outbound</option>
+                    <option value="Inbound">Inbound</option>
+                    <option value="Others">Others</option>
+                  </Select>
+                </FormControl>
                 <FormControl mr="2">
                   <FormLabel>List of Agents</FormLabel>
-
                   <Select onChange={(e) => setListOfAgent(e.target.value)}>
                     <option value="">-- Select an Agent --</option>
                     {AgentData?.reverse()?.map((choose: any) => (
@@ -212,6 +222,7 @@ const Dashboard = () => {
                         </Th>
                         {/* <Th color="#26C6DA">Loan ID</Th> */}
                         {/* <Th color="#26C6DA">Disbursement Date</Th> */}
+                        <Th color="#26C6DA">Disposition Type</Th>
                         <Th color="#26C6DA">Customer Name</Th>
                         {/* <Th color="#26C6DA">Email</Th> */}
                         <Th color="#26C6DA">Phone Number</Th>
@@ -234,6 +245,7 @@ const Dashboard = () => {
                           // background={i % 2 === 0 ? "red" : "blue"}
                         >
                           <Td py="3">{info?.agentId}</Td>
+                          <Td py="3">{info?.dispositionType}</Td>
                           <Td py="3" display="flex" alignItems="center">
                             <Icon
                               as={CgProfile}
@@ -342,7 +354,10 @@ const Dashboard = () => {
                 </Flex>
                 <Box bg="white" p={["2", "5", "5", "5"]}>
                   <Box mb="5">
-                    <DashboardChart listOfAgent={listOfAgent} />
+                    <DashboardChart
+                      listOfAgent={listOfAgent}
+                      typeOfDisposition={typeOfDisposition}
+                    />
                   </Box>
                 </Box>
               </>
