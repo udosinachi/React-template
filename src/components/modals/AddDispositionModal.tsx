@@ -43,16 +43,24 @@ export const AddDispositionModal = ({
   const [DateCreated, setDateCreated] = useState("");
   const [CallAnswered, setCallAnswered] = useState("");
   const [CallStatus, setCallStatus] = useState("");
-  const [ReasonForNoPayment, setReasonForNoPayment] = useState("Null");
-  const [SubReasonForNoPayment, setSubReasonForNoPayment] = useState("Null");
-  const [InboundReason, setInboundReason] = useState("Null");
-  const [SubInboundReason, setSubInboundReason] = useState("Null");
+  const [ReasonForNoPayment, setReasonForNoPayment] = useState("");
+  const [SubReasonForNoPayment, setSubReasonForNoPayment] = useState("");
+  const [InboundReason, setInboundReason] = useState("");
+  const [SubInboundReason, setSubInboundReason] = useState("");
   const [PromiseToPay, setPromiseToPay] = useState("");
-  const [AmountToPayToday, setAmountToPayToday] = useState("");
+  const [AmountToPayToday, setAmountToPayToday] = useState("0");
   const [NumberOfDays, setNumberOfDays] = useState("");
   const [Comment, setComment] = useState("");
   const [typeOfCall, setTypeofCall] = useState("");
   const [typeOfCustomer, setTypeofCustomer] = useState("");
+  const [ContactPlatform, setContactPlatform] = useState("");
+  const [CallPurpose, setCallPurpose] = useState("");
+  const [ReminderDone, setReminderDone] = useState("");
+  const [CustomerResponse, setCustomerResponse] = useState("");
+  const [CustomerReview, setCustomerReview] = useState("");
+  const [IDType, setIDType] = useState("");
+  const [IDCardCheck, setIDCardCheck] = useState("");
+  const [Customer360download, setCustomer360download] = useState("");
 
   const { id } = useParams();
 
@@ -132,7 +140,7 @@ export const AddDispositionModal = ({
   const inboundSubReasonOptionData = [];
   for (let i = 0; i < dropdownList?.length; i++) {
     if (dropdownList[i]?.dropDownName === "Sub-Reason For Inbound") {
-      if (dropdownList[i]?.optionCode === InboundReason) {
+      if (dropdownList[i]?.optionCode === ReasonForNoPayment) {
         inboundSubReasonOptionData.push(dropdownList[i]);
       }
     }
@@ -145,10 +153,10 @@ export const AddDispositionModal = ({
       CommitmentDate: "2023-01-16",
       Email: "gatesbill@test.com",
       DisbursementDate: "10 Jan 2023",
-      LoanId: "30",
+      LoanId: 30,
 
       // AgentId: localStorage.getItem("agentID"),
-      AgentId: 300,
+      AgentId: 116,
       CustomerId: idIndex,
       NameOfBrowser: namesOfCustomer,
       PhoneNumber: id,
@@ -162,6 +170,15 @@ export const AddDispositionModal = ({
       NumberOfDays,
       Comment,
       DispositionType: typeOfCall,
+      TypeOfCustomer: typeOfCustomer,
+      IDType,
+      IDCardCheck,
+      CustomerReview,
+      Customer360download,
+      ReminderDone,
+      CustomerResponse,
+      CallPurpose,
+      ContactPlatform,
     });
   };
 
@@ -277,7 +294,6 @@ export const AddDispositionModal = ({
                     <Box display="flex" justifyContent="space-between" mt="4">
                       <FormControl w="90%" mr="2">
                         <FormLabel>Promise to Pay</FormLabel>
-
                         <Select
                           onChange={(e) => setPromiseToPay(e.target.value)}
                         >
@@ -368,33 +384,34 @@ export const AddDispositionModal = ({
                   <Box display="flex" justifyContent="space-between">
                     <FormControl w="90%" mr="2">
                       <FormLabel>ID Type</FormLabel>
-
-                      <Select>
+                      <Select onChange={(e) => setIDType(e.target.value)}>
                         <option value="">-- Select --</option>
-                        <option>NIN</option>
-                        <option>Voter's Card</option>
-                        <option>Driver's License</option>
-                        <option>Staff ID</option>
-                        <option>No ID</option>
-                        <option>Int'l Passport</option>
-                        <option>Others</option>
+                        <option value="NIN">NIN</option>
+                        <option value="Voter's Card">Voter's Card</option>
+                        <option value="Driver's License">
+                          Driver's License
+                        </option>
+                        <option value="Staff ID">Staff ID</option>
+                        <option value="No ID">No ID</option>
+                        <option value="Int'l Passport">Int'l Passport</option>
+                        <option value="Others">Others</option>
                       </Select>
                     </FormControl>
                     <FormControl w="90%" ml="2">
                       <FormLabel>ID Card Check</FormLabel>
-
-                      <Select>
+                      <Select onChange={(e) => setIDCardCheck(e.target.value)}>
                         <option value="">-- Select --</option>
-                        <option>Correct</option>
-                        <option>Wrong</option>
-                        <option>To be checked further</option>
+                        <option value="Correct">Correct</option>
+                        <option value="Wrong">Wrong</option>
+                        <option value="To be checked further">
+                          To be checked further
+                        </option>
                       </Select>
                     </FormControl>
                   </Box>
                   <Box display="flex" justifyContent="space-between">
                     <FormControl w="90%" mr="2">
                       <FormLabel>Reason</FormLabel>
-
                       <Select>
                         <option value="">-- Select --</option>
                         <option>N/A</option>
@@ -406,22 +423,32 @@ export const AddDispositionModal = ({
                     </FormControl>
                     <FormControl w="90%" ml="2">
                       <FormLabel>Customer 360 download</FormLabel>
-
-                      <Select>
+                      <Select
+                        onChange={(e) => setCustomer360download(e.target.value)}
+                      >
                         <option value="">-- Select --</option>
-                        <option>Yes</option>
-                        <option>No</option>
+                        <option value="Yes">Yes</option>
+                        <option value="No">No</option>
                       </Select>
                     </FormControl>
                   </Box>
                   <FormControl>
                     <FormLabel>Customer Review</FormLabel>
-                    <Select>
+                    <Select onChange={(e) => setCustomerReview(e.target.value)}>
                       <option value="">-- Select --</option>
-                      <option>Satisfied</option>
-                      <option>Unsatisfied</option>
-                      <option>Indifferent</option>
+                      <option value="Satisfied">Satisfied</option>
+                      <option value="Unsatisfied">Unsatisfied</option>
+                      <option value="Indifferent">Indifferent</option>
                     </Select>
+                  </FormControl>
+                  <FormControl>
+                    <FormLabel>Commitment Date</FormLabel>
+                    <Input
+                      type="date"
+                      name="Message Body"
+                      value={DateCreated}
+                      onChange={(e) => setDateCreated(e.target.value)}
+                    />
                   </FormControl>
                   <FormControl mt={4}>
                     <FormLabel>Comment</FormLabel>
@@ -467,31 +494,34 @@ export const AddDispositionModal = ({
                   <Box display="flex" justifyContent="space-between">
                     <FormControl w="90%" mr="2">
                       <FormLabel>Reminder Done</FormLabel>
-
-                      <Select>
+                      <Select onChange={(e) => setReminderDone(e.target.value)}>
                         <option value="">-- Select --</option>
-                        <option>Yes</option>
-                        <option>No</option>
+                        <option value="Yes">Yes</option>
+                        <option value="No">No</option>
                       </Select>
                     </FormControl>
+
                     <FormControl w="90%" ml="2">
                       <FormLabel>Customer's Response</FormLabel>
-
-                      <Select>
+                      <Select
+                        onChange={(e) => setCustomerResponse(e.target.value)}
+                      >
                         <option value="">-- Select --</option>
-                        <option>Positive</option>
-                        <option>Negative</option>
+                        <option value="Positive">Positive</option>
+                        <option value="Negative">Negative</option>
                       </Select>
                     </FormControl>
                   </Box>
                   <Box display="flex" justifyContent="space-between">
                     <FormControl w="90%" mr="2">
                       <FormLabel>Promise to Pay</FormLabel>
-
-                      <Select>
+                      <Select onChange={(e) => setPromiseToPay(e.target.value)}>
                         <option value="">-- Select --</option>
-                        <option>Yes</option>
-                        <option>No</option>
+                        {promiseToPayOptionData?.reverse()?.map((choose) => (
+                          <option key={choose?.id} value={choose?.optionText}>
+                            {choose?.optionText}
+                          </option>
+                        ))}
                       </Select>
                     </FormControl>
                     <FormControl w="90%" ml="2">
@@ -520,12 +550,12 @@ export const AddDispositionModal = ({
               <>
                 <FormControl>
                   <FormLabel>Call Purpose</FormLabel>
-                  <Select>
+                  <Select onChange={(e) => setCallPurpose(e.target.value)}>
                     <option value="">-- Select --</option>
-                    <option>Complaint</option>
-                    <option>Enquiry</option>
-                    <option>Request</option>
-                    <option>Others</option>
+                    <option value="Complaint">Complaint</option>
+                    <option value="Enquiry">Enquiry</option>
+                    <option value="Request">Request</option>
+                    <option value="Others">Others</option>
                   </Select>
                 </FormControl>
                 <FormControl>
@@ -554,6 +584,15 @@ export const AddDispositionModal = ({
                     ))}
                   </Select>
                 </FormControl>
+                <FormControl>
+                  <FormLabel>Commitment Date</FormLabel>
+                  <Input
+                    type="date"
+                    name="Message Body"
+                    value={DateCreated}
+                    onChange={(e) => setDateCreated(e.target.value)}
+                  />
+                </FormControl>
                 <FormControl mt={4}>
                   <FormLabel>Comment</FormLabel>
                   <Input
@@ -569,18 +608,21 @@ export const AddDispositionModal = ({
               <>
                 <FormControl>
                   <FormLabel>Contact Platform</FormLabel>
-
-                  <Select>
+                  <Select onChange={(e) => setContactPlatform(e.target.value)}>
                     <option value="">-- Select --</option>
-                    <option>Email</option>
-                    <option>Paytrigger</option>
-                    <option>Ticket/Customer 360</option>
-                    <option>Whatsapp</option>
+                    <option value="Email">Email</option>
+                    <option value="Paytrigger">Paytrigger</option>
+                    <option value="Ticket/Customer 360">
+                      Ticket/Customer 360
+                    </option>
+                    <option value="Whatsapp">Whatsapp</option>
                   </Select>
                 </FormControl>
                 <FormControl>
                   <FormLabel>Reason</FormLabel>
-                  <Select onChange={(e) => setInboundReason(e.target.value)}>
+                  <Select
+                    onChange={(e) => setReasonForNoPayment(e.target.value)}
+                  >
                     <option value="">-- Select --</option>
                     {inboundReasonOptionData?.reverse()?.map((choose) => (
                       <option key={choose?.id} value={choose?.optionText}>
@@ -591,7 +633,9 @@ export const AddDispositionModal = ({
                 </FormControl>
                 <FormControl>
                   <FormLabel>Sub-Reason</FormLabel>
-                  <Select onChange={(e) => setSubInboundReason(e.target.value)}>
+                  <Select
+                    onChange={(e) => setSubReasonForNoPayment(e.target.value)}
+                  >
                     <option value="">-- Select --</option>
                     {inboundSubReasonOptionData?.reverse()?.map((choose) => (
                       <option key={choose?.id} value={choose?.optionText}>
@@ -599,6 +643,15 @@ export const AddDispositionModal = ({
                       </option>
                     ))}
                   </Select>
+                </FormControl>
+                <FormControl>
+                  <FormLabel>Commitment Date</FormLabel>
+                  <Input
+                    type="date"
+                    name="Message Body"
+                    value={DateCreated}
+                    onChange={(e) => setDateCreated(e.target.value)}
+                  />
                 </FormControl>
                 <FormControl mt={4}>
                   <FormLabel>Comment</FormLabel>

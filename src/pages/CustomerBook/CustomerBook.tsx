@@ -94,7 +94,6 @@ const CustomerBook = () => {
     refetch: toRefetch,
   } = useGetCustomerDetailSearch();
   const useAllCustomerData = allCustomerData?.document?.records;
-  const totalCustomerNumber = allCustomerData?.document?.meta?.totalCount;
   console.log(allCustomerData);
   // console.log(allCustomerData?.document?.meta);
 
@@ -181,19 +180,19 @@ const CustomerBook = () => {
               <Table size="sm">
                 <Thead bgColor="gray.200">
                   <Tr>
-                    <Th color="#26C6DA" py="4">
+                    {/* <Th color="#26C6DA" py="4">
                       Customer ID
-                    </Th>
+                    </Th> */}
                     <Th color="#26C6DA">Full Name</Th>
                     <Th color="#26C6DA">Msisdn</Th>
-                    <Th color="#26C6DA">BVN</Th>
+                    <Th color="#26C6DA">Device Cost</Th>
                     <Th color="#26C6DA">Activation Date</Th>
-                    <Th color="#26C6DA">Address</Th>
+                    <Th color="#26C6DA">Device Type</Th>
                   </Tr>
                 </Thead>
                 {!allSearchedUserData || allSearchedUserData?.length === 0
                   ? useAllCustomerData?.map((customerList: any) => (
-                      <Tbody key={customerList?.id}>
+                      <Tbody key={customerList?.customerName}>
                         <Tr
                           cursor="pointer"
                           _hover={{ bgColor: "whitesmoke" }}
@@ -203,7 +202,7 @@ const CustomerBook = () => {
                             );
                           }}
                         >
-                          <Td py="3">{customerList?.id}</Td>
+                          {/* <Td py="3">{customerList?.id}</Td> */}
                           <Td py="3" display="flex" alignItems="center">
                             <Icon
                               as={CgProfile}
@@ -211,20 +210,20 @@ const CustomerBook = () => {
                               color="#26C6DA"
                               boxSize="4"
                             />
-                            {customerList?.firstname} {customerList?.lastname}
+                            {customerList?.customerName}
                           </Td>
                           <Td py="3">
                             <PhoneIcon mr="3" color="green" />
                             {customerList?.msisdn}
                           </Td>
-                          <Td>{customerList?.bvn}</Td>
+                          <Td>{customerList?.deviceCost}</Td>
                           <Td py="3">
                             <CalendarIcon mr="3" color="#26C6DA" />
-                            {customerList?.activationDate}
+                            {customerList?.dateActivated}
                           </Td>
                           <Td py="3">
                             <LinkIcon mr="3" color="green" />
-                            {customerList?.preCustomers[0]?.address1}
+                            {customerList?.deviceType}
                           </Td>
                         </Tr>
                       </Tbody>

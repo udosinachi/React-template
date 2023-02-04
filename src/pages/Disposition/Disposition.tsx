@@ -59,6 +59,7 @@ import { AddDispositionModal } from "../../components/modals/AddDispositionModal
 import { EditDispositionModal } from "../../components/modals/EditDispositionModal";
 import { CgProfile } from "react-icons/cg";
 import { MdOutlineMonetizationOn } from "react-icons/md";
+import { ViewDispositionModal } from "../../components/modals/ViewDispositionModal";
 // import Pagination from "./Pagination";
 
 const Disposition = () => {
@@ -393,6 +394,13 @@ const Disposition = () => {
                         key={info.id}
                         cursor="pointer"
                         _hover={{ background: "whitesmoke" }}
+                        onClick={() => {
+                          setEditID(info?.id);
+                          onOpenEdit();
+                          byIdMutate({
+                            id: info?.id,
+                          });
+                        }}
                         // background={i % 2 === 0 ? "red" : "blue"}
                       >
                         <Td py="3">{info?.agentId}</Td>
@@ -632,7 +640,14 @@ const Disposition = () => {
         onClose={onClose}
         refetchAllUser={refetchAllUser}
       /> */}
-      <EditDispositionModal
+      {/* <EditDispositionModal
+        editID={editID}
+        isOpenEdit={isOpenEdit}
+        onCloseEdit={onCloseEdit}
+        userIdData={userIdData}
+        refetchAllUser={refetchAllUser}
+      /> */}
+      <ViewDispositionModal
         editID={editID}
         isOpenEdit={isOpenEdit}
         onCloseEdit={onCloseEdit}

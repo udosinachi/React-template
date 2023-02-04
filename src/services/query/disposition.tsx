@@ -24,6 +24,7 @@ import {
   DISPOSITION_REPORT,
   AGENT_TOP_DISPOSITION_REPORT,
   DISPOSITION_REPORT_ANALYSIS_BY_DATE,
+  GET_DISPOSITION_BY_ID,
 } from "../queryKeys";
 
 export const useGetAllDisposition = (
@@ -102,7 +103,7 @@ export const useGetDispositionById = (id: any, options = {}) => {
 
 export const useGetDispositionByIdMutate = (options = {}) => {
   const { mutate, isLoading } = useMutation(getDispositionByIdMutate, {
-    mutationKey: GET_DISPOSITION,
+    mutationKey: GET_DISPOSITION_BY_ID,
     ...options,
   });
   return { mutate, isLoading };
