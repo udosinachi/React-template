@@ -14,6 +14,7 @@ import {
   Th,
   Td,
   TableContainer,
+  useDisclosure,
 } from "@chakra-ui/react";
 import { useState } from "react";
 import { FcMissedCall, FcCallTransfer, FcCallback } from "react-icons/fc";
@@ -37,6 +38,12 @@ import {
   InfoOutlineIcon,
   PhoneIcon,
 } from "@chakra-ui/icons";
+import { ViewDispositionModal } from "../../components/modals/ViewDispositionModal";
+import {
+  useGetAllDisposition,
+  useGetDispositionByIdMutate,
+} from "../../services/query/disposition";
+import useCustomToast from "../../utils/notification";
 
 const Dashboard = () => {
   const [typeOfDisposition, setTypeofDisposition] = useState("Outbound");
@@ -67,6 +74,33 @@ const Dashboard = () => {
   } = useGetAgentDispositionReport(listOfAgent, 1, 100);
   const agentDispositionReport = dataAgentDispositionReport?.document?.records;
   console.log(dataAgentDispositionReport);
+
+  const {
+    isOpen: isOpenEdit,
+    onOpen: onOpenEdit,
+    onClose: onCloseEdit,
+  } = useDisclosure();
+  const [editID, setEditID] = useState("");
+  const [userIdData, setUserIdData] = useState("");
+  const { errorToast, successToast } = useCustomToast();
+
+  const { mutate: byIdMutate, isLoading: loaderId } =
+    useGetDispositionByIdMutate({
+      onSuccess: (res: any) => {
+        // console.log(res);
+        setUserIdData(res);
+      },
+      onError: (err: any) => {
+        console.log(err);
+        errorToast("Failed");
+      },
+    });
+
+  const {
+    data: data2,
+    isLoading: isLoading2,
+    refetch: refetchAllUser,
+  } = useGetAllDisposition(1, 100);
 
   return (
     <div>
@@ -239,10 +273,15 @@ const Dashboard = () => {
                     <Tbody>
                       {agentDispositionReport?.map((info: any) => (
                         <Tr
-                          key={info.id}
                           cursor="pointer"
                           _hover={{ background: "whitesmoke" }}
-                          // background={i % 2 === 0 ? "red" : "blue"}
+                          onClick={() => {
+                            setEditID(info?.id);
+                            onOpenEdit();
+                            byIdMutate({
+                              id: info?.id,
+                            });
+                          }}
                         >
                           <Td py="3">{info?.agentId}</Td>
                           <Td py="3">{info?.dispositionType}</Td>
@@ -365,6 +404,13 @@ const Dashboard = () => {
           </>
         </Box>
       )}
+      <ViewDispositionModal
+        editID={editID}
+        isOpenEdit={isOpenEdit}
+        onCloseEdit={onCloseEdit}
+        userIdData={userIdData}
+        refetchAllUser={refetchAllUser}
+      />
     </div>
   );
 };

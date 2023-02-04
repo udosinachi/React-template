@@ -87,7 +87,7 @@ const Navbar = ({ onOpen, ...rest }: MobileProps) => {
         window.removeEventListener(item, resetTimer);
       });
 
-      // logout();
+      logout();
     }, 300000);
   };
   const resetTimer = () => {

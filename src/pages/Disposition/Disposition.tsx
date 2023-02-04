@@ -481,7 +481,18 @@ const Disposition = () => {
                       </Tr>
                     ))
                   : allSearchedUserData?.map((info: any) => (
-                      <Tr key={info.id}>
+                      <Tr
+                        key={info.id}
+                        cursor="pointer"
+                        _hover={{ background: "whitesmoke" }}
+                        onClick={() => {
+                          setEditID(info?.id);
+                          onOpenEdit();
+                          byIdMutate({
+                            id: info?.id,
+                          });
+                        }}
+                      >
                         <Td py="3">{info?.agentId}</Td>
                         {/* <Td>{info?.customerId}</Td> */}
                         {/* <Td>{info?.loanId}</Td> */}

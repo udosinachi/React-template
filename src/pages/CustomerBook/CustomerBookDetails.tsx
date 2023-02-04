@@ -47,7 +47,7 @@ const CustomerBookDetails = () => {
           <Box>
             <Box>
               <Flex justifyContent="flex-end">
-                {localStorage.getItem("role")?.toString() !==
+                {localStorage.getItem("role")?.toString() ===
                   "customerserv1" && (
                   <Button
                     mb="3"

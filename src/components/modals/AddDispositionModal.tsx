@@ -155,8 +155,8 @@ export const AddDispositionModal = ({
       DisbursementDate: "10 Jan 2023",
       LoanId: 30,
 
-      // AgentId: localStorage.getItem("agentID"),
-      AgentId: 116,
+      AgentId: localStorage.getItem("agentID"),
+      // AgentId: 116,
       CustomerId: idIndex,
       NameOfBrowser: namesOfCustomer,
       PhoneNumber: id,
