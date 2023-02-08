@@ -15,6 +15,11 @@ import {
   useGetCustomerDetailSearchByNumber,
 } from "../../services/query/customer";
 import { useParams } from "react-router-dom";
+import {
+  useGetDispositionByIdMutate,
+  useGetSearchDisposition,
+} from "../../services/query/disposition";
+import { ViewDispositionModal } from "../../components/modals/ViewDispositionModal";
 
 const CustomerBookDetails = () => {
   const { id } = useParams();
@@ -36,6 +41,33 @@ const CustomerBookDetails = () => {
   const displayedData = data?.document?.records[0];
   // const displayedData2 = data?.document?.records[0]?.preCustomers[0];
   console.log(data);
+
+  const {
+    data: dataSearchUserDisposition,
+    isLoading: isLoadingSearchUserDisposition,
+    refetch: refetchSearchUserDisposition,
+  } = useGetSearchDisposition(id);
+  const viewUserDispositionData = dataSearchUserDisposition?.document?.records;
+  console.log(viewUserDispositionData);
+
+  // let viewUserDispositionDataArray = [];
+
+  // for (let i = 0; i > viewUserDispositionData?.length; i++) {
+  //   viewUserDispositionDataArray.push(viewUserDispositionData[i]);
+  // }
+  // console.log(viewUserDispositionDataArray);
+
+  const { mutate: byIdMutate, isLoading: loaderId } =
+    useGetDispositionByIdMutate({
+      onSuccess: (res: any) => {
+        // console.log(res);
+        setUserIdData(res);
+      },
+      onError: (err: any) => {
+        console.log(err);
+        // errorToast("Failed");
+      },
+    });
 
   return (
     <div>
@@ -102,24 +134,6 @@ const CustomerBookDetails = () => {
                     </Text>
                     <Text>{displayedData?.storeName}</Text>
                   </Flex>
-                  {/* <Flex mb="1">
-                    <Text w="150px" fontWeight="700">
-                      Address:{" "}
-                    </Text>
-                    <Text>{displayedData2?.address1}</Text>
-                  </Flex> */}
-                  {/* <Flex mb="1">
-                    <Text w="150px" fontWeight="700">
-                      DOB:{" "}
-                    </Text>
-                    <Text>{displayedData2?.dob}</Text>
-                  </Flex> */}
-                  {/* <Flex mb="1">
-                    <Text w="150px" fontWeight="700">
-                      BVN Status:{" "}
-                    </Text>
-                    <Text>{displayedData2?.bvnStatus}</Text>
-                  </Flex> */}
                 </Box>
 
                 <Box p="5" w="100%">
@@ -181,62 +195,36 @@ const CustomerBookDetails = () => {
                       </Flex>
                     </Box>
                   </Flex>
-                  {/* <Flex flexWrap="wrap" mt="2">
-                    <Box mr="10">
-                      <Flex mb="1">
-                        <Text w="200px" fontWeight="700">
-                          First Name:{" "}
-                        </Text>
-                        <Text>{displayedData2?.fname}</Text>
-                      </Flex>
-                      <Flex mb="1">
-                        <Text w="200px" fontWeight="700">
-                          Last Name:{" "}
-                        </Text>
-                        <Text>{displayedData2?.lname}</Text>
-                      </Flex>
-                      <Flex mb="1">
-                        <Text w="200px" fontWeight="700">
-                          Customer ID:{" "}
-                        </Text>
-                        <Text>{displayedData2?.customerId}</Text>
-                      </Flex>
-                      <Flex mb="1">
-                        <Text w="200px" fontWeight="700">
-                          Ref No:{" "}
-                        </Text>
-                        <Text>{displayedData2?.refNo}</Text>
-                      </Flex>
-                    </Box>
-                    <Box>
-                      <Flex mb="1">
-                        <Text w="200px" fontWeight="700">
-                          Device ID:{" "}
-                        </Text>
-                        <Text>{displayedData2?.deviceId}</Text>
-                      </Flex>
-                      <Flex mb="1">
-                        <Text w="200px" fontWeight="700">
-                          BVN Number:{" "}
-                        </Text>
-                        <Text>{displayedData2?.bvnNumber}</Text>
-                      </Flex>
-                      <Flex mb="1">
-                        <Text w="200px" fontWeight="700">
-                          Risk Class:{" "}
-                        </Text>
-                        <Text>{displayedData2?.riskClass}</Text>
-                      </Flex>
-                      <Flex mb="1">
-                        <Text w="200px" fontWeight="700">
-                          Created Date:{" "}
-                        </Text>
-                        <Text>{displayedData2?.created}</Text>
-                      </Flex>
-                    </Box>
-                  </Flex> */}
                 </Box>
               </Flex>
+            </Box>
+            <Box bgColor="white" p="5" w="100%">
+              <Text fontWeight="700" fontSize="20px" p="3">
+                Users Dispositions
+              </Text>
+
+              <Box>
+                {viewUserDispositionData?.map((item: any) => (
+                  <Box key={item.id} mb="3">
+                    <Flex
+                      border="1px solid black"
+                      p="3"
+                      cursor="pointer"
+                      _hover={{ background: "whitesmoke" }}
+                      onClick={() => {
+                        setEditID(item?.id);
+                        onOpenEdit();
+                        byIdMutate({
+                          id: item?.id,
+                        });
+                      }}
+                    >
+                      {/* <Box mr="1">{item?.dispositionType}</Box> */}
+                      <Box>{item?.reasonForNoPayment}</Box>
+                    </Flex>
+                  </Box>
+                ))}
+              </Box>
             </Box>
           </Box>
           <AddDispositionModal
@@ -246,6 +234,13 @@ const CustomerBookDetails = () => {
             firstName={displayedData?.customerName}
             lastName={displayedData?.customerName}
             idIndex={displayedData?.id}
+          />
+          <ViewDispositionModal
+            editID={editID}
+            isOpenEdit={isOpenEdit}
+            onCloseEdit={onCloseEdit}
+            userIdData={userIdData}
+            refetchAllUser={refetchAllUser}
           />
         </Box>
       )}

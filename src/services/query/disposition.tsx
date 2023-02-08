@@ -43,13 +43,13 @@ export const useGetAllDisposition = (
 };
 
 export const useGetSearchDisposition = (
-  searchKey: string,
-  page: number,
-  itemPerPage: number,
+  searchKey: any,
+  // page: number,
+  // itemPerPage: number,
   options = {}
 ) => {
   const { data, isLoading, refetch } = useQuery(
-    [SEARCH_DISPOSITION, searchKey, page, itemPerPage],
+    [SEARCH_DISPOSITION, searchKey],
     getSearchDisposition,
     {
       ...options,

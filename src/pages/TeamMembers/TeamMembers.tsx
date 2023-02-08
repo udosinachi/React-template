@@ -297,13 +297,13 @@ const TeamMembers = () => {
                           mr="3"
                           cursor="pointer"
                         /> */}
-                            <Icon
+                            {/* <Icon
                               onClick={() => deleteUserInfo(info?.id)}
                               as={DeleteIcon}
                               boxSize={5}
                               color="red.500"
                               cursor="pointer"
-                            />
+                            /> */}
                           </Td>
                         </Tr>
                       ))
