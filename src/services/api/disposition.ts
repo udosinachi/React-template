@@ -22,7 +22,7 @@ export const getSearchDisposition = async ({ queryKey }: any) => {
 export const getSearchDispositionMutate = async (body: any) => {
   // const [, searchKey, page, itemsPerPage] = queryKey;
   const res = await axiosInstance.get(
-    `${apiURL}${DISPOSITION}/search?searchKey=${body.searchKey}&page=${body.page}&itemsPerPage=${body.itemsPerPage}&orderBy=Id|DESC`
+    `${apiURL}${DISPOSITION}/search?searchKey=${body.searchKey}&page=${body.page}&itemsPerPage=${body.itemsPerPage}&orderBy=Id|DESC&dispositionType=${body.dispositionType}`
   );
   return res?.data;
 };

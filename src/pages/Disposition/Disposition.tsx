@@ -29,6 +29,8 @@ import {
   InputRightAddon,
   Select,
   Text,
+  FormControl,
+  FormLabel,
 } from "@chakra-ui/react";
 import {
   useGetAllUserInfo,
@@ -86,6 +88,8 @@ const Disposition = () => {
   console.log(currentPage);
   console.log(recordsPerPage);
 
+  const [typeOfDisposition, setTypeofDisposition] = useState("");
+
   const {
     data,
     isLoading,
@@ -122,6 +126,10 @@ const Disposition = () => {
     //     window.location.href = "/customer-book";
     //   }, 200);
     // }
+    if (typeOfDisposition === "") {
+      errorToast("Select Type of Call");
+      return false;
+    }
     if (searchedWords.length < 3) {
       errorToast("Minimum 3 chracters required for search");
       return false;
@@ -133,6 +141,7 @@ const Disposition = () => {
     }
 
     searchMutate({
+      dispositionType: typeOfDisposition,
       searchKey: searchedWords,
       page: currentPage,
       itemsPerPage: recordsPerPage,
@@ -321,6 +330,16 @@ const Disposition = () => {
             Add Disposition
           </Button> */}
             </Flex>
+            <FormControl mr="2" mb="2">
+              <FormLabel>Type of Call</FormLabel>
+              <Select onChange={(e) => setTypeofDisposition(e.target.value)}>
+                <option value="">-- Select a Type --</option>
+                <option value="Outbound">Outbound</option>
+                <option value="Inbound">Inbound</option>
+                <option value="Others">Others</option>
+              </Select>
+            </FormControl>
+
             <Box>
               <Text>Start Date</Text>
               <Input
@@ -365,7 +384,7 @@ const Disposition = () => {
                     Agent ID
                   </Th>
                   <Th color="#26C6DA">Customer Name</Th>
-                  {/* <Th color="#26C6DA">Email</Th> */}
+                  <Th color="#26C6DA">Call Type</Th>
                   <Th color="#26C6DA">Phone Number</Th>
                   <Th color="#26C6DA">Amount to Pay Today</Th>
                   <Th color="#26C6DA">Reason For No Payment</Th>
@@ -416,10 +435,7 @@ const Disposition = () => {
                           />
                           {info?.nameOfBrowser}
                         </Td>
-                        {/* <Td py="3">
-                          <EmailIcon mr="3" color="#26C6DA" />
-                          {info?.email}
-                        </Td> */}
+                        <Td py="3">{info?.dispositionType}</Td>
                         <Td py="3">
                           <PhoneIcon mr="3" color="green" />
                           {info?.phoneNumber}
@@ -506,10 +522,8 @@ const Disposition = () => {
                           />
                           {info?.nameOfBrowser}
                         </Td>
-                        {/* <Td py="3">
-                          <EmailIcon mr="3" color="#26C6DA" />
-                          {info?.email}
-                        </Td> */}
+                        <Td py="3">{info?.dispositionType}</Td>
+
                         <Td py="3">
                           <PhoneIcon mr="3" color="green" />
                           {info?.phoneNumber}
