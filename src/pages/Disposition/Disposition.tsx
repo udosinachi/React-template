@@ -9,6 +9,7 @@ import {
   EmailIcon,
   InfoOutlineIcon,
   ChatIcon,
+  DownloadIcon,
 } from "@chakra-ui/icons";
 import {
   Box,
@@ -62,7 +63,8 @@ import { EditDispositionModal } from "../../components/modals/EditDispositionMod
 import { CgProfile } from "react-icons/cg";
 import { MdOutlineMonetizationOn } from "react-icons/md";
 import { ViewDispositionModal } from "../../components/modals/ViewDispositionModal";
-// import Pagination from "./Pagination";
+import * as FileSaver from "file-saver";
+import XLSX from "sheetjs-style";
 
 const Disposition = () => {
   const queryClient = useQueryClient();
@@ -293,6 +295,21 @@ const Disposition = () => {
     });
   };
 
+  const fileType =
+    "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet;charset=UTF-8";
+  const fileExtension = ".xlsx";
+
+  const { data: dataDisposition } = useGetAllDisposition(1, 1000);
+  const theDataDisposition = dataDisposition?.document?.records;
+
+  const handleExport = async () => {
+    const ws = XLSX.utils.json_to_sheet(theDataDisposition);
+    const wb = { Sheets: { data: ws }, SheetNames: ["data"] };
+    const excelBuffer = XLSX.write(wb, { bookType: "xlsx", type: "array" });
+    const data = new Blob([excelBuffer], { type: fileType });
+    FileSaver.saveAs(data, "Dispositions" + fileExtension);
+  };
+
   return (
     <div>
       {isLoading || searchLoader || searchDispositionDateLoader ? (
@@ -369,6 +386,19 @@ const Disposition = () => {
               Filter
             </Button>
           </Box>
+
+          <Flex justifyContent="flex-end">
+            <Button
+              onClick={handleExport}
+              bgColor="#26C6DA"
+              color="white"
+              cursor="pointer"
+              size="sm"
+              rightIcon={<DownloadIcon />}
+            >
+              Export
+            </Button>
+          </Flex>
           <TableContainer
             bg="white"
             sx={{
