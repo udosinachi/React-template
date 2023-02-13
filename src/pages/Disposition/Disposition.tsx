@@ -77,18 +77,18 @@ const Disposition = () => {
   } = useDisclosure();
   const [editID, setEditID] = useState("");
   const [userIdData, setUserIdData] = useState("");
-  console.log(userIdData);
+  // console.log(userIdData);
 
   const [allSearchedUserData, setAllSearchedUserData] = useState([]);
-  console.log(allSearchedUserData);
+  // console.log(allSearchedUserData);
   const [searchedWords, setSearchedWords] = useState("");
   const [noSearchRecord, setNoSearchRecord] = useState("");
-  console.log(noSearchRecord);
+  // console.log(noSearchRecord);
 
   const [currentPage, setCurrentPage] = useState(1);
   const [recordsPerPage, setRecordsPerPage] = useState(10);
-  console.log(currentPage);
-  console.log(recordsPerPage);
+  // console.log(currentPage);
+  // console.log(recordsPerPage);
 
   const [typeOfDisposition, setTypeofDisposition] = useState("");
 
@@ -98,25 +98,17 @@ const Disposition = () => {
     refetch: refetchAllUser,
   } = useGetAllDisposition(currentPage, recordsPerPage);
   const allUserData = data?.document?.records;
-  console.log(allUserData);
-
-  // const {
-  //   data: searchedData,
-  //   isLoading: searchLoader,
-  //   refetch: refetchSearchedUser,
-  // } = useGetSearchUserInfo(searchedWords, 1, 100);
-  // const allSearchedUserData = searchedData?.document?.records;
-  // console.log(allSearchedUserData);
+  // console.log(allUserData);
 
   const { mutate: searchMutate, isLoading: searchLoader } =
     useGetSearchDispositionMutate({
       onSuccess: (res: any) => {
-        console.log(res);
+        // console.log(res);
         setAllSearchedUserData(res?.document?.records);
         setNoSearchRecord(res?.message);
       },
       onError: (err: any) => {
-        console.log(err?.response?.data);
+        // console.log(err?.response?.data);
         errorToast("Failed to Search");
       },
     });
@@ -193,28 +185,28 @@ const Disposition = () => {
         setUserIdData(res);
       },
       onError: (err: any) => {
-        console.log(err);
+        // console.log(err);
         errorToast("Failed");
       },
     });
 
   const { mutate, isLoading: isDelete } = useDeleteDisposition({
     onSuccess: (res: any) => {
-      console.log(res);
+      // console.log(res);
       successToast("Record Deleted");
       setTimeout(() => {
         queryClient.invalidateQueries(GET_ALL_DISPOSITION);
       }, 200);
     },
     onError: (err: any) => {
-      console.log(err);
+      // console.log(err);
       errorToast("Failed");
     },
   });
 
   const deleteUserInfo = (id: any) => {
     alert("Are you sure");
-    console.log(id);
+    // console.log(id);
     mutate({
       id,
     });
@@ -227,7 +219,7 @@ const Disposition = () => {
     isLoading: searchLoaderAgentReport,
   } = useGetDispositionReportMutate({
     onSuccess: (res: any) => {
-      console.log(res);
+      // console.log(res);
       // setAllSearchedUserData(res?.document?.records);
       // setSearchResponse(true);
       // setNoSearchRecord(res?.message);
@@ -240,7 +232,7 @@ const Disposition = () => {
       }
     },
     onError: (err: any) => {
-      console.log(err?.response?.data);
+      // console.log(err?.response?.data);
       errorToast(err?.response?.data);
     },
   });
@@ -255,7 +247,7 @@ const Disposition = () => {
     isLoading: searchDispositionDateLoader,
   } = useGetDispositionReportMutate({
     onSuccess: (res: any) => {
-      console.log(res);
+      // console.log(res);
       setAllSearchedUserData(res?.document?.records);
       setSearchResponse(true);
       setNoSearchRecord(res?.message);
@@ -268,7 +260,7 @@ const Disposition = () => {
       }
     },
     onError: (err: any) => {
-      console.log(err?.response?.data);
+      // console.log(err?.response?.data);
       errorToast(err?.response?.data);
     },
   });
@@ -422,17 +414,6 @@ const Disposition = () => {
                   <Th color="#26C6DA">Promise To Pay </Th>
                   <Th color="#26C6DA">Comment</Th>
                   <Th color="#26C6DA">Enter Date</Th>
-                  {/* <Th color="#26C6DA"></Th> */}
-
-                  {/* <Th color="#26C6DA">Customer ID </Th>
-                <Th color="#26C6DA">Call Status </Th>
-                <Th color="#26C6DA">CC </Th>
-                <Th color="#26C6DA">Commitment Date</Th>
-                <Th color="#26C6DA">Number of Days to Pay</Th>
-                <Th color="#26C6DA">Subject </Th>
-                <Th color="#26C6DA">Message Body </Th>
-                <Th color="#26C6DA">Flag</Th>
-                <Th color="#26C6DA">Date Created</Th> */}
                 </Tr>
               </Thead>
 
@@ -494,28 +475,8 @@ const Disposition = () => {
                         <Td>{info?.dateCreated?.slice(0, 10)}</Td>
 
                         {/* 
-                      <Td>{info?.category}</Td>
-                      <Td>{info?.callStatus}</Td>
-                      <Td>{info?.cc}</Td>
-                      <Td>{info?.commitmentDate}</Td>
-                      <Td>{info?.numberOfDays}</Td>
-                      <Td>{info?.subject}</Td>
-                      <Td>{info?.messageBody}</Td>
-                      <Td>{info?.flag}</Td> */}
+                      
                         {/* <Td>
-                          <Icon
-                          onClick={() => {
-                            setEditID(info?.id);
-                            onOpenEdit();
-                            byIdMutate({
-                              id: info?.id,
-                            });
-                          }}
-                          as={EditIcon}
-                          boxSize={5}
-                          mr="3"
-                          cursor="pointer"
-                        />
                           <Icon
                             onClick={() => deleteUserInfo(info?.id)}
                             as={DeleteIcon}
@@ -580,19 +541,7 @@ const Disposition = () => {
                         </Td>
                         <Td>{info?.dateCreated?.slice(0, 10)}</Td>
                         {/* <Td>
-                          <Icon
-                          onClick={() => {
-                            setEditID(info?.id);
-                            onOpenEdit();
-                            byIdMutate({
-                              id: info?.id,
-                            });
-                          }}
-                          as={EditIcon}
-                          boxSize={5}
-                          mr="3"
-                          cursor="pointer"
-                        />
+                          
                           <Icon
                             onClick={() => deleteUserInfo(info?.id)}
                             as={DeleteIcon}

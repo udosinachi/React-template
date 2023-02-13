@@ -66,7 +66,7 @@ export default function Login() {
       }
     },
     onError: (err: any) => {
-      console.log(err);
+      // console.log(err);
       errorToast("Failed");
     },
   });

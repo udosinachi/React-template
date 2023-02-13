@@ -40,7 +40,7 @@ const CustomerBookDetails = () => {
   } = useGetCustomerDetailSearchByNumber(id);
   const displayedData = data?.document?.records[0];
   // const displayedData2 = data?.document?.records[0]?.preCustomers[0];
-  console.log(data);
+  // console.log(data);
 
   const {
     data: dataSearchUserDisposition,
@@ -48,7 +48,7 @@ const CustomerBookDetails = () => {
     refetch: refetchSearchUserDisposition,
   } = useGetSearchDisposition(id);
   const viewUserDispositionData = dataSearchUserDisposition?.document?.records;
-  console.log(viewUserDispositionData);
+  // console.log(viewUserDispositionData);
 
   // let viewUserDispositionDataArray = [];
 
@@ -64,7 +64,7 @@ const CustomerBookDetails = () => {
         setUserIdData(res);
       },
       onError: (err: any) => {
-        console.log(err);
+        // console.log(err);
         // errorToast("Failed");
       },
     });

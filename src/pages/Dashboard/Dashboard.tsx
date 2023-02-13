@@ -73,7 +73,7 @@ const Dashboard = () => {
     refetch: refetchAgentDispositionReport,
   } = useGetAgentDispositionReport(listOfAgent, 1, 100);
   const agentDispositionReport = dataAgentDispositionReport?.document?.records;
-  console.log(dataAgentDispositionReport);
+  // console.log(dataAgentDispositionReport);
 
   const {
     isOpen: isOpenEdit,
@@ -91,7 +91,7 @@ const Dashboard = () => {
         setUserIdData(res);
       },
       onError: (err: any) => {
-        console.log(err);
+        // console.log(err);
         errorToast("Failed");
       },
     });

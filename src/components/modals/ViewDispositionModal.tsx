@@ -78,12 +78,12 @@ export const ViewDispositionModal = ({
     isLoading,
     refetch: refetchAllUser2,
   } = useGetDispositionById(editID);
-  console.log(data);
+  // console.log(data);
   const viewData = data?.document;
 
   const { mutate, isLoading: loader } = useGetDispositionByIdMutate({
     onSuccess: (res: any) => {
-      console.log(res);
+      // console.log(res);
       setTimeout(() => {
         queryClient.invalidateQueries(GET_DISPOSITION_BY_ID);
       }, 200);
@@ -91,7 +91,7 @@ export const ViewDispositionModal = ({
       refetchAllUser();
     },
     onError: (err: any) => {
-      console.log(err);
+      // console.log(err);
       errorToast("Failed");
     },
   });

@@ -54,18 +54,18 @@ const TeamMembers = () => {
   } = useDisclosure();
   const [editID, setEditID] = useState("");
   const [userIdData, setUserIdData] = useState("");
-  console.log(userIdData);
+  // console.log(userIdData);
 
   const [allSearchedUserData, setAllSearchedUserData] = useState([]);
-  console.log(allSearchedUserData);
+  // console.log(allSearchedUserData);
   const [searchedWords, setSearchedWords] = useState("");
   const [noSearchRecord, setNoSearchRecord] = useState("");
-  console.log(noSearchRecord);
+  // console.log(noSearchRecord);
 
   const [currentPage, setCurrentPage] = useState(1);
   const [recordsPerPage, setRecordsPerPage] = useState(10);
-  console.log(currentPage);
-  console.log(recordsPerPage);
+  // console.log(currentPage);
+  // console.log(recordsPerPage);
 
   const {
     data,
@@ -75,7 +75,7 @@ const TeamMembers = () => {
   const allUserData = data?.document?.records;
   const totalRecords = data?.document?.totalRecords;
   //   console.log(data?.document?.totalRecords);
-  console.log(allUserData);
+  // console.log(allUserData);
 
   // const {
   //   data: searchedData,
@@ -88,12 +88,12 @@ const TeamMembers = () => {
   const { mutate: searchMutate, isLoading: searchLoader } =
     useGetSearchUserInfoMutate({
       onSuccess: (res: any) => {
-        console.log(res);
+        // console.log(res);
         setAllSearchedUserData(res?.document?.records);
         setNoSearchRecord(res?.message);
       },
       onError: (err: any) => {
-        console.log(err?.response?.data);
+        // console.log(err?.response?.data);
         errorToast("Failed to Search");
       },
     });
@@ -162,28 +162,28 @@ const TeamMembers = () => {
       setUserIdData(res);
     },
     onError: (err: any) => {
-      console.log(err);
+      // console.log(err);
       errorToast("Failed");
     },
   });
 
   const { mutate, isLoading: isDelete } = useDeleteUserInfo({
     onSuccess: (res: any) => {
-      console.log(res);
+      // console.log(res);
       successToast("Record Deleted");
       setTimeout(() => {
         queryClient.invalidateQueries(GET_ALL_USER_INFO);
       }, 200);
     },
     onError: (err: any) => {
-      console.log(err);
+      // console.log(err);
       errorToast("Failed");
     },
   });
 
   const deleteUserInfo = (id: any) => {
     alert("Are you sure");
-    console.log(id);
+    // console.log(id);
     mutate({
       id,
     });

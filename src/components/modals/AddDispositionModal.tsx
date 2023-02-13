@@ -66,7 +66,7 @@ export const AddDispositionModal = ({
 
   const { mutate, isLoading: loader } = useAddNewDisposition({
     onSuccess: (res: any) => {
-      console.log(res);
+      // console.log(res);
       successToast("Added Successfully");
       setTimeout(() => {
         // window.location.href = "/customer-book";
@@ -76,7 +76,7 @@ export const AddDispositionModal = ({
       refetchAllUser();
     },
     onError: (err: any) => {
-      console.log(err);
+      // console.log(err);
       errorToast("Failed");
     },
   });
@@ -135,7 +135,7 @@ export const AddDispositionModal = ({
       inboundReasonOptionData.push(dropdownList[i]);
     }
   }
-  console.log(inboundReasonOptionData);
+  // console.log(inboundReasonOptionData);
 
   const inboundSubReasonOptionData = [];
   for (let i = 0; i < dropdownList?.length; i++) {

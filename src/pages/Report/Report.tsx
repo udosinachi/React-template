@@ -59,7 +59,7 @@ const Report = () => {
   const { mutate: searchMutate, isLoading: searchLoader } =
     useGetDispositionReportByDateMutate({
       onSuccess: (res: any) => {
-        console.log(res);
+        // console.log(res);
         setAllSearchedUserData(res?.document?.records);
         setSearchResponse(true);
         setNoSearchRecord(res?.document?.totalRecords);
@@ -72,7 +72,7 @@ const Report = () => {
         }
       },
       onError: (err: any) => {
-        console.log(err?.response?.data);
+        // console.log(err?.response?.data);
         errorToast(err?.response?.data);
       },
     });
@@ -121,7 +121,7 @@ const Report = () => {
     isLoading: searchLoaderAgentReport,
   } = useGetDispositionAgentReportMutate({
     onSuccess: (res: any) => {
-      console.log(res);
+      // console.log(res);
       setAllSearchedUserData(res?.document?.records);
       setSearchResponse(true);
       setNoSearchRecord(res?.message);
@@ -134,13 +134,13 @@ const Report = () => {
       }
     },
     onError: (err: any) => {
-      console.log(err?.response?.data);
+      // console.log(err?.response?.data);
       errorToast(err?.response?.data);
     },
   });
 
   const optionChanger = (e: any) => {
-    console.log(e.target.value);
+    // console.log(e.target.value);
 
     if (noSearchRecord === "No Record Found") {
       errorToast("No Record Found");

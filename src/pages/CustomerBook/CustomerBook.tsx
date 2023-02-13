@@ -47,8 +47,8 @@ const CustomerBook = () => {
   const { mutate: searchMutate, isLoading: searchLoader } =
     useGetCustomerDetailSearchMutate({
       onSuccess: (res: any) => {
-        console.log(res);
-        console.log(res?.document?.records);
+        // console.log(res);
+        // console.log(res?.document?.records);
         setAllSearchedUserData(res?.document?.records);
         setNoSearchRecord(res?.message);
         setSearchResponse(true);
@@ -60,7 +60,7 @@ const CustomerBook = () => {
         }
       },
       onError: (err: any) => {
-        console.log(err?.response?.data);
+        // console.log(err?.response?.data);
         errorToast(err?.response?.data);
       },
     });
@@ -94,7 +94,7 @@ const CustomerBook = () => {
     refetch: toRefetch,
   } = useGetCustomerDetailSearch();
   const useAllCustomerData = allCustomerData?.document?.records;
-  console.log(allCustomerData);
+  // console.log(allCustomerData);
   // console.log(allCustomerData?.document?.meta);
 
   const pageNumbers: any = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10];

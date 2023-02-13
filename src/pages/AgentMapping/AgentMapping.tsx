@@ -48,7 +48,7 @@ const AgentMapping = () => {
     refetch: refetchSupervisor,
   } = useGetAllSupervisors();
   const SupervisorData = dataSupervisor?.document?.records;
-  console.log(SupervisorData);
+  // console.log(SupervisorData);
 
   const {
     data: dataAgent,
@@ -56,7 +56,7 @@ const AgentMapping = () => {
     refetch: refetchAgent,
   } = useGetAllAgents();
   const AgentData = dataAgent?.document?.records;
-  console.log(AgentData);
+  // console.log(AgentData);
 
   const [listOfSupervisors, setListOfSupervisors] = useState("");
   const [listOfAgent, setListOfAgent] = useState("");
@@ -74,11 +74,11 @@ const AgentMapping = () => {
   } = useGetAllSupervisorAgentsMapping(listOfSupervisorToAgent, 1, 100);
   const SupervisorAgentsMappingData =
     dataSupervisorAgentsMapping?.document?.records;
-  console.log(SupervisorAgentsMappingData);
+  // console.log(SupervisorAgentsMappingData);
 
   const { mutate, isLoading: isCreateLoading } = useAddNewAgentMapping({
     onSuccess: (res: any) => {
-      console.log(res);
+      // console.log(res);
       if (res?.code === 1) {
         successToast(res?.message);
       } else {
@@ -86,7 +86,7 @@ const AgentMapping = () => {
       }
     },
     onError: (err: any) => {
-      console.log(err);
+      // console.log(err);
       errorToast("Failed");
     },
   });
