@@ -48,14 +48,6 @@ const CustomerBookDetails = () => {
     refetch: refetchSearchUserDisposition,
   } = useGetSearchDisposition(id);
   const viewUserDispositionData = dataSearchUserDisposition?.document?.records;
-  // console.log(viewUserDispositionData);
-
-  // let viewUserDispositionDataArray = [];
-
-  // for (let i = 0; i > viewUserDispositionData?.length; i++) {
-  //   viewUserDispositionDataArray.push(viewUserDispositionData[i]);
-  // }
-  // console.log(viewUserDispositionDataArray);
 
   const { mutate: byIdMutate, isLoading: loaderId } =
     useGetDispositionByIdMutate({

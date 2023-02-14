@@ -644,13 +644,6 @@ const Disposition = () => {
         onClose={onClose}
         refetchAllUser={refetchAllUser}
       /> */}
-      {/* <EditDispositionModal
-        editID={editID}
-        isOpenEdit={isOpenEdit}
-        onCloseEdit={onCloseEdit}
-        userIdData={userIdData}
-        refetchAllUser={refetchAllUser}
-      /> */}
       <ViewDispositionModal
         editID={editID}
         isOpenEdit={isOpenEdit}

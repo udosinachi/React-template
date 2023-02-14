@@ -221,7 +221,6 @@ const TeamMembers = () => {
                   color="white"
                   cursor="pointer"
                   onClick={() => searchHandler()}
-                  // onClick={() => setUserInfoToggle("Searched")}
                 />
               </InputGroup>
               {/* <Button size={"sm"} bgColor="#26C6DA" color="white" onClick={onOpen}>
@@ -350,13 +349,6 @@ const TeamMembers = () => {
                 {/* )} */}
               </Table>
             </TableContainer>
-            {/* <Pagination
-          nPages={nPages}
-          currentPage={currentPage}
-          setCurrentPage={setCurrentPage}
-          recordsPerPage={recordsPerPage}
-          setRecordsPerPage={setRecordsPerPage}
-        /> */}
 
             <Box>
               <Flex flexWrap="wrap" mt="3" fontSize="13px">

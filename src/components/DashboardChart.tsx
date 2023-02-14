@@ -29,14 +29,14 @@ const BarChart = ({ listOfAgent }: any, { typeOfDisposition }: any) => {
     isLoading: isLoaded,
     refetch: refetchAllUser,
   } = useGetDashboardChart(typeOfDisposition);
-  console.log(chartData);
+  // console.log(chartData);
 
   const {
     data: dataAgentCharts,
     isLoading: isLoadingAgentCharts,
     refetch: refetchAgentCharts,
   } = useGetAgentDashboardCharts(listOfAgent, typeOfDisposition);
-  console.log(dataAgentCharts);
+  // console.log(dataAgentCharts);
 
   //   const { data } = useGetDashboardStats()
   //   const [chartData, setChartData] = useState([]);

@@ -45,7 +45,7 @@ export default function Login() {
   // });
   const { mutate, isLoading: isCreateLoading } = useLoginAccount({
     onSuccess: (res: any) => {
-      console.log(res);
+      // console.log(res);
       if (res?.message === "Record Found") {
         successToast("Login Successful");
         localStorage.setItem("user", JSON.stringify(res));
@@ -100,9 +100,6 @@ export default function Login() {
           boxShadow={"lg"}
           p={8}
         >
-          {/* <Heading textAlign="center" color="#26C6DA" mb="3" fontSize="20px">
-            Supervisor Login
-          </Heading> */}
           <form>
             <Stack spacing={4}>
               <FormControl id="email">
@@ -130,9 +127,6 @@ export default function Login() {
                   justify={"space-between"}
                 >
                   <Checkbox>Remember me</Checkbox>
-                  {/* <NavLink to="/agent-login" style={{ color: "#26C6DA" }}>
-                    Agent Login
-                  </NavLink> */}
                 </Stack>
                 <Button
                   bg={"blue.400"}
@@ -143,18 +137,9 @@ export default function Login() {
                   type="submit"
                   isLoading={isCreateLoading}
                   onClick={handleSubmit}
-                  // disabled={Username === "" || Password === ""}
                 >
                   Login
                 </Button>
-                {/* <Stack pt={6}>
-                  <Text align={"center"}>
-                    Don't have an account?{" "}
-                    <NavLink to="/signup" style={{ color: "#26C6DA" }}>
-                      Sign Up
-                    </NavLink>
-                  </Text>
-                </Stack> */}
               </Stack>
             </Stack>
           </form>
